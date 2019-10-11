@@ -132,6 +132,7 @@ function setupPrey() {
   preyHealth = preyMaxHealth;
   preyTX = random(0, 1000);
   preyTY = random(0, 1000);
+  preyEaten = 0;
 }
 
 // setupPlayer()
