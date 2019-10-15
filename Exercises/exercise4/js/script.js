@@ -41,7 +41,9 @@ let leftPaddle = {
   vy: 0,
   speed: 5,
   upKey: 87,
-  downKey: 83
+  downKey: 83,
+  color: fgColor
+
 }
 
 // RIGHT PADDLE
@@ -56,15 +58,16 @@ let rightPaddle = {
   vy: 0,
   speed: 5,
   upKey: 38,
-  downKey: 40
+  downKey: 40,
+  color: fgColor
 }
 
 // A variable to hold the beep sound we will play on bouncing
 let beepSFX;
 
 //A variable to track the score for each players
-let playerScore;
-let opponentScore;
+let leftScore =0;
+let rightScore= 0;
 
 // preload()
 //
@@ -97,6 +100,7 @@ function setupPaddles() {
   leftPaddle.x = 0 + leftPaddle.w;
   leftPaddle.y = height / 2;
 
+
   // Initialise the right paddle position
   rightPaddle.x = width - rightPaddle.w;
   rightPaddle.y = height / 2;
@@ -121,6 +125,7 @@ function draw() {
     checkBallWallCollision();
     checkBallPaddleCollision(leftPaddle);
     checkBallPaddleCollision(rightPaddle);
+    displayScore();
 
     // Check if the ball went out of bounds and respond if so
     // (Note how we can use a function that returns a truth value
@@ -189,11 +194,11 @@ function updateBall() {
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
   if (ball.x < 0) {
-    playerScore++;
+    leftScore++;
     return true;
   }
   else if ( ball.x > width) {
-    opponentScore++;
+    rightScore++;
     return true;
   }
   else {
@@ -299,5 +304,6 @@ function mousePressed() {
 //
 //Displays the score by the color of their rectangle
 function displayScore(){
-
+  textSize(20);
+  text(leftScore,10, 10);
 }
