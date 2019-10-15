@@ -1,7 +1,7 @@
 "use strict";
 
 // Pong
-// by Pippin Barr
+// by Frederick Labbe
 //
 // A "simple" implementation of Pong with no scoring system
 // just the ability to play the game with the keyboard.
@@ -61,6 +61,10 @@ let rightPaddle = {
 
 // A variable to hold the beep sound we will play on bouncing
 let beepSFX;
+
+//A variable to track the score for each players
+let playerScore;
+let opponentScore;
 
 // preload()
 //
@@ -184,7 +188,12 @@ function updateBall() {
 // Returns true if so, false otherwise
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
-  if (ball.x < 0 || ball.x > width) {
+  if (ball.x < 0) {
+    playerScore++;
+    return true;
+  }
+  else if ( ball.x > width) {
+    opponentScore++;
     return true;
   }
   else {
@@ -284,4 +293,11 @@ function displayStartMessage() {
 // Which will help us be allowed to play audio in the browser
 function mousePressed() {
   playing = true;
+}
+
+//displayScore
+//
+//Displays the score by the color of their rectangle
+function displayScore(){
+
 }
