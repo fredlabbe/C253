@@ -2,6 +2,8 @@
 //This is an example of classes in js. This is a Predator class, creating predators.
 // A Predator class describes what a Predator is and does
 class Predator { // A Predator class describes what a Predator is and does
+
+
   constructor(x, y, speed, fillColor, radius,up,down,left,right) {
     // Sets up the Predator when it is created or "constructed"
     this.x = x;
@@ -19,6 +21,7 @@ class Predator { // A Predator class describes what a Predator is and does
     this.downKey = down;
     this.leftKey = left;
     this.rightKey = right;
+    this.preyAmt = 0;
 }
 
   handleInput() {
@@ -84,6 +87,7 @@ class Predator { // A Predator class describes what a Predator is and does
       this.health = constrain(this.health,0,this.maxHealth);
       prey.health -= this.healthGainPerEat;
       if (prey.health < 0) {
+        this.preyAmt++;
         prey.reset();
       }
     }
