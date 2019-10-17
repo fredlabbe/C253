@@ -101,6 +101,7 @@ function preload() {
   ouch = loadSound('assets/sounds/owSound.mp3');
   atmosphere = loadSound('assets/sounds/underwater.wav');
 }
+
 // setup()
 //
 // Sets up the basic elements of the game
@@ -432,6 +433,7 @@ function mousePressed() {
     //Should reset all the values to beginning values
   }
 }
+
 //edits the font, the stroke around the letter,its width and the color
 function textEdit() {
   textSize(24);

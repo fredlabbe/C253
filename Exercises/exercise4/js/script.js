@@ -3,8 +3,9 @@
 // Pong
 // by Frederick Labbe
 //
-// A "simple" implementation of Pong with no scoring system
-// just the ability to play the game with the keyboard.
+// A "simple" implementation of Pong with a scoring system, the color of the
+//paddles change with the score
+// players have the ability to play the game with the keyboard.
 //
 // Up and down keys control the right hand paddle, W and S keys control
 // the left hand paddle
@@ -13,8 +14,7 @@
 let playing = false;
 
 // Game colors (using hexadecimal)
-let bgColor = 0;
-let fgColor = 255;
+let fgColor = 0;
 
 // BALL
 
@@ -42,7 +42,9 @@ let leftPaddle = {
   speed: 5,
   upKey: 87,
   downKey: 83,
-  color: fgColor
+  color: fgColor,
+  //A variable to track the score for each players
+  score: 0
 
 }
 
@@ -59,24 +61,33 @@ let rightPaddle = {
   speed: 5,
   upKey: 38,
   downKey: 40,
-  color: fgColor
+  color: fgColor,
+  //A variable to track the score for each players
+  score: 0
 }
 
 // A variable to hold the beep sound we will play on bouncing
 let beepSFX;
 
-//A variable to track the score for each players
-let leftScore =0;
-let rightScore= 0;
+//A variable that holds the sirene horn for when a goal is scored
+let goalSFX;
 
 //a state variable taking into account who won the last point
 let winState = "Not yet";
 
+//A variable for the images
+let iceImg;
+
 // preload()
 //
-// Loads the beep audio for the sound of bouncing
+// Loads the audio and the images
 function preload() {
+  //the sounds
   beepSFX = new Audio("assets/sounds/beep.wav");
+  goalSFX = new Audio('assets/sounds/goalHorn.wav');
+
+  //the images
+  iceImg = loadImage("assets/images/ice.jpg")
 }
 
 // setup()
@@ -115,7 +126,7 @@ function setupPaddles() {
 // See how tidy it looks?!
 function draw() {
   // Fill the background
-  background(bgColor);
+  image(iceImg, 0, 0, width, height);
 
   if (playing) {
     // If the game is in play, we handle input and move the elements around
@@ -128,7 +139,13 @@ function draw() {
     checkBallWallCollision();
     checkBallPaddleCollision(leftPaddle);
     checkBallPaddleCollision(rightPaddle);
-    displayScore();
+
+    //Checks if the one player has won. I so, resets the score and playing to false
+    if (leftPaddle.score === 10 || rightPaddle.score === 10) {
+      playing = false;
+      leftPaddle.score = 0;
+      rightPaddle.score = 0;
+    }
 
     // Check if the ball went out of bounds and respond if so
     // (Note how we can use a function that returns a truth value
@@ -139,8 +156,7 @@ function draw() {
       // This is where we would likely count points, depending on which side
       // the ball went off...
     }
-  }
-  else {
+  } else {
     // Otherwise we display the message to start the game
     displayStartMessage();
   }
@@ -166,8 +182,7 @@ function handleInput(paddle) {
   else if (keyIsDown(paddle.downKey)) {
     // Move down
     paddle.vy = paddle.speed;
-  }
-  else {
+  } else {
     // Otherwise stop moving
     paddle.vy = 0;
   }
@@ -193,20 +208,22 @@ function updateBall() {
 // ballIsOutOfBounds()
 //
 // Checks if the ball has gone off the left or right
-// Returns true if so, false otherwise
+// Returns true if so, false otherwise & upgrades score & plays sound
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
   if (ball.x < 0) {
-    rightScore++;
+    rightPaddle.score++;
     winState = "right";
+    goalSFX.currentTime = 0;
+    goalSFX.play();
     return true;
-  }
-  else if ( ball.x > width) {
-    leftScore++;
+  } else if (ball.x > width) {
+    leftPaddle.score++;
     winState = "left";
+    goalSFX.currentTime = 0;
+    goalSFX.play();
     return true;
-  }
-  else {
+  } else {
     return false;
   }
 }
@@ -261,11 +278,21 @@ function checkBallPaddleCollision(paddle) {
 
 // displayPaddle(paddle)
 //
-// Draws the specified paddle
+// Draws the specified paddle by mapping it to colors. When players score,
+//they become more and more on fire so they turn redder!
 function displayPaddle(paddle) {
   // Draw the paddles
-  fill(paddle.color);
+  push();
+  if (paddle.score <= 4) {
+    paddle.color = map(paddle.score, 0, 4, 10, 200);
+    fill(paddle.color, 180, 20);
+  } else if (paddle.score > 4) {
+    paddle.color = map(paddle.score, 5, 10, 200, 20);
+    fill(180, paddle.color, 20);
+  }
   rect(paddle.x, paddle.y, paddle.w, paddle.h);
+  pop();
+
 }
 
 // displayBall()
@@ -282,14 +309,22 @@ function displayBall() {
 //takes a random number for the vy if someone won a point last
 //sends the ball in opposite direction than the last who won
 function resetBall() {
-  if(winState = "Not yet"){
+  // Initialise the ball's position and velocity
+  ball.x = width / 2;
+  ball.y = height / 2;
+
+  let r = random(-8, 8);
+  console.log(winState);
+
+  //if there is no point yet, set the vy to speed
+  if (winState === "Not yet") {
     ball.vy = ball.speed;
     ball.vx = ball.speed;
   }
   //right won, so want to launch the ball to the right
   //taking the absolute value will always make the x positive, hence
   //send it to the right
-  else if (winState = "right"){
+  else if (winState === "right") {
     ball.vy = r;
     ball.vx = abs(ball.speed);
     console.log("right works");
@@ -297,19 +332,10 @@ function resetBall() {
   //left won, so launch the ball to the left
   //taking the absolute value will always make the x positive, but it is put
   // negative because of the *(-1), hence sending it to the left
-  else if(winState = "left"){
+  else if (winState === "left") {
     ball.vy = r;
-    ball.vx = abs(ball.speed)*(-1);
+    ball.vx = abs(ball.speed) * (-1);
   }
-  // Initialise the ball's position and velocity
-  ball.x = width / 2;
-  ball.y = height / 2;
-
-  let r = random(-8,8);
-  console.log(winState);
-
-  //if there is no point yet, set the vy to speed
-
 }
 
 // displayStartMessage()
@@ -329,15 +355,4 @@ function displayStartMessage() {
 // Which will help us be allowed to play audio in the browser
 function mousePressed() {
   playing = true;
-}
-
-//displayScore
-//
-//Displays the score by the color of their rectangle
-function displayScore(){
-  textSize(20);
-  text(leftScore+"\n"+leftPaddle.color,30, 30);
-  text(rightScore+"\n"+rightPaddle.color,width-30,30);
-  leftPaddle.color = leftPaddle + leftScore*20;
-
 }
