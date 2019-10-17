@@ -42,7 +42,9 @@ let leftPaddle = {
   speed: 5,
   upKey: 87,
   downKey: 83,
-  color: fgColor
+  color: fgColor,
+  //A variable to track the score for each players
+  score: 0
 
 }
 
@@ -59,18 +61,18 @@ let rightPaddle = {
   speed: 5,
   upKey: 38,
   downKey: 40,
-  color: fgColor
+  color: fgColor,
+  //A variable to track the score for each players
+  score: 0
 }
 
 // A variable to hold the beep sound we will play on bouncing
 let beepSFX;
 
-//A variable to track the score for each players
-let leftScore =0;
-let rightScore= 0;
-
 //a state variable taking into account who won the last point
 let winState = "Not yet";
+
+//A variable for the images
 
 // preload()
 //
@@ -197,12 +199,12 @@ function updateBall() {
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
   if (ball.x < 0) {
-    rightScore++;
+    rightPaddle.score++;
     winState = "right";
     return true;
   }
   else if ( ball.x > width) {
-    leftScore++;
+    leftPaddle.score++;
     winState = "left";
     return true;
   }
@@ -264,8 +266,20 @@ function checkBallPaddleCollision(paddle) {
 // Draws the specified paddle
 function displayPaddle(paddle) {
   // Draw the paddles
-  fill(paddle.color);
+  //fill(paddle.color);
+
+  push();
+  if(paddle.score <=4){
+    paddle.color = map(paddle.score,0,4,10,200);
+    fill(paddle.color,180,20);
+  }
+  else if(paddle.score > 4){
+    paddle.color = map(paddle.score,5,10,200,20);
+    fill(180,paddle.color,20);
+  }
   rect(paddle.x, paddle.y, paddle.w, paddle.h);
+  pop();
+
 }
 
 // displayBall()
@@ -282,25 +296,6 @@ function displayBall() {
 //takes a random number for the vy if someone won a point last
 //sends the ball in opposite direction than the last who won
 function resetBall() {
-  if(winState = "Not yet"){
-    ball.vy = ball.speed;
-    ball.vx = ball.speed;
-  }
-  //right won, so want to launch the ball to the right
-  //taking the absolute value will always make the x positive, hence
-  //send it to the right
-  else if (winState = "right"){
-    ball.vy = r;
-    ball.vx = abs(ball.speed);
-    console.log("right works");
-  }
-  //left won, so launch the ball to the left
-  //taking the absolute value will always make the x positive, but it is put
-  // negative because of the *(-1), hence sending it to the left
-  else if(winState = "left"){
-    ball.vy = r;
-    ball.vx = abs(ball.speed)*(-1);
-  }
   // Initialise the ball's position and velocity
   ball.x = width / 2;
   ball.y = height / 2;
@@ -309,7 +304,25 @@ function resetBall() {
   console.log(winState);
 
   //if there is no point yet, set the vy to speed
-
+  if(winState === "Not yet"){
+    ball.vy = ball.speed;
+    ball.vx = ball.speed;
+  }
+  //right won, so want to launch the ball to the right
+  //taking the absolute value will always make the x positive, hence
+  //send it to the right
+  else if (winState === "right"){
+    ball.vy = r;
+    ball.vx = abs(ball.speed);
+    console.log("right works");
+  }
+  //left won, so launch the ball to the left
+  //taking the absolute value will always make the x positive, but it is put
+  // negative because of the *(-1), hence sending it to the left
+  else if(winState === "left"){
+    ball.vy = r;
+    ball.vx = abs(ball.speed)*(-1);
+  }
 }
 
 // displayStartMessage()
@@ -336,8 +349,8 @@ function mousePressed() {
 //Displays the score by the color of their rectangle
 function displayScore(){
   textSize(20);
-  text(leftScore+"\n"+leftPaddle.color,30, 30);
-  text(rightScore+"\n"+rightPaddle.color,width-30,30);
-  leftPaddle.color = leftPaddle + leftScore*20;
+  text(leftPaddle.score+"\n"+leftPaddle.color,30, 30);
+  text(rightPaddle.score+"\n"+rightPaddle.color,width-30,30);
+  //leftPaddle.color = leftPaddle + leftPaddle.score*20;
 
 }
