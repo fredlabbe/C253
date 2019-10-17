@@ -69,6 +69,9 @@ let beepSFX;
 let leftScore =0;
 let rightScore= 0;
 
+//a state variable taking into account who won the last point
+let winState = "Not yet";
+
 // preload()
 //
 // Loads the beep audio for the sound of bouncing
@@ -194,11 +197,13 @@ function updateBall() {
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
   if (ball.x < 0) {
-    leftScore++;
+    rightScore++;
+    winState = "right";
     return true;
   }
   else if ( ball.x > width) {
-    rightScore++;
+    leftScore++;
+    winState = "left";
     return true;
   }
   else {
@@ -259,6 +264,7 @@ function checkBallPaddleCollision(paddle) {
 // Draws the specified paddle
 function displayPaddle(paddle) {
   // Draw the paddles
+  fill(paddle.color);
   rect(paddle.x, paddle.y, paddle.w, paddle.h);
 }
 
@@ -273,12 +279,37 @@ function displayBall() {
 // resetBall()
 //
 // Sets the starting position and velocity of the ball
+//takes a random number for the vy if someone won a point last
+//sends the ball in opposite direction than the last who won
 function resetBall() {
+  if(winState = "Not yet"){
+    ball.vy = ball.speed;
+    ball.vx = ball.speed;
+  }
+  //right won, so want to launch the ball to the right
+  //taking the absolute value will always make the x positive, hence
+  //send it to the right
+  else if (winState = "right"){
+    ball.vy = r;
+    ball.vx = abs(ball.speed);
+    console.log("right works");
+  }
+  //left won, so launch the ball to the left
+  //taking the absolute value will always make the x positive, but it is put
+  // negative because of the *(-1), hence sending it to the left
+  else if(winState = "left"){
+    ball.vy = r;
+    ball.vx = abs(ball.speed)*(-1);
+  }
   // Initialise the ball's position and velocity
   ball.x = width / 2;
   ball.y = height / 2;
-  ball.vx = ball.speed;
-  ball.vy = ball.speed;
+
+  let r = random(-8,8);
+  console.log(winState);
+
+  //if there is no point yet, set the vy to speed
+
 }
 
 // displayStartMessage()
@@ -305,5 +336,8 @@ function mousePressed() {
 //Displays the score by the color of their rectangle
 function displayScore(){
   textSize(20);
-  text(leftScore,10, 10);
+  text(leftScore+"\n"+leftPaddle.color,30, 30);
+  text(rightScore+"\n"+rightPaddle.color,width-30,30);
+  leftPaddle.color = leftPaddle + leftScore*20;
+
 }
