@@ -4,7 +4,7 @@
 class Predator { // A Predator class describes what a Predator is and does
 
 
-  constructor(x, y, speed, fillColor, radius,up,down,left,right) {
+  constructor(x, y, speed, fillColor, radius,up,down,left,right,sprint) {
     // Sets up the Predator when it is created or "constructed"
     this.x = x;
     this.y = y;
@@ -21,6 +21,8 @@ class Predator { // A Predator class describes what a Predator is and does
     this.downKey = down;
     this.leftKey = left;
     this.rightKey = right;
+    this.sprintKey = sprint;
+    this.sprintSpeed = 20;
     this.preyAmt = 0;
 }
 
@@ -43,6 +45,14 @@ class Predator { // A Predator class describes what a Predator is and does
     }
     else {
       this.vy = 0;
+    }
+    if(keyIsDown(this.sprintKey)){
+      this.speed = 50;
+      console.log(this.speed);
+      console.log("works");
+    }
+    else{
+      this.speed = 5;
     }
   }
   move() {
