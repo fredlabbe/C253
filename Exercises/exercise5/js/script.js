@@ -57,6 +57,7 @@ function setup() {
   fill(255, 0, 0);
   textSize(30);
   textAlign(CENTER);
+  textFont("Gill Sans");
 }
 
 
@@ -95,15 +96,19 @@ function draw() {
     if (tiger.health <= 0 || lion.health <= 0) {
       state = "GameOver";
     }
+    //checks weather the tiger or lion or neither won and diplays the image
+    //and message accordingly 
   } else if (state === "GameOver") {
-    if (tiger.health <= 0) {
-      image(lionImg, width / 2, height / 2, winImgSize, winImgSize);
-      text("Won!", width / 2, (height / 2) + winImgSize + 50);
-    } else if (lion.health <= 0) {
-      image(tigerImg, width / 2, height / 2, winImgSize, winImgSize);
-      text("Won!", width / 2, (height / 2) + winImgSize + 50);
-    } else {
+    if (tiger.health === 0 && lion.health === 0) {
       text("Nobody won!", width / 2, height / 2);
+    } else if (tiger.health <= 0) {
+      imageMode(CENTER);
+      image(lionImg, width / 2, height / 2, winImgSize, winImgSize);
+      text("Won!", width / 2, (height / 2) + winImgSize);
+    } else if (lion.health <= 0) {
+      imageMode(CENTER);
+      image(tigerImg, width / 2, height / 2, winImgSize, winImgSize);
+      text("Won!", width / 2, (height / 2) + winImgSize);
     }
   }
 

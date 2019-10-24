@@ -92,23 +92,27 @@ class Predator {
       //amount of health initially set.
       this.health = constrain(this.health, 0, this.maxHealth);
       prey.health -= this.healthGainPerEat;
-      if (prey.health < 0) {
+      if (prey.health <= 0) {
         this.preyAmt++;
         prey.reset();
       }
     }
   }
   display() {
-    // Draw the predator on the canvas
+    if(this.health <= 0){
+      return;
+    }
+    // Draws the predator on the canvas
     push();
     noStroke();
     this.radius = this.health;
-    imageMode(CENTER, CENTER);
+    imageMode(CENTER);
+    console.log(this.radius);
     image(this.image, this.x, this.y, this.radius * 2, this.radius * 2);
     pop();
     push();
     noStroke();
-    rectMode(CENTER, CENTER);
+    rectMode(CENTER);
     fill(195, 0, 0);
     rect(this.x, this.y + this.radius, 100, 10);
     this.healthBar = map(this.preyAmt, 0, 10, 0, 100);
