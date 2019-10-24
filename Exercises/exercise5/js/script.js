@@ -54,7 +54,7 @@ function setup() {
   warthog = new Prey(random(0, width), random(0, height), 8, color(204, 168, 151), 50, warthogImg);
 
   //setting the texts' characteristics
-  fill(255,0,0);
+  fill(255, 0, 0);
   textSize(30);
   textAlign(CENTER);
 }
@@ -68,9 +68,8 @@ function draw() {
   background(0);
 
   if (state === "Menu") {
-    text("Play", width/2, height/2);
-  }
-  else if (state === "Game") {
+    text("Play", width / 2, height / 2);
+  } else if (state === "Game") {
     //they take the users' inputs in
     tiger.handleInput();
     lion.handleInput();
@@ -97,16 +96,14 @@ function draw() {
       state = "GameOver";
     }
   } else if (state === "GameOver") {
-    if(tiger.health <= 0){
-      image(lionImg,width/2,height/2, winImgSize,winImgSize);
-      text("Won!", width/2, (height/2)+winImgSize+50);
-    }
-    else if(lion.health <= 0){
-      image(tigerImg,width/2,height/2, winImgSize,winImgSize);
-      text("Won!", width/2, (height/2)+winImgSize+50);
-    }
-    else{
-      text("Nobody won!",width/2,height/2);
+    if (tiger.health <= 0) {
+      image(lionImg, width / 2, height / 2, winImgSize, winImgSize);
+      text("Won!", width / 2, (height / 2) + winImgSize + 50);
+    } else if (lion.health <= 0) {
+      image(tigerImg, width / 2, height / 2, winImgSize, winImgSize);
+      text("Won!", width / 2, (height / 2) + winImgSize + 50);
+    } else {
+      text("Nobody won!", width / 2, height / 2);
     }
   }
 

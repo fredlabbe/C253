@@ -5,7 +5,7 @@
 class Predator {
 
   //creates the predator
-  constructor(x, y, speed, fillColor, radius,up,down,left,right,sprint, img) {
+  constructor(x, y, speed, fillColor, radius, up, down, left, right, sprint, img) {
     // Sets up the Predator when it is created or "constructed"
     this.x = x;
     this.y = y;
@@ -27,34 +27,29 @@ class Predator {
     this.preyAmt = 0;
     this.image = img;
     this.healthBar = 0;
-}
+  }
 
   // Check for player input and react appropriately
   handleInput() {
     if (keyIsDown(this.leftKey)) {
       this.vx = -this.speed;
-    }
-    else if (keyIsDown(this.rightKey)) {
+    } else if (keyIsDown(this.rightKey)) {
       this.vx = this.speed;
-    }
-    else {
+    } else {
       this.vx = 0;
     }
     if (keyIsDown(this.upKey)) {
       this.vy = -this.speed;
-    }
-    else if (keyIsDown(this.downKey)) {
+    } else if (keyIsDown(this.downKey)) {
       this.vy = this.speed;
-    }
-    else {
+    } else {
       this.vy = 0;
     }
-    if(keyIsDown(this.sprintKey)){
+    if (keyIsDown(this.sprintKey)) {
       this.speed = this.sprintSpeed;
       console.log(this.speed);
       console.log("works");
-    }
-    else{
+    } else {
       this.speed = 5;
     }
   }
@@ -66,7 +61,7 @@ class Predator {
     this.y += this.vy;
 
     this.health = this.health - this.healthLossPerMove;
-    this.health = constrain(this.health,0,this.maxHealth);
+    this.health = constrain(this.health, 0, this.maxHealth);
 
     // Calls the handleWrapping method, note the use of "this"
     this.handleWrapping();
@@ -75,29 +70,27 @@ class Predator {
   handleWrapping() {
     if (this.x < 0) {
       this.x += width;
-    }
-    else if (this.x > width) {
+    } else if (this.x > width) {
       this.x -= width;
     }
     if (this.y < 0) {
       this.y += height;
-    }
-    else if (this.y > height) {
+    } else if (this.y > height) {
       this.y -= height;
     }
-}
+  }
 
   handleEating(prey) {
     // Check for an overlap with this prey
     // And reduce its health if there is one
     // Also increase the predator's health
-    let d = dist(this.x,this.y,prey.x,prey.y);
+    let d = dist(this.x, this.y, prey.x, prey.y);
     if (d < this.radius + prey.radius) {
       this.health += this.healthGainPerEat;
 
       //constrain makes sure that the health doesn't go higher than the maximum
       //amount of health initially set.
-      this.health = constrain(this.health,0,this.maxHealth);
+      this.health = constrain(this.health, 0, this.maxHealth);
       prey.health -= this.healthGainPerEat;
       if (prey.health < 0) {
         this.preyAmt++;
@@ -110,17 +103,17 @@ class Predator {
     push();
     noStroke();
     this.radius = this.health;
-    imageMode(CENTER,CENTER);
-    image(this.image,this.x,this.y,this.radius*2,this.radius*2);
+    imageMode(CENTER, CENTER);
+    image(this.image, this.x, this.y, this.radius * 2, this.radius * 2);
     pop();
     push();
     noStroke();
-    rectMode(CENTER,CENTER);
-    fill(195,0,0);
-    rect(this.x,this.y+this.radius,100,10);
-    this.healthBar = map(this.preyAmt,0,10,0,100);
-    fill(0,195,0);
-    rect(this.x,this.y+this.radius,this.healthBar,10);
+    rectMode(CENTER, CENTER);
+    fill(195, 0, 0);
+    rect(this.x, this.y + this.radius, 100, 10);
+    this.healthBar = map(this.preyAmt, 0, 10, 0, 100);
+    fill(0, 195, 0);
+    rect(this.x, this.y + this.radius, this.healthBar, 10);
     pop();
   }
 }
