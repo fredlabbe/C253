@@ -1,6 +1,8 @@
 //Prey Class
 //
-// A Prey class describes what a Preys and does
+// Contains the constructor with the different variables for the prey,
+// the method to make it move and make it wrap around the edges, the reset
+// that resets
 class Prey {
   constructor(x, y, speed, fillColor, radius, img) {
     // Sets up the Prey when it is created or "constructed"
@@ -44,19 +46,17 @@ class Prey {
       this.y -= height;
     }
   }
-  display() {
     // Draw the prey on the canvas
+  display() {
     push();
     noStroke();
-    //fill(this.fillColor);
     this.radius = this.health;
-    //ellipse(this.x,this.y,this.radius * 2);
     image(this.image,this.x,this.y,this.radius*2,this.radius*2);
     pop();
   }
+  //resets the prey's values
   reset(){
     this.health = this.maxHealth;
-
     let rx = random(0,width);
     let ry = random(0,height);
     this.x = rx;

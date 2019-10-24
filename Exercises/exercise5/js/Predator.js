@@ -1,9 +1,10 @@
 //
-//This is an example of classes in js. This is a Predator class, creating predators.
+//This is an example of classes in js. This is a Predator class,
+//creating predators
 // A Predator class describes what a Predator is and does
-class Predator { // A Predator class describes what a Predator is and does
+class Predator {
 
-
+  //creates the predator
   constructor(x, y, speed, fillColor, radius,up,down,left,right,sprint, img) {
     // Sets up the Predator when it is created or "constructed"
     this.x = x;
@@ -28,8 +29,8 @@ class Predator { // A Predator class describes what a Predator is and does
     this.healthBar = 0;
 }
 
+  // Check for player input and react appropriately
   handleInput() {
-    // Check for player input and react appropriately
     if (keyIsDown(this.leftKey)) {
       this.vx = -this.speed;
     }
@@ -57,10 +58,10 @@ class Predator { // A Predator class describes what a Predator is and does
       this.speed = 5;
     }
   }
+  // Move the predator based on velocity
+  // Lose health from movement
+  // Wrap at the canvas edges
   move() {
-    // Move the predator based on velocity
-    // Lose health from movement
-    // Wrap at the canvas edges
     this.x += this.vx;
     this.y += this.vy;
 
@@ -70,7 +71,7 @@ class Predator { // A Predator class describes what a Predator is and does
     // Calls the handleWrapping method, note the use of "this"
     this.handleWrapping();
   }
-
+  //makes the predator wrap around the edges
   handleWrapping() {
     if (this.x < 0) {
       this.x += width;
@@ -109,17 +110,17 @@ class Predator { // A Predator class describes what a Predator is and does
     push();
     noStroke();
     this.radius = this.health;
-    rectMode(CENTER,CENTER);
+    imageMode(CENTER,CENTER);
     image(this.image,this.x,this.y,this.radius*2,this.radius*2);
     pop();
     push();
     noStroke();
     rectMode(CENTER,CENTER);
     fill(195,0,0);
-    rect(this.x,this.y+this.radius*2,100,10);
+    rect(this.x,this.y+this.radius,100,10);
     this.healthBar = map(this.preyAmt,0,10,0,100);
     fill(0,195,0);
-    rect(this.x,this.y+this.radius*2,this.healthBar,10);
+    rect(this.x,this.y+this.radius,this.healthBar,10);
     pop();
   }
 }

@@ -2,11 +2,11 @@
 
 /*****************
 
-Title of Project
-Author Name
+The Predator King (Lion King pun)
+Frederick Labbe
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+A chasing 2 player game where the predators try to eat the preys to stay alive.
+last man(or animal) standing wins.
 
 ******************/
 
@@ -44,7 +44,7 @@ function preload() {
 
 // setup()
 //
-// Description of setup
+// Creates the predators and the preys and sets up the texts
 
 function setup() {
   createCanvas(1280, 720);
@@ -62,8 +62,8 @@ function setup() {
 
 // draw()
 //
-// Description of draw()
-
+// Manages the state of the game(the screen), and handles the game itslef.
+//Checks if either predator has died and displays who won accordingly
 function draw() {
   background(0);
 
@@ -111,7 +111,7 @@ function draw() {
   }
 
 }
-
+//Swithces the screens from menu to game
 function mousePressed() {
   if (state === "Menu") {
     state = "Game";
