@@ -4,7 +4,7 @@
 class Predator { // A Predator class describes what a Predator is and does
 
 
-  constructor(x, y, speed, fillColor, radius,up,down,left,right,sprint) {
+  constructor(x, y, speed, fillColor, radius,up,down,left,right,sprint, img) {
     // Sets up the Predator when it is created or "constructed"
     this.x = x;
     this.y = y;
@@ -22,8 +22,10 @@ class Predator { // A Predator class describes what a Predator is and does
     this.leftKey = left;
     this.rightKey = right;
     this.sprintKey = sprint;
-    this.sprintSpeed = 20;
+    this.sprintSpeed = 10;
     this.preyAmt = 0;
+    this.image = img;
+    this.healthBar = 0;
 }
 
   handleInput() {
@@ -47,7 +49,7 @@ class Predator { // A Predator class describes what a Predator is and does
       this.vy = 0;
     }
     if(keyIsDown(this.sprintKey)){
-      this.speed = 50;
+      this.speed = this.sprintSpeed;
       console.log(this.speed);
       console.log("works");
     }
@@ -106,9 +108,18 @@ class Predator { // A Predator class describes what a Predator is and does
     // Draw the predator on the canvas
     push();
     noStroke();
-    fill(this.fillColor);
     this.radius = this.health;
-    ellipse(this.x,this.y,this.radius * 2);
+    rectMode(CENTER,CENTER);
+    image(this.image,this.x,this.y,this.radius*2,this.radius*2);
+    pop();
+    push();
+    noStroke();
+    rectMode(CENTER,CENTER);
+    fill(195,0,0);
+    rect(this.x,this.y+this.radius*2,100,10);
+    this.healthBar = map(this.preyAmt,0,10,0,100);
+    fill(0,195,0);
+    rect(this.x,this.y+this.radius*2,this.healthBar,10);
     pop();
   }
 }

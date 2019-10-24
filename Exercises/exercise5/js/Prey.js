@@ -2,7 +2,7 @@
 //
 // A Prey class describes what a Preys and does
 class Prey {
-  constructor(x, y, speed, fillColor, radius) {
+  constructor(x, y, speed, fillColor, radius, img) {
     // Sets up the Prey when it is created or "constructed"
     this.x = x;
     this.y = y;
@@ -15,6 +15,7 @@ class Prey {
     this.radius = this.health; // Radius is matched to health
     this.tx = random(0,100);
     this.ty = random(0,100);
+    this.image = img;
   }
   move() {
     // Move the prey based on noise velocity
@@ -47,9 +48,10 @@ class Prey {
     // Draw the prey on the canvas
     push();
     noStroke();
-    fill(this.fillColor);
+    //fill(this.fillColor);
     this.radius = this.health;
-    ellipse(this.x,this.y,this.radius * 2);
+    //ellipse(this.x,this.y,this.radius * 2);
+    image(this.image,this.x,this.y,this.radius*2,this.radius*2);
     pop();
   }
   reset(){
