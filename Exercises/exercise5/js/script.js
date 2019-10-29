@@ -35,7 +35,7 @@ let winImgSize = 200;
 
 function preload() {
   //preloads the images and put it in variables
-  lionImg = loadImage("assets/images/scar.png");
+  lionImg = loadImage("assets/images/Scar.png");
   warthogImg = loadImage("assets/images/pumba.png");
   antelopeImg = loadImage("assets/images/antelope.png");
   tigerImg = loadImage("assets/images/tiger.png");
@@ -97,7 +97,7 @@ function draw() {
       state = "GameOver";
     }
     //checks weather the tiger or lion or neither won and diplays the image
-    //and message accordingly 
+    //and message accordingly
   } else if (state === "GameOver") {
     if (tiger.health === 0 && lion.health === 0) {
       text("Nobody won!", width / 2, height / 2);
