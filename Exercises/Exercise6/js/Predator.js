@@ -14,7 +14,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, feltColor, radius) {//FIXED
+  constructor(x, y, speed, fillColor, radius) {//FIXED
     // Position
     this.x = x;
     this.y = y;
@@ -28,10 +28,10 @@ class Predator {
     this.healthLossPerMove = 0.1;
     this.healthGainPerEat = 1;
     // Display properties
-    this.fillColor = feltColor;
+    this.fillColor = fillColor;
     this.radios = this.health; // Radius is defined in terms of health
     // Input properties
-    this.appKey = UP_ARROW;
+    this.upKey = UP_ARROW;////FIXED
     this.downKey = DOWN_ARROW;
     this.leftKey = LEFT_ARROW;
     this.rightKey = RIGHT_ARROW;
@@ -118,7 +118,7 @@ class Predator {
       prey.health -= this.healthGainPerEat;
       // Check if the prey died and reset it if so
       if (prey.health < 0) {
-        prey.reset();////FIXED 
+        prey.reset();////FIXED
       }
     }
   }
