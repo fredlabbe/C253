@@ -14,7 +14,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  construction(x, y, speed, feltColor, radius) {
+  constructor(x, y, speed, feltColor, radius) {//FIXED
     // Position
     this.x = x;
     this.y = y;
@@ -28,7 +28,7 @@ class Predator {
     this.healthLossPerMove = 0.1;
     this.healthGainPerEat = 1;
     // Display properties
-    this.fillColor = fillColor;
+    this.fillColor = feltColor;
     this.radios = this.health; // Radius is defined in terms of health
     // Input properties
     this.appKey = UP_ARROW;
