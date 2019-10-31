@@ -9,20 +9,43 @@
 let tiger;
 
 // The three prey
-let antelope;
+//let player;
 let zebra;
 let bee;
 
+//the player
+let player;
+
+//animation array
+let walkAnimation = [];
+
+//state variable containing the state of the game
+let state = "Menu";
+
+//preload()
+//
+//preloads the images and sounds
+function preload(){
+  //the images
+  for(let i = 0; i < 2; i++){
+    let image = loadImage("assets/animations/playerWalking/walkingAnimation"+i+".png");
+    walkAnimation.push(image);
+    console.log("assets/animations/playerWalking/walkingAnimation"+i+".png");
+
+  }
+
+  //frameRate(10);
+}
 // setup()
 //
 // Sets up a canvas
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  tiger = new Predator(100, 100, 5, color(200, 200, 0), 40);
-  antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
-  zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
-  bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
+  tiger = new Predator(100, 100, 5, color(200, 200, 0), 40,walkAnimation);
+  player = new Prey(500, 500, 3, color(255, 100, 10), 50);
+  //zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
+  //bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
 }
 
 // draw()
@@ -30,25 +53,49 @@ function setup() {
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
   // Clear the background to black
-  background(0);
+  background(200,200,200);
 
-  // Handle input for the tiger
-  tiger.handleInput();
+  if(state === "Menu"){
+    textSize(50);
+    textAlign(CENTER);
+    text("Click to play", (width / 2), (height / 2));
 
-  // Move all the "animals"
-  tiger.move();
-  antelope.move();
-  zebra.move();
-  bee.move();
+  }
+  if(state === "Narrative"){
+    text("Narrative", (width / 2), (height / 2));
+  }
+  if(state === "Game"){
+    // Handle input for the tiger
+    player.handleInput();
 
-  // Handle the tiger eating any of the prey
-  tiger.handleEating(antelope);
-  tiger.handleEating(zebra);
-  tiger.handleEating(bee);
+    // Move all the "animals"
+    tiger.move();
+    player.move();
+    //zebra.move();
+    //bee.move();
 
-  // Display all the "animals"
-  tiger.display();
-  antelope.display();
-  zebra.display();
-  bee.display();
+    // Handle the tiger eating any of the prey
+    tiger.handleEating(player);
+    //tiger.handleEating(zebra);
+    //tiger.handleEating(bee);
+
+    // Display all the "animals"
+    tiger.display();
+    player.display();
+    //zebra.display();
+    //bee.display();
+  }
+
+}
+
+function mousePressed() {
+
+  if (state === "Menu") {
+    state = "Narrative";
+  } else if (state === "Narrative") {
+    state = "Game";
+  } else if (state === "GameOver") {
+    state = "Menu";
+    //Should reset all the values to beginning values
+  }
 }

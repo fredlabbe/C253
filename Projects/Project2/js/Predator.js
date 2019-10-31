@@ -10,7 +10,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, radius) {
+  constructor(x, y, speed, fillColor, size) {
     // Position
     this.x = x;
     this.y = y;
@@ -18,60 +18,33 @@ class Predator {
     this.vx = 0;
     this.vy = 0;
     this.speed = speed;
+    // Time properties for noise() function
+    this.tx = random(0, 1000); // To make x and y noise different
+    this.ty = random(0, 1000); // we use random starting values
     // Health properties
-    this.maxHealth = radius;
+    this.maxHealth = size;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     this.healthLossPerMove = 0.1;
     this.healthGainPerEat = 1;
     // Display properties
     this.fillColor = fillColor;
-    this.radius = this.health; // Radius is defined in terms of health
-    // Input properties
-    this.upKey = UP_ARROW;
-    this.downKey = DOWN_ARROW;
-    this.leftKey = LEFT_ARROW;
-    this.rightKey = RIGHT_ARROW;
-  }
-
-  // handleInput
-  //
-  // Checks if an arrow key is pressed and sets the predator's
-  // velocity appropriately.
-  handleInput() {
-    // Horizontal movement
-    if (keyIsDown(this.leftKey)) {
-      this.vx = -this.speed;
-    }
-    else if (keyIsDown(this.rightKey)) {
-      this.vx = this.speed;
-    }
-    else {
-      this.vx = 0;
-    }
-    // Vertical movement
-    if (keyIsDown(this.upKey)) {
-      this.vy = -this.speed;
-    }
-    else if (keyIsDown(this.downKey)) {
-      this.vy = this.speed;
-    }
-    else {
-      this.vy = 0;
-    }
+    this.size = this.health; // size is defined in terms of health
   }
 
   // move
   //
-  // Updates the position according to velocity
-  // Lowers health (as a cost of living)
-  // Handles wrapping
+  // Sets velocity based on the noise() function and the Prey's speed
+  // Moves based on the resulting velocity and handles wrapping
   move() {
+    // Set velocity via noise()
+    this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
+    this.vy = map(noise(this.ty), 0, 1, -this.speed, this.speed);
     // Update position
     this.x += this.vx;
     this.y += this.vy;
-    // Update health
-    this.health = this.health - this.healthLossPerMove;
-    this.health = constrain(this.health, 0, this.maxHealth);
+    // Update time properties
+    this.tx += 0.01;
+    this.ty += 0.01;
     // Handle wrapping
     this.handleWrapping();
   }
@@ -106,7 +79,7 @@ class Predator {
     // Calculate distance from this predator to the prey
     let d = dist(this.x, this.y, prey.x, prey.y);
     // Check if the distance is less than their two radii (an overlap)
-    if (d < this.radius + prey.radius) {
+    if (d < this.size + prey.size) {
       // Increase predator health and constrain it to its possible range
       this.health += this.healthGainPerEat;
       this.health = constrain(this.health, 0, this.maxHealth);
@@ -122,13 +95,13 @@ class Predator {
   // display
   //
   // Draw the predator as an ellipse on the canvas
-  // with a radius the same size as its current health.
+  // with a size the same size as its current health.
   display() {
     push();
     noStroke();
     fill(this.fillColor);
-    this.radius = this.health;
-    ellipse(this.x, this.y, this.radius * 2);
+    this.size = this.health;
+    ellipse(this.x, this.y, this.size * 2);
     pop();
   }
 }
