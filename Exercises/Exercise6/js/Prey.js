@@ -22,7 +22,7 @@ class Prey {
     // Velocity and speed
     this.vx = 0;
     this.vy = 0;
-    this.sped = speed;
+    this.speed = speed;//FIXED
     // Time properties for noise() function
     this.tx = random(1, 100); // To make x and y noise different
     this.ty = random(1, 100); // we use random starting values
