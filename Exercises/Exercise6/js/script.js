@@ -27,9 +27,9 @@ let bee;
 function setup(){
   createCanvas(windowWidth, windowHeight);
   //////Fixed
-  tiger = new Predator(100, 100, 100, color(200, 200, 0), 40);
-  antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
-  zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);///FIXED
+  tiger = new Predator(100, 100, 5, color(200, 200, 0), 40);//FIXED
+  antelope = new Prey(100, 200, 10, color(255, 100, 10), 50);
+  zebra = new Prey(100, 300, 8, color(255, 255, 255), 60);///FIXED
   bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
 }
 
