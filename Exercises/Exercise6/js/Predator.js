@@ -72,7 +72,7 @@ class Predator {
   move() {
     // Update position
     this.x += this.vx;//FIXED
-    this.y += this.vy;///FIXED 
+    this.y += this.vy;///FIXED
     // Update health
     this.health = this.health - this.healthLossPerMove;
     this.health = constrain(this.health, 0, this.maxHealth);
@@ -97,7 +97,7 @@ class Predator {
       this.y += height;
     }
     else if (this.y > height) {
-      this.y -= height;
+      this.y -= height;//FIXED
     }
   }
 
