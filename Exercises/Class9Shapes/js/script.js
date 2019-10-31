@@ -10,40 +10,27 @@ author, and this description to match your project!
 
 ******************/
 
-let mySquare1;
-let circle1;
+let square;
+let circle;
 
-// preload()
-//
-// Description of preload
-
-function preload() {
-
-}
-
-
-// setup()
-//
-// Description of setup
-
+let shapes = [];
 function setup() {
-  createCanvas(1000,1000);
+  createCanvas(windowWidth,windowHeight);
 
-  mySquare1 = new Square(random(0,width),random(0,height),100,150);
-  circle1 = new Circle(random(0,width),random(0,height),100);
+  for(let i = 0; i<100; i++){
+    square = new Square(random(0,width),random(0,height),100,color(0,0,255));
+    shapes.push(square);
+  }
+
+  for(let i = 0; i<100; i++){
+    circle = new Circle(random(0,width),random(0,height),200);
+    shapes.push(circle);
+  }
 }
-
-
-// draw()
-//
-// Description of draw()
-
 function draw() {
   background(255);
-
-  mySquare1.update();
-  mySquare1.display();
-
-  circle1.update();
-  circle1.display();
+  for (let i = 0; i < shapes.length; i++) {
+    shapes[i].update();
+    shapes[i].display();
+  }
 }
