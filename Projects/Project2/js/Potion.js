@@ -13,6 +13,8 @@ class Potion{
     //Position
     this.x = x;
     this.y = y;
+    //size
+    this.size = 30;
     //Properties
     this.healingValue = healingValue;
     this.isDrank = false;
@@ -25,8 +27,12 @@ class Potion{
   //Displays the potion at the received coordinates. If it is drank,
   //it is not displayed.
   display(){
+    console.log("this works");
+    //image(this.image,this.x,this.y,this.size,this.size);
     if(this.isDrank === false){
       //Display
+      image(this.image,this.x,this.y,this.size,this.size);
+      console.log("THAT works");
     }
   }
 
@@ -39,7 +45,7 @@ class Potion{
   handleHealing(player){
     let d = dist(this.x, this.y, player.x, player.y);
     // Check if the distance is less than their two radii (an overlap)
-    if (d < this.size + prey.size) {
+    if (d < this.size + player.size) {
       // Increase player's health and constrain it to its possible range
       player.health += this.healingValue;
       player.health = constrain(player.health, 0, player.maxHealth);

@@ -10,7 +10,7 @@ class Prey {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, size,walkAnimation) {
+  constructor(x, y, speed, fillColor, size,walkAnimation,currentFrame,animationRate) {
     // Position
     this.x = x;
     this.y = y;
@@ -33,8 +33,12 @@ class Prey {
 
     //the animation
     this.walkAnimation = walkAnimation;
-
+    //booleans to know if the object is moving
     this.isMoving = false;
+    this.isMovingSideways = false;
+    //properties for the frames and animation
+    this.currentFrame = currentFrame;
+    this.animationRate = animationRate;
     this.frame = 0;
   }
 
@@ -46,15 +50,15 @@ class Prey {
     // Horizontal movement
     if (keyIsDown(this.leftKey)) {
       this.vx = -this.speed;
-      this.isMoving = true;
+      this.isMovingSideways = true;
     }
     else if (keyIsDown(this.rightKey)) {
       this.vx = this.speed;
-      this.isMoving = true;
+      this.isMovingSideways = true;
     }
     else {
       this.vx = 0;
-      this.isMoving = false;
+      this.isMovingSideways = false;
     }
     // Vertical movement
     if (keyIsDown(this.upKey)) {
@@ -114,22 +118,32 @@ class Prey {
   // Draw the prey as an ellipse on the canvas
   // with a size the same size as its current health.
   display() {
-    push();
-    this.size = this.health;
-    imageMode(CENTER);
-    if(this.isMoving === true){
-        image(walkAnimation[this.frame],this.x,this.y,this.size * 2, this.size* 2);
-        if(this.frame === 1){
-          this.frame = 0;
-        }
-        else{
-          this.frame = 1;
-        }
-    }
-    else{
-        image(walkAnimation[0],this.x,this.y,this.size * 2, this.size* 2);
-    }
-    pop();
+  //   push();
+  //   //this.size = this.health;
+  //   imageMode(CENTER);
+  //   //if(this.isMoving === true){
+  //       image(walkAnimation[this.currentFrame],this.x,this.y,80,80);
+  //       //Checking to see if the currentFrame of the overall program is a
+  //       //multiple of the frameRate of the animation by using modulo (%).
+  //       //Only changes the frames if it is.
+  //       if((this.frameCount % frameRate())/this.animationRate){
+  //         this.currentFrame++;
+  //         if(this.currentFrame >= walkAnimation.length){
+  //           this.currentFrame = 0;
+  //         }
+  //       }
+  //
+  //       // if(this.frame === 1){
+  //       //   this.frame = 0;
+  //       // }
+  //       // else{
+  //       //   this.frame = 1;
+  //       // }
+  //   // }
+  //   // else{
+  //   //     image(walkAnimation[0],this.x,this.y,this.size * 2, this.size* 2);
+  //   // }
+  //   pop();
   }
 
   // reset

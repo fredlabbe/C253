@@ -8,19 +8,25 @@
 // Our predator
 let tiger;
 
-// The three prey
-//let player;
-let zebra;
-let bee;
-
 //the player
 let player;
+
+//the potion
+let potion;
 
 //animation array
 let walkAnimation = [];
 
 //state variable containing the state of the game
 let state = "Menu";
+
+//variables for counting the frames and the rate
+//at which they change in the animation
+let currentFrame = 0;
+let animationRate = 10;//in frames per seconds
+
+//images
+let potionImg;
 
 //preload()
 //
@@ -31,10 +37,11 @@ function preload(){
     let image = loadImage("assets/animations/playerWalking/walkingAnimation"+i+".png");
     walkAnimation.push(image);
     console.log("assets/animations/playerWalking/walkingAnimation"+i+".png");
-
   }
+  potionImg = loadImage("assets/images/potion.png");
 
-  //frameRate(10);
+  //the framerate of the program
+  frameRate(30);
 }
 // setup()
 //
@@ -42,10 +49,10 @@ function preload(){
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  tiger = new Predator(100, 100, 5, color(200, 200, 0), 40,walkAnimation);
+  tiger = new Predator(100, 100, 10, color(200, 200, 0), 40,walkAnimation, currentFrame,animationRate);
   player = new Prey(500, 500, 3, color(255, 100, 10), 50);
-  //zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
-  //bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
+  potion = new Potion(500,500,50,potionImg);
+
 }
 
 // draw()
@@ -78,10 +85,33 @@ function draw() {
     tiger.handleEating(player);
     //tiger.handleEating(zebra);
     //tiger.handleEating(bee);
+    //handles if the player drinks the potion
+    potion.handleHealing(player);
 
     // Display all the "animals"
     tiger.display();
-    player.display();
+    potion.display();
+    //player.display();
+    push();
+    imageMode(CENTER);
+    if(player.isMoving === true || player.isMovingSideways === true){
+    //this.size = this.health;
+    //if(this.isMoving === true){
+        image(walkAnimation[currentFrame],player.x,player.y,player.size * 2, player.size* 2);
+        //Checking to see if the currentFrame of the overall program is a
+        //multiple of the frameRate of the animation by using modulo (%).
+        //Only changes the frames if it is.
+        if((frameCount % floor(frameRate())/animationRate)){
+          currentFrame++;
+          if(currentFrame >= walkAnimation.length){
+            currentFrame = 0;
+          }
+        }
+      }
+      else{
+        image(walkAnimation[0],player.x,player.y,player.size * 2, player.size* 2);
+      }
+        pop();
     //zebra.display();
     //bee.display();
   }
