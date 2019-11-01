@@ -115,14 +115,9 @@ class Prey {
   // with a size the same size as its current health.
   display() {
     push();
-    //noStroke();
-    //fill(this.fillColor);
     this.size = this.health;
-    //ellipse(this.x, this.y, this.size * 2);
     imageMode(CENTER);
     if(this.isMoving === true){
-
-
         image(walkAnimation[this.frame],this.x,this.y,this.size * 2, this.size* 2);
         if(this.frame === 1){
           this.frame = 0;
@@ -130,7 +125,6 @@ class Prey {
         else{
           this.frame = 1;
         }
-
     }
     else{
         image(walkAnimation[0],this.x,this.y,this.size * 2, this.size* 2);
@@ -144,8 +138,8 @@ class Prey {
   // and size back to default
   reset() {
     // Random position
-    this.x = random(0, width);
-    this.y = random(0, height);
+    this.x = 50;
+    this.y = 50;
     // Default health
     this.health = this.maxHealth;
     // Default size
