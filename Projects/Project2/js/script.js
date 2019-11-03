@@ -14,6 +14,9 @@ let player;
 //the potion
 let potion;
 
+//the Wall
+let wall;
+
 //animation array
 let walkAnimation = [];
 
@@ -27,31 +30,34 @@ let animationRate = 10;//in frames per seconds
 
 //images
 let potionImg;
+let backgroundImg;
 
 //preload()
 //
 //preloads the images and sounds
 function preload(){
   //the images
-  for(let i = 0; i < 2; i++){
+  for(let i = 0; i < 3; i++){
     let image = loadImage("assets/animations/playerWalking/walkingAnimation"+i+".png");
     walkAnimation.push(image);
     console.log("assets/animations/playerWalking/walkingAnimation"+i+".png");
   }
   potionImg = loadImage("assets/images/potion.png");
+  backgroundImg = loadImage("assets/images/background.png");
 
   //the framerate of the program
-  frameRate(30);
+  frameRate(20);
 }
 // setup()
 //
 // Sets up a canvas
-// Creates objects for the predator and three prey
+// Creates objects for the predator, the player, the potions and the walls
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  tiger = new Predator(100, 100, 10, color(200, 200, 0), 40,walkAnimation, currentFrame,animationRate);
-  player = new Prey(500, 500, 3, color(255, 100, 10), 50);
+  tiger = new Predator(100, 100, 20, color(200, 200, 0), 40,walkAnimation, currentFrame,animationRate);
+  player = new Prey(30, 30, 6, color(255, 100, 10), 50);
   potion = new Potion(500,500,50,potionImg);
+  wall = new Wall(0,80,700,30);
 
 }
 
@@ -59,8 +65,8 @@ function setup() {
 //
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
-  // Clear the background to black
-  background(200,200,200);
+  //putting the dungeon backgound under everything on the canvas
+  image(backgroundImg, 0, 0, width, height);
 
   if(state === "Menu"){
     textSize(50);
@@ -87,9 +93,15 @@ function draw() {
     //handles if the player drinks the potion
     potion.handleHealing(player);
 
+    //handling the solid characteristics of a wall object
+    //in relationship to the player
+    wall.handleSolid(player);
+
     // Display all the "animals"
     tiger.display();
     potion.display();
+    wall.display();
+
     //player.display();
     push();
     imageMode(CENTER);
@@ -122,8 +134,9 @@ function mousePressed() {
   } else if (state === "Narrative") {
     state = "Game";
   } else if (state === "GameOver") {
-    state = "Menu";
     //Should reset all the values to beginning values
+    state = "Menu";
+
   }
 }
 

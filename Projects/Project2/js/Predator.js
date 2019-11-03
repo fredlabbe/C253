@@ -46,27 +46,27 @@ class Predator {
     this.tx += 0.01;
     this.ty += 0.01;
     // Handle wrapping
-    this.handleWrapping();
+    this.handleBoundaries();
   }
 
-  // handleWrapping
+  // handleBoundaries()
   //
-  // Checks if the predator has gone off the canvas and
-  // wraps it to the other side if so
-  handleWrapping() {
+  // Checks if the prey has gone off the canvas and
+  // prevents it from it, as a wall would do
+  handleBoundaries(){
     // Off the left or right
     if (this.x < 0) {
-      this.x += width;
+      this.x += this.speed+this.size/2;
     }
     else if (this.x > width) {
-      this.x -= width;
+      this.x -= this.speed+this.size/2;
     }
     // Off the top or bottom
     if (this.y < 0) {
-      this.y += height;
+      this.y += this.speed+this.size/2;
     }
     else if (this.y > height) {
-      this.y -= height;
+      this.y -= this.speed+this.size/2;
     }
   }
 
