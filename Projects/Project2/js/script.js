@@ -65,8 +65,8 @@ function draw() {
   if(state === "Menu"){
     textSize(50);
     textAlign(CENTER);
-    text("Click to play", (width / 2), (height / 2));
-
+    let playText = text("Click to play", (width / 2), (height / 2));
+    //playText.mouseOver(textHover);
   }
   if(state === "Narrative"){
     text("Narrative", (width / 2), (height / 2));
@@ -112,8 +112,6 @@ function draw() {
         image(walkAnimation[0],player.x,player.y,player.size * 2, player.size* 2);
       }
         pop();
-    //zebra.display();
-    //bee.display();
   }
 
 }
@@ -128,4 +126,10 @@ function mousePressed() {
     state = "Menu";
     //Should reset all the values to beginning values
   }
+}
+
+function textHover(){
+  push();
+  fill(150,150,150);
+  pop();
 }
