@@ -78,8 +78,7 @@ function draw() {
     // Move all the "animals"
     tiger.move();
     player.move();
-    //zebra.move();
-    //bee.move();
+
 
     // Handle the tiger eating any of the prey
     tiger.handleEating(player);
