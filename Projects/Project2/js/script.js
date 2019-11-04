@@ -94,7 +94,7 @@ function draw() {
   if(state === "Narrative"){
     text("Narrative", (width / 2), (height / 2));
   }
-  if(state === "Game"){
+  if(state === "Level1"){
     // Handle input for the tiger
     player.handleInput();
 
@@ -169,6 +169,12 @@ function draw() {
   }
   pop();
   }
+  else if(state === "Level 2"){
+    //the code for the level 2
+  }
+  else if(state === "Level 3"){
+    //the code for the level 3
+  }
 }
 
 function mousePressed() {
@@ -176,7 +182,7 @@ function mousePressed() {
   if (state === "Menu") {
     state = "Narrative";
   } else if (state === "Narrative") {
-    state = "Game";
+    state = "Level 1";
   } else if (state === "GameOver") {
     //Should reset all the values to beginning values
     state = "Menu";

@@ -32,14 +32,17 @@ class Door{
   //
   //Checks if the player found the door by taking the distance
   //between the two objects. If yes, it changes the scenes.
-  handleHealing(player){
+  handleExit(player){
     let d = dist(this.x, this.y, player.x, player.y);
     // Check if the distance is less than their two radii (an overlap)
+    //and changes the level depending on what level it currently is
     if (d < this.size + player.size) {
-      // Increase player's health and constrain it to its possible range
-      player.health += this.healingValue;
-      player.health = constrain(player.health, 0, player.maxHealth);
-      this.isDrank = true;
+      if(this.state === "Level 1"){
+         this.state = "Level 2";
+      }
+      else if(this.state === "Level 2"){
+        this.state = "Level 3";
+      }
     }
   }
 }
