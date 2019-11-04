@@ -26,10 +26,10 @@ class Prey {
     this.fillColor = fillColor;
     this.size = this.health;
     // Input properties
-    this.upKey = UP_ARROW;
-    this.downKey = DOWN_ARROW;
-    this.leftKey = LEFT_ARROW;
-    this.rightKey = RIGHT_ARROW;
+    this.upKey = 87;//W
+    this.downKey = 83;//S
+    this.leftKey = 65;//A
+    this.rightKey = 68;//D
 
     //the animation
     this.walkAnimation = walkAnimation;
