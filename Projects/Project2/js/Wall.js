@@ -1,7 +1,7 @@
 // Wall
 //
 // A class that represents wall objects that can't be passed
-// through by the player.
+// through by the character.
 //
 
 class Wall{
@@ -24,52 +24,65 @@ class Wall{
   //Displays the wall on the screen as a rectangle
   display(){
     push();
+    rectMode(CENTER);
     fill(0);
     rect(this.x,this.y,this.width,this.height);
     pop();
   }
   //handleSolid()
   //
-  //Checks if the player is inside the wall so it can move it
-  //and act as a solid wall, preventing the player from going
-  //through. Receives the player as an argument
-  handleSolid(player){
+  //Checks if the character is inside the wall so it can move it
+  //and act as a solid wall, preventing the character from going
+  //through. Receives the character as an argument
+  handleSolid(character){
 
-    //constrain(player.y,0,this.y);
-    // if(player.x > this.x-this.width && player.x < this.x+this.width){
-    //   player.vx = player.speed*(-1);
+    //constrain(character.y,0,this.y);
+    // if(character.x > this.x-this.width && character.x < this.x+this.width){
+    //   character.vx = character.speed*(-1);
     //   console.log("wallX works");
     // }
     // else{
-    //   player.vx = player.speed;
+    //   character.vx = character.speed;
     // }
-    // if(player.y > this.y-this.height && player.y < this.y+this.height){
-    //   player.vy = player.speed*(-1);
+    // if(character.y > this.y-this.height && character.y < this.y+this.height){
+    //   character.vy = character.speed*(-1);
     //   console.log("wallY works");
     // }
     // else{
-    //   player.vy = player.speed;
+    //   character.vy = character.speed;
     // }
 
-    if(player.x + player.size/2 > this.x - this.width/2 && player.x - player.size/2 < this.x + this.width/2 && player.y + player.size/2 > this.y - this.height/2 && player.y - player.size/2 < this.x + this.height/2){
+    if(character.x + character.size/2 > this.x - this.width/2 && character.x - character.size/2 < this.x + this.width/2 && character.y + character.size/2 > this.y - this.height/2 && character.y - character.size/2 < this.y + this.height/2){
       // We have an overlap - just like in pong with the ball and the paddle
       // set velocity to 0
       console.log("overlap works");
-      player.vx = 0;
-      player.vy = 0;
-      // calculate the overlap on x and y
-      let xOverlap = player.x - wall.x;
-      let yOverlap = player.y - wall.y;
-      // push the player out by the overlap amount
-      if (xOverlap < 0) {
-        // player to the left
-        player.x = wall.x - wall.width/2 - player.size/2;
-      }
-      else if(xOverlap > 0){
-        //player to the right
-        player.x = wall.x - wall.width/2 + player.size/2;
+      character.x -= character.vx;
+      character.y -= character.vy;
 
-      }
-    }
+      character.vx = 0;
+      character.vy = 0;
+
+      return;
+    //   // calculate the overlap on x and y
+    //   let xOverlap = character.x - wall.x;
+    //   let yOverlap = character.y - wall.y;
+    //   // push the character out by the overlap amount
+    //   if (xOverlap < 0) {
+    //     // character to the left
+    //     character.x = wall.x - wall.width/2 - character.size/2;
+    //   }
+    //   else if(xOverlap > 0){
+    //     //character to the right
+    //     character.x = wall.x + wall.width/2 + character.size/2;
+    //   }
+    //   if (yOverlap < 0) {
+    //     // character to the left
+    //     character.y = wall.y - wall.height/2 - character.size/2;
+    //   }
+    //   else if(yOverlap > 0){
+    //     //character to the right
+    //     character.y = wall.y + wall.height/2 + character.size/2;
+    // }
+  }
   }
 }

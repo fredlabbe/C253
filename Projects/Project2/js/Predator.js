@@ -83,7 +83,7 @@ class Predator {
   handleEating(prey) {
     // Calculate distance from this predator to the prey
     let d = dist(this.x, this.y, prey.x, prey.y);
-    // Check if the distance is less than their two radii (an overlap)
+    // Check if the distance is less than their two sizes (an overlap)
     if (d < this.size + prey.size) {
       // Increase predator health and constrain it to its possible range
       this.health += this.healthGainPerEat;

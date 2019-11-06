@@ -20,8 +20,8 @@ let wall2;
 
 //the door and its properties
 let door;
-let doorX;
-let doorY;
+let doorX = 800;
+let doorY = 450;
 
 //the keys
 let key;
@@ -119,19 +119,25 @@ function draw() {
     potion.handleHealing(player);
 
     //handling the solid characteristics of a wall object
-    //in relationship to the player
+    //in relationship to the characters
     wall.handleSolid(player);
+    wall2.handleSolid(player);
+    //wall.handleSolid(orc);
+    wall2.handleSolid(orc);
 
     //handling if the key is found
     key.handleFound(player);
 
-    // Display all the "animals"
-    orc.display();
+    //handling the exit of the player
+    door.handleExit(player);
+
+    // Display all the objects
     potion.display();
     wall.display();
     wall2.display();
-    //door.display();
+    door.display();
     key.display();
+    orc.display();
     player.display();
   }
   else if(state === "Level 2"){
