@@ -6,7 +6,7 @@
 // The predator loses health over time, so must keep eating to survive.
 
 // Our predator
-let tiger;
+let orc;
 
 //the player
 let player;
@@ -14,13 +14,17 @@ let player;
 //the potion
 let potion;
 
-//the Wall
+//the Walls
 let wall;
+let wall2;
 
 //the door and its properties
 let door;
 let doorX;
 let doorY;
+
+//the keys
+let key;
 
 //animation array
 let playerWalkAnimation = [];
@@ -39,6 +43,7 @@ let animationRate = 10;//in frames per seconds
 let potionImg;
 let backgroundImg;
 let doorImg;
+let keyImg;
 
 //preload()
 //
@@ -56,6 +61,7 @@ function preload(){
   }
   potionImg = loadImage("assets/images/potion.png");
   doorImg = loadImage("assets/images/door.png");
+  keyImg = loadImage("assets/images/key.png");
   backgroundImg = loadImage("assets/images/background.png");
 
   //the framerate of the program
@@ -67,11 +73,15 @@ function preload(){
 // Creates objects for the predator, the player, the potions and the walls
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  tiger = new Predator(100, 100, 20, color(200, 200, 0), 60,playerWalkAnimation, currentFrame,animationRate);
-  player = new Prey(30, 30, 6, color(255, 100, 10), 50);
+  player = new Prey(30, 30, 6, color(255, 100, 10), 50, playerWalkAnimation, currentFrame,animationRate);
+
+  //The objects of level 1
+  orc = new Predator(100, 100, 20, color(200, 200, 0), 60,orcLeftAnimation,orcRightAnimation,currentFrame,animationRate);
   potion = new Potion(500,500,50,potionImg);
-  wall = new Wall(0,80,700,30);
-  door = new Door(doorX,doorY,100,200,doorImg,state);
+  wall = new Wall(0,100,500,30);
+  wall2 = new Wall(400,200,30,700);
+  door = new Door(doorX,doorY,100,200,doorImg,"Level 1");
+  key = new Key(700,200,keyImg);
 
   //setting up the door properties
   doorX = windowWidth - 100;
@@ -94,16 +104,16 @@ function draw() {
   if(state === "Narrative"){
     text("Narrative", (width / 2), (height / 2));
   }
-  if(state === "Level1"){
-    // Handle input for the tiger
+  if(state === "Level 1"){
+    // Handle input for the orc
     player.handleInput();
 
     // Move all the "animals"
-    tiger.move();
+    orc.move();
     player.move();
 
-    // Handle the tiger eating any of the prey
-    tiger.handleEating(player);
+    // Handle the orc eating any of the prey
+    orc.handleEating(player);
 
     //handles if the player drinks the potion
     potion.handleHealing(player);
@@ -112,68 +122,26 @@ function draw() {
     //in relationship to the player
     wall.handleSolid(player);
 
+    //handling if the key is found
+    key.handleFound(player);
+
     // Display all the "animals"
-    //tiger.display();
+    orc.display();
     potion.display();
     wall.display();
+    wall2.display();
     //door.display();
-
-    //player.display();
-    push();
-    imageMode(CENTER);
-    if(player.isMoving === true || player.isMovingSideways === true){
-    //this.size = this.health;
-    //if(this.isMoving === true){
-        image(playerWalkAnimation[currentFrame],player.x,player.y,player.size * 2, player.size* 2);
-        //Checking to see if the currentFrame of the overall program is a
-        //multiple of the frameRate of the animation by using modulo (%).
-        //Only changes the frames if it is.
-        if((frameCount % floor(frameRate())/animationRate)){
-          currentFrame++;
-          if(currentFrame >= playerWalkAnimation.length){
-            currentFrame = 0;
-          }
-        }
-      }
-      else{
-        image(playerWalkAnimation[0],player.x,player.y,player.size * 2, player.size* 2);
-      }
-        pop();
-
-  //orc animation when it moves left
-  push();
-  imageMode(CENTER);
-  if(tiger.vx < 0){
-    image(orcLeftAnimation[currentFrame],tiger.x,tiger.y,tiger.size*2,tiger.size*2);
-    //Checking to see if the currentFrame of the overall program is a
-    //multiple of the frameRate of the animation by using modulo (%).
-    //Only changes the frames if it is.
-    if((frameCount % floor(frameRate())/animationRate)){
-      currentFrame++;
-      if(currentFrame >= playerWalkAnimation.length){
-        currentFrame = 0;
-      }
-    }
-  }
-  if(tiger.vx > 0){
-    image(orcRightAnimation[currentFrame],tiger.x,tiger.y,tiger.size*2,tiger.size*2);
-    //Checking to see if the currentFrame of the overall program is a
-    //multiple of the frameRate of the animation by using modulo (%).
-    //Only changes the frames if it is.
-    if((frameCount % floor(frameRate())/animationRate)){
-      currentFrame++;
-      if(currentFrame >= playerWalkAnimation.length){
-        currentFrame = 0;
-      }
-    }
-  }
-  pop();
+    key.display();
+    player.display();
   }
   else if(state === "Level 2"){
     //the code for the level 2
   }
   else if(state === "Level 3"){
     //the code for the level 3
+  }
+  else if(state === "GameOver"){
+    //code for game over
   }
 }
 

@@ -1,55 +1,51 @@
-// Potion
+// Key
 //
-// A class that represents potion objects that can be found
-// by the player. Different potions can heal the player
-// by different values.
+// A class that represents Key objects that can be found
+// by the player. When the key is found, the player can
+// unlock the door to the next level.
 
-class Potion{
+class Key{
   // constructor
   //
   // Sets the initial values for the Potion's properties
   // Either sets default values or uses the arguments provided
-  constructor(x,y,healingValue,image){
+  constructor(x,y,image){
     //Position
     this.x = x;
     this.y = y;
     //size
     this.size = 50;
     //Properties
-    this.healingValue = healingValue;
-    this.isDrank = false;
+    this.isFound = false;
     //Image of the potion to be displayed
     this.image = image;
   }
 
   ///display()
   //
-  //Displays the potion at the received coordinates. If it is drank,
+  //Displays the key at the received coordinates. If it is found,
   //it is not displayed.
   display(){
-    //console.log("this works");
-    //image(this.image,this.x,this.y,this.size,this.size);
-    if(this.isDrank === false){
+    if(this.isFound === false){
       //Display
       image(this.image,this.x,this.y,this.size,this.size);
-      console.log("THAT works");
     }
   }
 
   //handleHealing()
   //
-  //Checks if the player found the potion by taking the distance
-  //between the two objects and checks if it is drank. If yes,
+  //Checks if the player found the key by taking the distance
+  //between the two objects. If yes,
   //set the condition to true and it will not be displayed anymore
   //because of the code in display()
-  handleHealing(player){
+  handleFound(player){
     let d = dist(this.x, this.y, player.x, player.y);
     // Check if the distance is less than their two radii (an overlap)
     if (d < this.size + player.size) {
       // Increase player's health and constrain it to its possible range
       player.health += this.healingValue;
       player.health = constrain(player.health, 0, player.maxHealth);
-      this.isDrank = true;
+      this.isFound = true;
     }
   }
 }

@@ -10,7 +10,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, size) {
+  constructor(x, y, speed, fillColor, size, orcLeftAnimation, orcRightAnimation, currentFrame,animationRate) {
     // Position
     this.x = x;
     this.y = y;
@@ -27,8 +27,13 @@ class Predator {
     this.healthLossPerMove = 0.1;
     this.healthGainPerEat = 1;
     // Display properties
-    this.fillColor = fillColor;
     this.size = this.health; // size is defined in terms of health
+    this.orcLeftAnimation = orcLeftAnimation;
+    this.orcRightAnimation = orcRightAnimation;
+
+    //the frames
+    this.currentFrame = currentFrame;
+    this.animationRate = animationRate;
   }
 
   // move
@@ -97,11 +102,34 @@ class Predator {
   // Draw the predator as an ellipse on the canvas
   // with a size the same size as its current health.
   display() {
+    //orc animation when it moves left
     push();
-    noStroke();
-    fill(this.fillColor);
-    this.size = this.health;
-    ellipse(this.x, this.y, this.size * 2);
+    imageMode(CENTER);
+    if(this.vx < 0){
+      image(orcLeftAnimation[currentFrame],this.x,this.y,this.size*2,this.size*2);
+      //Checking to see if the currentFrame of the overall program is a
+      //multiple of the frameRate of the animation by using modulo (%).
+      //Only changes the frames if it is.
+      if((frameCount % floor(frameRate())/animationRate)){
+        currentFrame++;
+        if(currentFrame >= playerWalkAnimation.length){
+          currentFrame = 0;
+        }
+      }
+    }
+    //orc animation when it moves right
+    if(this.vx > 0){
+      image(orcRightAnimation[currentFrame],this.x,this.y,this.size*2,this.size*2);
+      //Checking to see if the currentFrame of the overall program is a
+      //multiple of the frameRate of the animation by using modulo (%).
+      //Only changes the frames if it is.
+      if((frameCount % floor(frameRate())/animationRate)){
+        currentFrame++;
+        if(currentFrame >= playerWalkAnimation.length){
+          currentFrame = 0;
+        }
+      }
+    }
     pop();
   }
 }

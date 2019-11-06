@@ -116,35 +116,29 @@ class Prey {
 
   // display
   //
-  // Draw the prey as an ellipse on the canvas
-  // with a size the same size as its current health.
+  // Draw the prey as an image on the canvas
+  // with a constant size that does not change with its health.
   display() {
-  //   push();
-  //   //this.size = this.health;
-  //   imageMode(CENTER);
-  //   //if(this.isMoving === true){
-  //       image(walkAnimation[this.currentFrame],this.x,this.y,80,80);
-  //       //Checking to see if the currentFrame of the overall program is a
-  //       //multiple of the frameRate of the animation by using modulo (%).
-  //       //Only changes the frames if it is.
-  //       if((this.frameCount % frameRate())/this.animationRate){
-  //         this.currentFrame++;
-  //         if(this.currentFrame >= walkAnimation.length){
-  //           this.currentFrame = 0;
-  //         }
-  //       }
-  //
-  //       // if(this.frame === 1){
-  //       //   this.frame = 0;
-  //       // }
-  //       // else{
-  //       //   this.frame = 1;
-  //       // }
-  //   // }
-  //   // else{
-  //   //     image(walkAnimation[0],this.x,this.y,this.size * 2, this.size* 2);
-  //   // }
-  //   pop();
+    push();
+    imageMode(CENTER);
+    if(this.isMoving === true || this.isMovingSideways === true){
+    //this.size = this.health;
+    //if(this.isMoving === true){
+        image(playerWalkAnimation[currentFrame],this.x,this.y,this.size * 2, this.size* 2);
+        //Checking to see if the currentFrame of the overall program is a
+        //multiple of the frameRate of the animation by using modulo (%).
+        //Only changes the frames if it is.
+        if((frameCount % floor(frameRate())/animationRate)){
+          currentFrame++;
+          if(currentFrame >= playerWalkAnimation.length){
+            currentFrame = 0;
+          }
+        }
+      }
+      else{
+        image(playerWalkAnimation[0],this.x,this.y,this.size * 2, this.size* 2);
+      }
+        pop();
   }
 
   // reset

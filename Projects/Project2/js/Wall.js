@@ -36,19 +36,40 @@ class Wall{
   handleSolid(player){
 
     //constrain(player.y,0,this.y);
-    if(player.x > this.x-this.width && player.x < this.x+this.width){
-      player.vx = player.speed*(-1);
-      console.log("wallX works");
-    }
-    else{
-      player.vx = player.speed;
-    }
-    if(player.y > this.y-this.height && player.y < this.y+this.height){
-      player.vy = player.speed*(-1);
-      console.log("wallY works");
-    }
-    else{
-      player.vy = player.speed;
+    // if(player.x > this.x-this.width && player.x < this.x+this.width){
+    //   player.vx = player.speed*(-1);
+    //   console.log("wallX works");
+    // }
+    // else{
+    //   player.vx = player.speed;
+    // }
+    // if(player.y > this.y-this.height && player.y < this.y+this.height){
+    //   player.vy = player.speed*(-1);
+    //   console.log("wallY works");
+    // }
+    // else{
+    //   player.vy = player.speed;
+    // }
+
+    if(player.x + player.size/2 > this.x - this.width/2 && player.x - player.size/2 < this.x + this.width/2 && player.y + player.size/2 > this.y - this.height/2 && player.y - player.size/2 < this.x + this.height/2){
+      // We have an overlap - just like in pong with the ball and the paddle
+      // set velocity to 0
+      console.log("overlap works");
+      player.vx = 0;
+      player.vy = 0;
+      // calculate the overlap on x and y
+      let xOverlap = player.x - wall.x;
+      let yOverlap = player.y - wall.y;
+      // push the player out by the overlap amount
+      if (xOverlap < 0) {
+        // player to the left
+        player.x = wall.x - wall.width/2 - player.size/2;
+      }
+      else if(xOverlap > 0){
+        //player to the right
+        player.x = wall.x - wall.width/2 + player.size/2;
+
+      }
     }
   }
 }
