@@ -34,13 +34,13 @@ class Door{
   //between the two objects. If yes, it changes the scenes.
   handleExit(player){
     if(key.isFound === true){
-      console.log("Works");
+      console.log(this.x, this.y, player.x, player.y, this.width, player.size);
       let d = dist(this.x, this.y, player.x, player.y);
       // Check if the distance is less than their two radii (an overlap)
       //and changes the level depending on what level it currently is
-      if (d < this.size + player.size) {
-        this.state = "GameOver";
-        console.log(this.state);
+      if (d < this.width + player.size) {
+        state = "GameOver";
+        console.log(state);
         // if(this.state === "Level 1"){
         //    this.state = "Level 2";
         // }

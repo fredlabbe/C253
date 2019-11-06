@@ -20,8 +20,8 @@ let wall2;
 
 //the door and its properties
 let door;
-let doorX = 800;
-let doorY = 450;
+let doorX;
+let doorY;
 
 //the keys
 let key;
@@ -73,19 +73,19 @@ function preload(){
 // Creates objects for the predator, the player, the potions and the walls
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  //setting up the door properties
+  doorX = windowWidth - 200;
+  doorY = windowHeight - 200;
+
   player = new Prey(30, 30, 6, color(255, 100, 10), 50, playerWalkAnimation, currentFrame,animationRate);
 
   //The objects of level 1
-  orc = new Predator(100, 100, 20, color(200, 200, 0), 60,orcLeftAnimation,orcRightAnimation,currentFrame,animationRate);
+  orc = new Predator(100, 400, 20, color(200, 200, 0), 60,orcLeftAnimation,orcRightAnimation,currentFrame,animationRate);
   potion = new Potion(500,500,50,potionImg);
   wall = new Wall(0,100,500,30);
   wall2 = new Wall(400,200,30,700);
   door = new Door(doorX,doorY,100,200,doorImg,"Level 1");
   key = new Key(700,200,keyImg);
-
-  //setting up the door properties
-  doorX = windowWidth - 100;
-  doorY = windowHeight - 100;
 }
 
 // draw()
@@ -94,8 +94,8 @@ function setup() {
 function draw() {
   //putting the dungeon backgound under everything on the canvas
   image(backgroundImg, 0, 0, width, height);
-
   if(state === "Menu"){
+
     textSize(50);
     textAlign(CENTER);
     let playText = text("Click to play", (width / 2), (height / 2));
@@ -122,7 +122,7 @@ function draw() {
     //in relationship to the characters
     wall.handleSolid(player);
     wall2.handleSolid(player);
-    //wall.handleSolid(orc);
+    wall.handleSolid(orc);
     wall2.handleSolid(orc);
 
     //handling if the key is found
@@ -147,7 +147,9 @@ function draw() {
     //the code for the level 3
   }
   else if(state === "GameOver"){
-    //code for game over
+    //Shows the game over screen and resets all values to starting values
+    text("Game Over Click to play again!", (width / 2), (height / 2));
+
   }
 }
 
