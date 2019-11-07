@@ -43,6 +43,7 @@ let animationRate = 10;//in frames per seconds
 //images
 let menuImg;
 let narrativeImg;
+let overImg;
 let potionImg;
 let backgroundImg;
 let doorImg;
@@ -86,6 +87,7 @@ function preload(){
   backgroundImg = loadImage("assets/images/background.png");
   menuImg = loadImage("assets/images/Menu.jpg");
   narrativeImg = loadImage("assets/images/Narrative.jpg");
+  overImg = = loadImage("assets/images/gameOver.jpg");
 
   //the sounds
 
@@ -179,7 +181,7 @@ function draw() {
   }
   else if(state === "GameOver"){
     //Shows the game over screen and resets all values to starting values
-    text("Game Over Click to play again!", (width / 2), (height / 2));
+    image(overImg, 0, 0, width, height);
 
   }
 }
@@ -196,4 +198,4 @@ function mousePressed() {
     //Should reset all the values to beginning values
     state = "Menu";
   }
-} 
+}
