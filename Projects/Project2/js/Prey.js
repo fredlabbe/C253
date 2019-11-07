@@ -10,7 +10,7 @@ class Prey {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, size,walkAnimation,currentFrame,animationRate) {
+  constructor(x, y, speed, fillColor, size, walkAnimation, currentFrame, animationRate) {
     // Position
     this.x = x;
     this.y = y;
@@ -28,10 +28,10 @@ class Prey {
     this.fillColor = fillColor;
     this.size = this.health;
     // Input properties
-    this.upKey = 87;//W
-    this.downKey = 83;//S
-    this.leftKey = 65;//A
-    this.rightKey = 68;//D
+    this.upKey = 87; //W
+    this.downKey = 83; //S
+    this.leftKey = 65; //A
+    this.rightKey = 68; //D
 
     //the animation
     this.walkAnimation = walkAnimation;
@@ -53,12 +53,10 @@ class Prey {
     if (keyIsDown(this.leftKey)) {
       this.vx = -this.speed;
       this.isMovingSideways = true;
-    }
-    else if (keyIsDown(this.rightKey)) {
+    } else if (keyIsDown(this.rightKey)) {
       this.vx = this.speed;
       this.isMovingSideways = true;
-    }
-    else {
+    } else {
       this.vx = 0;
       this.isMovingSideways = false;
     }
@@ -66,12 +64,10 @@ class Prey {
     if (keyIsDown(this.upKey)) {
       this.vy = -this.speed;
       this.isMoving = true;
-    }
-    else if (keyIsDown(this.downKey)) {
+    } else if (keyIsDown(this.downKey)) {
       this.vy = this.speed;
       this.isMoving = true;
-    }
-    else {
+    } else {
       this.vy = 0;
       this.isMoving = false;
     }
@@ -99,10 +95,10 @@ class Prey {
   //
   // Checks if the prey has gone off the canvas and
   // prevents it from it, as a wall would do
-  handleBoundaries(){
-    this.x = constrain(this.x, 0+this.size/2, width-this.size);
-    this.y = constrain(this.y, 0+this.size/2, height-this.size);
-   }
+  handleBoundaries() {
+    this.x = constrain(this.x, 0 + this.size / 2, width - this.size);
+    this.y = constrain(this.y, 0 + this.size / 2, height - this.size);
+  }
 
   // display
   //
@@ -111,22 +107,21 @@ class Prey {
   display() {
     push();
     imageMode(CENTER);
-    if(this.isMoving === true || this.isMovingSideways === true){
-        image(playerWalkAnimation[currentFrame],this.x,this.y,this.size * 2, this.size* 2);
-        //Checking to see if the currentFrame of the overall program is a
-        //multiple of the frameRate of the animation by using modulo (%).
-        //Only changes the frames if it is.
-        if((frameCount % floor(frameRate())/animationRate)){
-          currentFrame++;
-          if(currentFrame >= playerWalkAnimation.length){
-            currentFrame = 0;
-          }
+    if (this.isMoving === true || this.isMovingSideways === true) {
+      image(playerWalkAnimation[currentFrame], this.x, this.y, this.size * 2, this.size * 2);
+      //Checking to see if the currentFrame of the overall program is a
+      //multiple of the frameRate of the animation by using modulo (%).
+      //Only changes the frames if it is.
+      if ((frameCount % floor(frameRate()) / animationRate)) {
+        currentFrame++;
+        if (currentFrame >= playerWalkAnimation.length) {
+          currentFrame = 0;
         }
       }
-      else{
-        image(playerWalkAnimation[0],this.x,this.y,this.size * 2, this.size* 2);
-      }
-        pop();
+    } else {
+      image(playerWalkAnimation[0], this.x, this.y, this.size * 2, this.size * 2);
+    }
+    pop();
   }
 
   // reset

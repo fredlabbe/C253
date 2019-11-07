@@ -10,7 +10,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, size, orcLeftAnimation, orcRightAnimation, currentFrame,animationRate) {
+  constructor(x, y, speed, size, orcLeftAnimation, orcRightAnimation, currentFrame, animationRate) {
     // Position
     this.x = x;
     this.y = y;
@@ -42,10 +42,10 @@ class Predator {
   // Moves based on the resulting velocity and handles wrapping
   move() {
     // Set velocity via noise()
-    if(random() < 0.05){
-    this.vx = map(random(), 0, 1, -this.speed, this.speed);
-    this.vy = map(random(), 0, 1, -this.speed, this.speed);
-  }
+    if (random() < 0.05) {
+      this.vx = map(random(), 0, 1, -this.speed, this.speed);
+      this.vy = map(random(), 0, 1, -this.speed, this.speed);
+    }
     // Update position
     this.x += this.vx;
     this.y += this.vy;
@@ -60,9 +60,9 @@ class Predator {
   //
   // Checks if the prey has gone off the canvas and
   // prevents it from it, as a wall would do
-  handleBoundaries(){
-    this.x = constrain(this.x, 0+this.size/2, width-this.size);
-    this.y = constrain(this.y, 0+this.size/2, height-this.size);
+  handleBoundaries() {
+    this.x = constrain(this.x, 0 + this.size / 2, width - this.size);
+    this.y = constrain(this.y, 0 + this.size / 2, height - this.size);
   }
 
   // handleEating
@@ -97,27 +97,27 @@ class Predator {
     //orc animation when it moves left
     push();
     imageMode(CENTER);
-    if(this.vx < 0){
-      image(orcLeftAnimation[currentFrame],this.x,this.y,this.size*2,this.size*2);
+    if (this.vx < 0) {
+      image(orcLeftAnimation[currentFrame], this.x, this.y, this.size * 2, this.size * 2);
       //Checking to see if the currentFrame of the overall program is a
       //multiple of the frameRate of the animation by using modulo (%).
       //Only changes the frames if it is.
-      if((frameCount % floor(frameRate())/animationRate)){
+      if ((frameCount % floor(frameRate()) / animationRate)) {
         currentFrame++;
-        if(currentFrame >= playerWalkAnimation.length){
+        if (currentFrame >= playerWalkAnimation.length) {
           currentFrame = 0;
         }
       }
     }
     //orc animation when it moves right or at a wall
-    if(this.vx >= 0){
-      image(orcRightAnimation[currentFrame],this.x,this.y,this.size*2,this.size*2);
+    if (this.vx >= 0) {
+      image(orcRightAnimation[currentFrame], this.x, this.y, this.size * 2, this.size * 2);
       //Checking to see if the currentFrame of the overall program is a
       //multiple of the frameRate of the animation by using modulo (%).
       //Only changes the frames if it is.
-      if((frameCount % floor(frameRate())/animationRate)){
+      if ((frameCount % floor(frameRate()) / animationRate)) {
         currentFrame++;
-        if(currentFrame >= playerWalkAnimation.length){
+        if (currentFrame >= playerWalkAnimation.length) {
           currentFrame = 0;
         }
       }

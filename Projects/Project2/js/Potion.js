@@ -4,12 +4,12 @@
 // by the player. Different potions can heal the player
 // by different values.
 
-class Potion{
+class Potion {
   // constructor
   //
   // Sets the initial values for the Potion's properties
   // Either sets default values or uses the arguments provided
-  constructor(x,y,healingValue,image){
+  constructor(x, y, healingValue, image) {
     //Position
     this.x = x;
     this.y = y;
@@ -26,10 +26,10 @@ class Potion{
   //
   //Displays the potion at the received coordinates. If it is drank,
   //it is not displayed.
-  display(){
-    if(this.isDrank === false){
+  display() {
+    if (this.isDrank === false) {
       //Display
-      image(this.image,this.x,this.y,this.size,this.size);
+      image(this.image, this.x, this.y, this.size, this.size);
     }
   }
 
@@ -39,7 +39,7 @@ class Potion{
   //between the two objects and checks if it is drank. If yes,
   //set the condition to true and it will not be displayed anymore
   //because of the code in display()
-  handleHealing(player){
+  handleHealing(player) {
     let d = dist(this.x, this.y, player.x, player.y);
     // Check if the distance is less than their two radii (an overlap)
     //as long as the potion has not been drank

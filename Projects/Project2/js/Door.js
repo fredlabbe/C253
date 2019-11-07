@@ -4,12 +4,12 @@
 // by the player. When a player steps through them, it changes
 // the level to the next level.
 
-class Door{
+class Door {
   // constructor
   //
   // Sets the initial values for the Door's properties
   // Either sets default values or uses the arguments provided
-  constructor(x,y,width,height,img,state){
+  constructor(x, y, width, height, img, state) {
     // Position
     this.x = x;
     this.y = y;
@@ -25,23 +25,23 @@ class Door{
   //display()
   //
   //Displays the door on the screen as an image
-  display(){
+  display() {
     push();
     imageMode(CENTER);
-    image(this.image,this.x,this.y,this.width,this.height);
+    image(this.image, this.x, this.y, this.width, this.height);
     pop();
   }
   //handleHealing()
   //
   //Checks if the player found the door by taking the distance
   //between the two objects. If yes, it changes the scenes.
-  handleExit(player){
-    if(key.isFound === true){
+  handleExit(player) {
+    if (key.isFound === true) {
       //console.log(this.x, this.y, player.x, player.y, this.width, player.size);
       let d = dist(this.x, this.y, player.x, player.y);
       // Check if the distance is less than their two radii (an overlap)
       //and changes the level depending on what level it currently is
-      if (d < this.width/2 + player.size/2) {
+      if (d < this.width / 2 + player.size / 2) {
         state = "GameOver";
       }
     }

@@ -4,12 +4,12 @@
 // by the player. When the key is found, the player can
 // unlock the door to the next level.
 
-class Key{
+class Key {
   // constructor
   //
   // Sets the initial values for the Potion's properties
   // Either sets default values or uses the arguments provided
-  constructor(x,y,image){
+  constructor(x, y, image) {
     //Position
     this.x = x;
     this.y = y;
@@ -25,10 +25,10 @@ class Key{
   //
   //Displays the key at the received coordinates. If it is found,
   //it is not displayed.
-  display(){
-    if(this.isFound === false){
+  display() {
+    if (this.isFound === false) {
       //Display
-      image(this.image,this.x,this.y,this.size,this.size);
+      image(this.image, this.x, this.y, this.size, this.size);
     }
   }
 
@@ -38,7 +38,7 @@ class Key{
   //between the two objects. If yes,
   //set the condition to true and it will not be displayed anymore
   //because of the code in display()
-  handleFound(player){
+  handleFound(player) {
     let d = dist(this.x, this.y, player.x, player.y);
     // Check if the distance is less than their two radii (an overlap)
     if (d < this.size + player.size) {
