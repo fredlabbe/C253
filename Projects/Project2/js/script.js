@@ -122,8 +122,8 @@ function draw() {
     //in relationship to the characters
     wall.handleSolid(player);
     wall2.handleSolid(player);
-    wall.handleSolid(orc);
-    wall2.handleSolid(orc);
+    //wall.handleSolid(orc);
+    //wall2.handleSolid(orc);
 
     //handling if the key is found
     key.handleFound(player);
