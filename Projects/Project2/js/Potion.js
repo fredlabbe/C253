@@ -32,7 +32,6 @@ class Potion{
     if(this.isDrank === false){
       //Display
       image(this.image,this.x,this.y,this.size,this.size);
-      console.log("THAT works");
     }
   }
 
@@ -45,7 +44,8 @@ class Potion{
   handleHealing(player){
     let d = dist(this.x, this.y, player.x, player.y);
     // Check if the distance is less than their two radii (an overlap)
-    if (d < this.size + player.size) {
+    //as long as the potion has not been drank
+    if (d < this.size + player.size && this.isDrank === false) {
       // Increase player's health and constrain it to its possible range
       player.health += this.healingValue;
       player.health = constrain(player.health, 0, player.maxHealth);

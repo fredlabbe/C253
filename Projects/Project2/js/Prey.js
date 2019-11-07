@@ -18,6 +18,8 @@ class Prey {
     this.vx = 0;
     this.vy = 0;
     this.speed = speed;
+    this.barX = 10;
+    this.barY = windowHeight - 50;
 
     // Health properties
     this.maxHealth = size;
@@ -155,5 +157,24 @@ class Prey {
     this.health = this.maxHealth;
     // Default size
     this.size = this.health;
+  }
+  // healthBar()
+  //
+  //creates the player's healthBar by mapping it to the health and max health
+  //and using a rectangle
+  healthBar() {
+    let healthSize;
+    healthSize = map(this.health, 0, this.maxHealth, 0, 300);
+    push();
+    //dark red color
+    fill(125, 37, 32);
+    //creating the red rectangle
+    rect(10, this.barY, 300, 20);
+    //the green color
+    fill(60, 94, 55);
+    //creating the rectangle that is mapped, the green one, the life
+    rect(10, this.barY, healthSize, 20);
+    pop();
+
   }
 }

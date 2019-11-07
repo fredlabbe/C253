@@ -59,20 +59,22 @@ class Predator {
   // Checks if the prey has gone off the canvas and
   // prevents it from it, as a wall would do
   handleBoundaries(){
+    this.x = constrain(this.x, 0+this.size/2, windowWidth-this.size);
+    this.y = constrain(this.y, 0+this.size/2, windowHeight-this.size);
     // Off the left or right
-    if (this.x < 0) {
-      this.x += this.speed+this.size/2;
-    }
-    else if (this.x > width) {
-      this.x -= this.speed+this.size/2;
-    }
-    // Off the top or bottom
-    if (this.y < 0) {
-      this.y += this.speed+this.size/2;
-    }
-    else if (this.y > height) {
-      this.y -= this.speed+this.size/2;
-    }
+    // if (this.x < 0) {
+    //   this.x += this.speed+this.size/2;
+    // }
+    // else if (this.x > width) {
+    //   this.x -= this.speed+this.size/2;
+    // }
+    // // Off the top or bottom
+    // if (this.y < 0) {
+    //   this.y += this.speed+this.size/2;
+    // }
+    // else if (this.y > height) {
+    //   this.y -= this.speed+this.size/2;
+    // }
   }
 
   // handleEating

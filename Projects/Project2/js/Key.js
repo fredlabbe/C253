@@ -42,9 +42,6 @@ class Key{
     let d = dist(this.x, this.y, player.x, player.y);
     // Check if the distance is less than their two radii (an overlap)
     if (d < this.size + player.size) {
-      // Increase player's health and constrain it to its possible range
-      player.health += this.healingValue;
-      player.health = constrain(player.health, 0, player.maxHealth);
       this.isFound = true;
     }
   }

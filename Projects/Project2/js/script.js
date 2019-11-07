@@ -7,6 +7,7 @@
 
 // Our ennemies
 let orcArray = [];
+let orc1;
 
 //the player
 let player;
@@ -15,7 +16,7 @@ let player;
 let potion;
 
 //the Walls
-let wall;
+let wall1;
 let wall2;
 
 //the door and its properties
@@ -41,6 +42,7 @@ let animationRate = 10;//in frames per seconds
 
 //images
 let menuImg;
+let narrativeImg;
 let potionImg;
 let backgroundImg;
 let doorImg;
@@ -48,9 +50,9 @@ let keyImg;
 
 //array containing the informations of the walls
 let wallProperties = [
-  {0,10,500,30},
-  {600,200,30,500},
-  {560,10,800,30}
+  {x: 0, y: 100, width: 500, height: 30},
+  {x: 600,y: 200,width: 30,height: 500},
+  {x: 560,y: 10,width: 800,height: 30}
 
 ];
 //array containing the walls
@@ -75,6 +77,7 @@ function preload(){
   keyImg = loadImage("assets/images/key.png");
   backgroundImg = loadImage("assets/images/background.png");
   menuImg = loadImage("assets/images/Menu.jpg");
+  narrativeImg = loadImage("assets/images/Narrative.jpg");
 
   //the framerate of the program
   frameRate(20);
@@ -86,7 +89,7 @@ function preload(){
 function setup() {
   createCanvas(windowWidth, windowHeight);
   //setting up the door properties
-  doorX = windowWidth - 200;
+  doorX = windowWidth - 150;
   doorY = windowHeight - 200;
 
   player = new Prey(30, 30, 6, color(255, 100, 10), 50, playerWalkAnimation, currentFrame,animationRate);
@@ -96,13 +99,17 @@ function setup() {
     wall = new Wall(wallProperties[i]);
     wallArray.push(wall);
   }
+  //the array containing the orcs
+  for(let i = 0; i< 3; i++){
+    let orc = new Predator(100, 400, 20, 60,orcLeftAnimation,orcRightAnimation,currentFrame,animationRate);
+    orcArray.push(orc);
+  }
   //The objects of level 1
-  orc = new Predator(100, 400, 20, 60,orcLeftAnimation,orcRightAnimation,currentFrame,animationRate);
   potion = new Potion(500,500,50,potionImg);
-  //wall = new Wall(0,100,500,30);
-  //wall2 = new Wall(400,200,30,700);
   door = new Door(doorX,doorY,100,200,doorImg,"Level 1");
   key = new Key(700,200,keyImg);
+  wall1 = new Wall(0,100,500,30);
+  orc1 = new Predator(500, 500, 20, 60,orcLeftAnimation,orcRightAnimation,currentFrame,animationRate);
 }
 
 // draw()
@@ -116,25 +123,25 @@ function draw() {
     image(menuImg, 0, 0, width, height);
   }
   if(state === "Narrative"){
-    text("Narrative", (width / 2), (height / 2));
+    image(narrativeImg, 0, 0, width, height);
   }
   if(state === "Level 1"){
     // Handle input for the orc
     player.handleInput();
 
     // Move all the "animals"
-    orc.move();
+    orc1.move();
     player.move();
 
     // Handle the orc eating any of the prey
-    orc.handleEating(player);
+    orc1.handleEating(player);
 
     //handles if the player drinks the potion
     potion.handleHealing(player);
 
     //handling the solid characteristics of a wall object
     //in relationship to the characters
-    //wall.handleSolid(player);
+    wall1.handleSolid(player);
     //wall2.handleSolid(player);
     //wall.handleSolid(orc);
     //wall2.handleSolid(orc);
@@ -144,21 +151,28 @@ function draw() {
 
     //handling the exit of the player
     door.handleExit(player);
-
+    //the walls
     for(let i = 0; i< wallArray.length; i++){
       wallArray[i].handleSolid(player);
-      wallArray[i].handleSolid(orc);
+      //wallArray[i].handleSolid(orc);
       wallArray[i].display();
+    }
+    //the orcs
+    for(let i = 0; i< orcArray.length; i++){
+      orcArray[i].move();
+      orcArray[i].handleEating(player);
+      orcArray[i].display();
     }
 
     // Display all the objects
     potion.display();
-    wall.display();
-    wall2.display();
+    wall1.display();
+    //wall2.display();
     door.display();
     key.display();
-    orc.display();
+    orc1.display();
     player.display();
+    player.healthBar();
   }
   else if(state === "Level 2"){
     //the code for the level 2
