@@ -100,8 +100,8 @@ class Prey {
   // Checks if the prey has gone off the canvas and
   // prevents it from it, as a wall would do
   handleBoundaries(){
-    this.x = constrain(this.x, 0+this.size/2, windowWidth-this.size);
-    this.y = constrain(this.y, 0+this.size/2, windowHeight-this.size);
+    this.x = constrain(this.x, 0+this.size/2, width-this.size);
+    this.y = constrain(this.y, 0+this.size/2, height-this.size);
   //   // Off the left or right
   //   if (this.x < 0) {
   //     this.x += this.speed+this.size/2;

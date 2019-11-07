@@ -51,8 +51,10 @@ let keyImg;
 //array containing the informations of the walls
 let wallProperties = [
   {x: 0, y: 100, width: 500, height: 30},
-  {x: 600,y: 200,width: 30,height: 500},
-  {x: 560,y: 10,width: 800,height: 30}
+  {x: 650, y: 100, width: 400, height: 30},
+  {x: 600, y: 535, width: 30, height: 900},
+  {x: 600, y: 285, width: 30, height: 400},
+
 
 ];
 //array containing the walls
@@ -87,7 +89,7 @@ function preload(){
 // Sets up a canvas
 // Creates objects for the predator, the player, the potions and the walls
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1000, 800);
   //setting up the door properties
   doorX = windowWidth - 150;
   doorY = windowHeight - 200;
@@ -96,20 +98,18 @@ function setup() {
 
   //the wall array
   for(let i = 0; i< wallProperties.length; i++){
-    wall = new Wall(wallProperties[i]);
+    wall = new Wall(wallProperties[i].x,wallProperties[i].y,wallProperties[i].width,wallProperties[i].height);
     wallArray.push(wall);
   }
   //the array containing the orcs
   for(let i = 0; i< 3; i++){
-    let orc = new Predator(100, 400, 20, 60,orcLeftAnimation,orcRightAnimation,currentFrame,animationRate);
+    let orc = new Predator(100, 400, 15, 60,orcLeftAnimation,orcRightAnimation,currentFrame,animationRate);
     orcArray.push(orc);
   }
   //The objects of level 1
   potion = new Potion(500,500,50,potionImg);
   door = new Door(doorX,doorY,100,200,doorImg,"Level 1");
   key = new Key(700,200,keyImg);
-  wall1 = new Wall(0,100,500,30);
-  orc1 = new Predator(500, 500, 20, 60,orcLeftAnimation,orcRightAnimation,currentFrame,animationRate);
 }
 
 // draw()
@@ -130,31 +130,36 @@ function draw() {
     player.handleInput();
 
     // Move all the "animals"
-    orc1.move();
+    //orc1.move();
     player.move();
 
     // Handle the orc eating any of the prey
-    orc1.handleEating(player);
+    //orc1.handleEating(player);
 
     //handles if the player drinks the potion
     potion.handleHealing(player);
 
-    //handling the solid characteristics of a wall object
-    //in relationship to the characters
-    wall1.handleSolid(player);
-    //wall2.handleSolid(player);
-    //wall.handleSolid(orc);
-    //wall2.handleSolid(orc);
+
 
     //handling if the key is found
     key.handleFound(player);
 
     //handling the exit of the player
     door.handleExit(player);
+
+    // Display all the objects
+    potion.display();
+    door.display();
+    key.display();
+
     //the walls
+    //handling the solid characteristics of a wall object
+    //in relationship to the characters
     for(let i = 0; i< wallArray.length; i++){
       wallArray[i].handleSolid(player);
-      //wallArray[i].handleSolid(orc);
+      for(let j = 0; j< orcArray.length; j++){
+        wallArray[i].handleSolid(orcArray[j]);
+      }
       wallArray[i].display();
     }
     //the orcs
@@ -163,22 +168,8 @@ function draw() {
       orcArray[i].handleEating(player);
       orcArray[i].display();
     }
-
-    // Display all the objects
-    potion.display();
-    wall1.display();
-    //wall2.display();
-    door.display();
-    key.display();
-    orc1.display();
     player.display();
     player.healthBar();
-  }
-  else if(state === "Level 2"){
-    //the code for the level 2
-  }
-  else if(state === "Level 3"){
-    //the code for the level 3
   }
   else if(state === "GameOver"){
     //Shows the game over screen and resets all values to starting values

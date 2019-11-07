@@ -42,8 +42,10 @@ class Predator {
   // Moves based on the resulting velocity and handles wrapping
   move() {
     // Set velocity via noise()
-    this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
-    this.vy = map(noise(this.ty), 0, 1, -this.speed, this.speed);
+    if(random() < 0.05){
+    this.vx = map(random(), 0, 1, -this.speed, this.speed);
+    this.vy = map(random(), 0, 1, -this.speed, this.speed);
+  }
     // Update position
     this.x += this.vx;
     this.y += this.vy;
@@ -59,22 +61,8 @@ class Predator {
   // Checks if the prey has gone off the canvas and
   // prevents it from it, as a wall would do
   handleBoundaries(){
-    this.x = constrain(this.x, 0+this.size/2, windowWidth-this.size);
-    this.y = constrain(this.y, 0+this.size/2, windowHeight-this.size);
-    // Off the left or right
-    // if (this.x < 0) {
-    //   this.x += this.speed+this.size/2;
-    // }
-    // else if (this.x > width) {
-    //   this.x -= this.speed+this.size/2;
-    // }
-    // // Off the top or bottom
-    // if (this.y < 0) {
-    //   this.y += this.speed+this.size/2;
-    // }
-    // else if (this.y > height) {
-    //   this.y -= this.speed+this.size/2;
-    // }
+    this.x = constrain(this.x, 0+this.size/2, width-this.size);
+    this.y = constrain(this.y, 0+this.size/2, height-this.size);
   }
 
   // handleEating
@@ -104,6 +92,7 @@ class Predator {
   // Draw the predator as an ellipse on the canvas
   // with a size the same size as its current health.
   display() {
+
     //orc animation when it moves left
     push();
     imageMode(CENTER);
@@ -119,8 +108,8 @@ class Predator {
         }
       }
     }
-    //orc animation when it moves right
-    if(this.vx > 0){
+    //orc animation when it moves right or at a wall
+    if(this.vx >= 0){
       image(orcRightAnimation[currentFrame],this.x,this.y,this.size*2,this.size*2);
       //Checking to see if the currentFrame of the overall program is a
       //multiple of the frameRate of the animation by using modulo (%).

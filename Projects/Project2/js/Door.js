@@ -26,7 +26,10 @@ class Door{
   //
   //Displays the door on the screen as an image
   display(){
+    push();
+    imageMode(CENTER);
     image(this.image,this.x,this.y,this.width,this.height);
+    pop();
   }
   //handleHealing()
   //
@@ -34,11 +37,11 @@ class Door{
   //between the two objects. If yes, it changes the scenes.
   handleExit(player){
     if(key.isFound === true){
-      console.log(this.x, this.y, player.x, player.y, this.width, player.size);
+      //console.log(this.x, this.y, player.x, player.y, this.width, player.size);
       let d = dist(this.x, this.y, player.x, player.y);
       // Check if the distance is less than their two radii (an overlap)
       //and changes the level depending on what level it currently is
-      if (d < this.width + player.size) {
+      if (d < this.width/2 + player.size/2) {
         state = "GameOver";
         console.log(state);
         // if(this.state === "Level 1"){

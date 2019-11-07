@@ -27,8 +27,6 @@ class Potion{
   //Displays the potion at the received coordinates. If it is drank,
   //it is not displayed.
   display(){
-    //console.log("this works");
-    //image(this.image,this.x,this.y,this.size,this.size);
     if(this.isDrank === false){
       //Display
       image(this.image,this.x,this.y,this.size,this.size);
