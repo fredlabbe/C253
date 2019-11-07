@@ -42,6 +42,7 @@ class Key{
     let d = dist(this.x, this.y, player.x, player.y);
     // Check if the distance is less than their two radii (an overlap)
     if (d < this.size + player.size) {
+      keySFX.play()
       this.isFound = true;
     }
   }

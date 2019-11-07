@@ -19,7 +19,7 @@ class Prey {
     this.vy = 0;
     this.speed = speed;
     this.barX = 10;
-    this.barY = windowHeight - 50;
+    this.barY = height - 50;
 
     // Health properties
     this.maxHealth = size;
@@ -102,20 +102,6 @@ class Prey {
   handleBoundaries(){
     this.x = constrain(this.x, 0+this.size/2, width-this.size);
     this.y = constrain(this.y, 0+this.size/2, height-this.size);
-  //   // Off the left or right
-  //   if (this.x < 0) {
-  //     this.x += this.speed+this.size/2;
-  //   }
-  //   else if (this.x > width) {
-  //     this.x -= this.speed-this.size/2;
-  //   }
-  //   // Off the top or bottom
-  //   if (this.y < 0) {
-  //     this.y += this.speed+this.size/2;
-  //   }
-  //   else if (this.y > height) {
-  //     this.y -= this.speed-this.size/2;
-  //   }
    }
 
   // display
@@ -126,8 +112,6 @@ class Prey {
     push();
     imageMode(CENTER);
     if(this.isMoving === true || this.isMovingSideways === true){
-    //this.size = this.health;
-    //if(this.isMoving === true){
         image(playerWalkAnimation[currentFrame],this.x,this.y,this.size * 2, this.size* 2);
         //Checking to see if the currentFrame of the overall program is a
         //multiple of the frameRate of the animation by using modulo (%).
@@ -158,6 +142,7 @@ class Prey {
     // Default size
     this.size = this.health;
   }
+
   // healthBar()
   //
   //creates the player's healthBar by mapping it to the health and max health

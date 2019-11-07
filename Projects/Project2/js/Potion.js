@@ -47,6 +47,7 @@ class Potion{
       // Increase player's health and constrain it to its possible range
       player.health += this.healingValue;
       player.health = constrain(player.health, 0, player.maxHealth);
+      potionSFX.play();
       this.isDrank = true;
     }
   }

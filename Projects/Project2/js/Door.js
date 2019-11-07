@@ -43,13 +43,6 @@ class Door{
       //and changes the level depending on what level it currently is
       if (d < this.width/2 + player.size/2) {
         state = "GameOver";
-        console.log(state);
-        // if(this.state === "Level 1"){
-        //    this.state = "Level 2";
-        // }
-        // else if(this.state === "Level 2"){
-        //   this.state = "Level 3";
-        //}
       }
     }
   }

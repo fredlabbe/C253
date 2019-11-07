@@ -48,12 +48,18 @@ let backgroundImg;
 let doorImg;
 let keyImg;
 
+//sounds
+let keySFX;
+let potionSFX;
+let dieSFX;
+
 //array containing the informations of the walls
 let wallProperties = [
   {x: 0, y: 100, width: 500, height: 30},
   {x: 650, y: 100, width: 400, height: 30},
   {x: 600, y: 535, width: 30, height: 900},
   {x: 600, y: 285, width: 30, height: 400},
+  {x: 900, y: 500, width: 250, height: 30},
 
 
 ];
@@ -64,7 +70,7 @@ let wallArray = [];
 //
 //preloads the images and sounds
 function preload(){
-  //the images
+  //the images and animations
   for(let i = 0; i < 3; i++){
     let playerImage = loadImage("assets/animations/playerWalking/walkingAnimation"+i+".png");
     playerWalkAnimation.push(playerImage);
@@ -81,6 +87,11 @@ function preload(){
   menuImg = loadImage("assets/images/Menu.jpg");
   narrativeImg = loadImage("assets/images/Narrative.jpg");
 
+  //the sounds
+
+  keySFX = loadSound('assets/sounds/key.wav');
+  potionSFX = loadSound('assets/sounds/potion.wav');
+  dieSFX = loadSound('assets/sounds/die.wav');
   //the framerate of the program
   frameRate(20);
 }
@@ -109,7 +120,7 @@ function setup() {
   //The objects of level 1
   potion = new Potion(500,500,50,potionImg);
   door = new Door(doorX,doorY,100,200,doorImg,"Level 1");
-  key = new Key(700,200,keyImg);
+  key = new Key(100,700,keyImg);
 }
 
 // draw()
@@ -129,17 +140,11 @@ function draw() {
     // Handle input for the orc
     player.handleInput();
 
-    // Move all the "animals"
-    //orc1.move();
+    // Move all the player
     player.move();
-
-    // Handle the orc eating any of the prey
-    //orc1.handleEating(player);
 
     //handles if the player drinks the potion
     potion.handleHealing(player);
-
-
 
     //handling if the key is found
     key.handleFound(player);
@@ -163,6 +168,7 @@ function draw() {
       wallArray[i].display();
     }
     //the orcs
+    // Handle the orc eating any of the prey and moves and display
     for(let i = 0; i< orcArray.length; i++){
       orcArray[i].move();
       orcArray[i].handleEating(player);
@@ -177,7 +183,9 @@ function draw() {
 
   }
 }
-
+// mousePressed()
+//
+//switches the state of the game, the screeens
 function mousePressed() {
 
   if (state === "Menu") {
@@ -188,10 +196,4 @@ function mousePressed() {
     //Should reset all the values to beginning values
     state = "Menu";
   }
-}
-
-function textHover(){
-  push();
-  fill(150,150,150);
-  pop();
-}
+} 
