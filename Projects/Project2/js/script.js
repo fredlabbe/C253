@@ -5,8 +5,8 @@
 // The predator chases the prey using the arrow keys and consumes them.
 // The predator loses health over time, so must keep eating to survive.
 
-// Our predator
-let orc;
+// Our ennemies
+let orcArray = [];
 
 //the player
 let player;
@@ -40,10 +40,21 @@ let currentFrame = 0;
 let animationRate = 10;//in frames per seconds
 
 //images
+let menuImg;
 let potionImg;
 let backgroundImg;
 let doorImg;
 let keyImg;
+
+//array containing the informations of the walls
+let wallProperties = [
+  {0,10,500,30},
+  {600,200,30,500},
+  {560,10,800,30}
+
+];
+//array containing the walls
+let wallArray = [];
 
 //preload()
 //
@@ -63,6 +74,7 @@ function preload(){
   doorImg = loadImage("assets/images/door.png");
   keyImg = loadImage("assets/images/key.png");
   backgroundImg = loadImage("assets/images/background.png");
+  menuImg = loadImage("assets/images/Menu.jpg");
 
   //the framerate of the program
   frameRate(20);
@@ -79,11 +91,16 @@ function setup() {
 
   player = new Prey(30, 30, 6, color(255, 100, 10), 50, playerWalkAnimation, currentFrame,animationRate);
 
+  //the wall array
+  for(let i = 0; i< wallProperties.length; i++){
+    wall = new Wall(wallProperties[i]);
+    wallArray.push(wall);
+  }
   //The objects of level 1
-  orc = new Predator(100, 400, 20, color(200, 200, 0), 60,orcLeftAnimation,orcRightAnimation,currentFrame,animationRate);
+  orc = new Predator(100, 400, 20, 60,orcLeftAnimation,orcRightAnimation,currentFrame,animationRate);
   potion = new Potion(500,500,50,potionImg);
-  wall = new Wall(0,100,500,30);
-  wall2 = new Wall(400,200,30,700);
+  //wall = new Wall(0,100,500,30);
+  //wall2 = new Wall(400,200,30,700);
   door = new Door(doorX,doorY,100,200,doorImg,"Level 1");
   key = new Key(700,200,keyImg);
 }
@@ -95,11 +112,8 @@ function draw() {
   //putting the dungeon backgound under everything on the canvas
   image(backgroundImg, 0, 0, width, height);
   if(state === "Menu"){
-
-    textSize(50);
-    textAlign(CENTER);
-    let playText = text("Click to play", (width / 2), (height / 2));
-    //playText.mouseOver(textHover);
+    //the menu image only for the menu
+    image(menuImg, 0, 0, width, height);
   }
   if(state === "Narrative"){
     text("Narrative", (width / 2), (height / 2));
@@ -120,8 +134,8 @@ function draw() {
 
     //handling the solid characteristics of a wall object
     //in relationship to the characters
-    wall.handleSolid(player);
-    wall2.handleSolid(player);
+    //wall.handleSolid(player);
+    //wall2.handleSolid(player);
     //wall.handleSolid(orc);
     //wall2.handleSolid(orc);
 
@@ -130,6 +144,12 @@ function draw() {
 
     //handling the exit of the player
     door.handleExit(player);
+
+    for(let i = 0; i< wallArray.length; i++){
+      wallArray[i].handleSolid(player);
+      wallArray[i].handleSolid(orc);
+      wallArray[i].display();
+    }
 
     // Display all the objects
     potion.display();
