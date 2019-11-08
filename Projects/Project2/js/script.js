@@ -1,10 +1,8 @@
-// Predator-Prey Simulation
-// by Pippin Barr
+// A Waltz of Orcs
+// by Frederick Labbe
 //
-// Creates a predator and three prey (of different sizes and speeds)
-// The predator chases the prey using the arrow keys and consumes them.
-// The predator loses health over time, so must keep eating to survive.
-
+// A dungeon game where the player has to flee from the orcs, get a key
+//and open the door. Player can take a potion to gain back his/her health.
 // Our ennemies
 let orcArray = [];
 let orc1;
