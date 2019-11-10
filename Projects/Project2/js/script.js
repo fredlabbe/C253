@@ -98,9 +98,9 @@ function preload() {
     let playerImage = loadImage("assets/animations/playerWalking/walkingAnimation" + i + ".png");
     playerWalkAnimation.push(playerImage);
     console.log("assets/animations/playerWalking/walkingAnimation" + i + ".png");
-    let orcLeftImage = loadImage("assets/animations/orcWalking/leftWalking/orcAnimation" + i + ".png");
+    let orcLeftImage = loadImage("assets/animations/orcWalking/leftWalking/OrcAnimation" + i + ".png");
     orcLeftAnimation.push(orcLeftImage);
-    let orcRightImage = loadImage("assets/animations/orcWalking/rightWalking/orcAnimation" + i + ".png")
+    let orcRightImage = loadImage("assets/animations/orcWalking/rightWalking/OrcAnimation" + i + ".png")
     orcRightAnimation.push(orcRightImage);
   }
   potionImg = loadImage("assets/images/potion.png");
