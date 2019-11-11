@@ -127,7 +127,7 @@ function setup() {
   createCanvas(1000, 800);
   //setting up the door properties
   doorX = width - 150;
-  doorY = height - 20;
+  doorY = height - 150;
 
   player = new Prey(30, 30, 6, color(255, 100, 10), 50, playerWalkAnimation, currentFrame, animationRate);
 
