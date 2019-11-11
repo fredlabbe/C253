@@ -126,8 +126,8 @@ function preload() {
 function setup() {
   createCanvas(1000, 800);
   //setting up the door properties
-  doorX = windowWidth - 150;
-  doorY = windowHeight - 200;
+  doorX = width - 150;
+  doorY = height - 20;
 
   player = new Prey(30, 30, 6, color(255, 100, 10), 50, playerWalkAnimation, currentFrame, animationRate);
 
