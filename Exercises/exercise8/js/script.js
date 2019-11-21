@@ -32,8 +32,8 @@ let vx = 0;
 let vy = 0;
 let speed = 5;
 let player;
-let playerX = 0
-let playerY = 0
+let playerX = -200;
+let playerY = -200;
 let playerSize = 100;
 
 
