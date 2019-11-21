@@ -104,8 +104,8 @@ function draw() {
   playerY += vy;
 
   //preventing the player to go out of the map
-  playerX = constrain(playerX, imageX + playerSize/2, 2*width - playerSize/2);
-  playerY = constrain(playerY, imageY + playerSize/2, 2*height - playerSize/2);
+  playerX = constrain(playerX, imageX + playerSize/2, width - playerSize/2);
+  playerY = constrain(playerY, imageY + playerSize/2, height - playerSize/2);
 
   //drawing the player as a red rectangle
   rectMode(CENTER);
