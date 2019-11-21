@@ -2,11 +2,16 @@
 
 /*****************
 
-Title of Project
-Author Name
+Exercise 8 (Prototype 2)
+Frederick Labbe
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+In this prototype, I am writing a code that makes a camera on the player move
+according to the player's position.
+1: start with mouseX & Y : achieved
+2: try to make it follow a rectangle: currently in developpement
+3: make it so the camera follows the player only when a certain percentage
+  of the screen is reached so it doesn't appear like the player is not moving
+  at the middle of the screen but the background move: Not there yet
 
 ******************/
 //image's properties
@@ -17,15 +22,20 @@ let imageY = -400;
 let eyePosition;
 
 //WASD moving keys
-upKey = 87; //W
-downKey = 83; //S
-leftKey = 65; //A
-rightKey = 68; //D
+let upKey = 87; //W
+let downKey = 83; //S
+let leftKey = 65; //A
+let rightKey = 68; //D
 
 //player's properties
-vx = 0;
-vy = 0;
-speed = 5;
+let vx = 0;
+let vy = 0;
+let speed = 5;
+let player;
+let playerX = 0
+let playerY = 0
+let playerSize = 100;
+
 
 // preload()
 //
@@ -42,52 +52,64 @@ backgroundImg = loadImage("assets/images/Forest.png");
 
 function setup() {
   createCanvas(800, 800, WEBGL);
-  //translate(-width/2, -height/2, 0);
 
   eyePosition = (height/2) / tan(PI/6);
 }
 
 // draw()
 //
-// Description of draw()
+// Draws a player as a rectangle on a canva with a camera that follows the player
 
 function draw() {
 
+  //draws the background as an image
   image(backgroundImg, imageX, imageY, 2*width, 2*height);
+  //maps the x position of the camera to the player's x position
+  //same thing for y
+  let cameraX = map(playerX,0,width,0,width);
+  let cameraY = map(playerY,0,height,0,height);
 
+  //creating translation variables that are constrained according to the position
+  //of the player inside the canvas
+  let translateX = constrain(playerX,-imageX/2,width);
+  let translateY = constrain(playerY,-imageY/2,height);
 
-  let cameraX = map(mouseX,0,width,0,width);
-  let cameraY = map(mouseY,0,height,0,height);
-
-  //camera(cameraY, 0, eyePosition, cameraY, 0, 0, 0 ,1, 0);
-  let translateX = constrain(mouseX,-width/2,width);
-  let translateY = constrain(mouseY,-height/2,height);
-  //camera(translateX, 0, eyePosition, translateX, 0, 0, 0 ,1, 0);
   camera(translateX, translateY, eyePosition, translateX, translateY, 0, 0 ,1, 0);
   translate(translateX,translateY,0);
 
-
-
-}
-// handleInput
-//
-// Checks if an arrow key is pressed and sets the predator's
-// velocity appropriately.
-handleInput() {
+  // Handling the inputs
   // Horizontal movement
   if (keyIsDown(leftKey)) {
     vx = -speed;
-  } else if (keyIsDown(rightKey)) {
+  }
+  else if (keyIsDown(rightKey)) {
     vx = speed;
-  } else {
+  }
+  else {
     vx = 0;
   }
   // Vertical movement
   if (keyIsDown(upKey)) {
     vy = -speed;
-  } else if (keyIsDown(downKey)) {
+  }
+  else if (keyIsDown(downKey)) {
     vy = speed;
-  } else {
+  }
+  else {
     vy = 0;
   }
+
+  //moving the player
+  playerX += vx;
+  playerY += vy;
+
+  //preventing the player to go out of the map
+  playerX = constrain(playerX, imageX + playerSize/2, 2*width - playerSize/2);
+  playerY = constrain(playerY, imageY + playerSize/2, 2*height - playerSize/2);
+
+  //drawing the player as a red rectangle
+  rectMode(CENTER);
+  fill(255,0,0);
+  player = rect(playerX, playerY, playerSize, playerSize);
+
 }
