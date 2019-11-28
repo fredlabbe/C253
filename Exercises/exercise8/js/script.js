@@ -9,7 +9,7 @@ In this prototype, I am writing a code that makes a camera on the player move
 according to the player's position.
 1: start with mouseX & Y : achieved
 2: try to make it follow a rectangle: currently in developpement
-3: make it so the camera follows the player only when a certain percentage
+3(bonus): make it so the camera follows the player only when a certain percentage
   of the screen is reached so it doesn't appear like the player is not moving
   at the middle of the screen but the background move: Not there yet
 
@@ -19,6 +19,7 @@ let backgroundImg;
 let imageX = -400;
 let imageY = -400;
 
+//Variable containing the value for the position of the eye of camera
 let eyePosition;
 
 //WASD moving keys
