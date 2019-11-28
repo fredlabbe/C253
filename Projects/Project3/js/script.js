@@ -173,7 +173,7 @@ function draw() {
   if(state === "Forest"){
     image(forestImg, 0, 0, width, height);
 
-
+    //the camera follwing the player in p5.Play 
     //camera.zoom = 1.5;
     camera.position.x = player.x;
     camera.position.y = player.y;
