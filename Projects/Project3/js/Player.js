@@ -24,7 +24,8 @@ class Player extends Character{
     this.upKey = 87; //W
     this.downKey = 83; //S
     this.leftKey = 65; //A
-    this.rightKey = 68; //D  
+    this.rightKey = 68; //D
+    this.shootKey = 32; //Spacebar to shoot
 
     //the animation
     this.walkAnimation = walkAnimation;
@@ -63,6 +64,10 @@ class Player extends Character{
     } else {
       this.vy = 0;
       this.isMoving = false;
+    }
+    if(keyIsDown(this.shootKey)){
+      let projectile = new Projectile(this.x,this.y,30,10,0);
+      projectile.shoot();
     }
   }
 
