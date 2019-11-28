@@ -22,8 +22,12 @@ let door;
 let doorX;
 let doorY;
 
+//dungeon entry and its properties
+let dungeonEntry;
+
 //the keys
 let key;
+let dungeonKey;
 
 //animation array
 let playerWalkAnimation = [];
@@ -46,6 +50,7 @@ let potionImg;
 let backgroundImg;
 let doorImg;
 let keyImg;
+let forestImg;
 
 //sounds
 let keySFX;
@@ -110,6 +115,7 @@ function preload() {
   menuImg = loadImage("assets/images/Menu.jpg");
   narrativeImg = loadImage("assets/images/Narrative.jpg");
   overImg = loadImage("assets/images/gameOver.jpg");
+  forestImg = loadImage("assets/images/Forest.png");
 
   //the sounds
 
@@ -124,12 +130,12 @@ function preload() {
 // Sets up a canvas
 // Creates objects for the predator, the player, the potions and the walls
 function setup() {
-  createCanvas(1000, 800);
+  createCanvas(1000, 700);
   //setting up the door properties
   doorX = width - 150;
   doorY = height - 150;
 
-  player = new Prey(30, 30, 6, color(255, 100, 10), 50, playerWalkAnimation, currentFrame, animationRate);
+  player = new Player(30, 30, 6, 50, playerWalkAnimation, currentFrame, animationRate);
 
   //the wall array
   for (let i = 0; i < wallProperties.length; i++) {
@@ -138,12 +144,16 @@ function setup() {
   }
   //the array containing the orcs
   for (let i = 0; i < 3; i++) {
-    let orc = new Predator(100, 400, 15, 60, orcLeftAnimation, orcRightAnimation, currentFrame, animationRate);
+    let orc = new Predator(100, 400, 15, 60, orcLeftAnimation, orcRightAnimation);
     orcArray.push(orc);
   }
-  //The objects of level 1
+  //the objects of the forest
+  dungeonEntry = new Door(800, 500, 100, 200, doorImg, "Forest");
+  dungeonKey = new Key(100, 500, keyImg);
+
+  //The objects of Dungeon
   potion = new Potion(500, 500, 50, potionImg);
-  door = new Door(doorX, doorY, 100, 200, doorImg, "Level 1");
+  door = new Door(doorX, doorY, 100, 200, doorImg, "Dungeon");
   key = new Key(100, 700, keyImg);
 }
 
@@ -160,7 +170,27 @@ function draw() {
   if (state === "Narrative") {
     image(narrativeImg, 0, 0, width, height);
   }
-  if (state === "Level 1") {
+  if(state === "Forest"){
+    image(forestImg, 0, 0, width, height);
+
+    //the dungeon entry
+    dungeonEntry.handleExit(player);
+
+    //handling if the key is found
+    dungeonKey.handleFound(player);
+
+    // Handle input for the orc
+    player.handleInput();
+
+    // Move the player
+    player.move();
+
+    dungeonEntry.display();
+    dungeonKey.display();
+    player.display();
+    player.healthBar();
+  }
+  if (state === "Dungeon") {
     // Handle input for the orc
     player.handleInput();
 
@@ -192,7 +222,7 @@ function draw() {
       wallArray[i].display();
     }
     //the orcs
-    // Handle the orc eating any of the prey and moves and display
+    // Handle the orc eating any of the Player and moves and displays
     for (let i = 0; i < orcArray.length; i++) {
       orcArray[i].move();
       orcArray[i].handleEating(player);
@@ -217,8 +247,10 @@ function mousePressed() {
   if (state === "Menu") {
     state = "Narrative";
   } else if (state === "Narrative") {
-    state = "Level 1";
-  } else if (state === "GameOver") {
+    state = "Forest";
+  } else if(state === "Forest"){
+    state = "Dungeon";
+  }else if (state === "GameOver") {
     //Should reset all the values to beginning values
     state = "Menu";
   }

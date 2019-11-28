@@ -22,7 +22,7 @@ class Projectile{
     this.projectiles = [];
     this.coolDown = 0;
     this.coolDownMax = 10;
-
+}
     shoot(){
       // The projectile cooldown determines when you can fire again (when it's at 0)
     // So count down
@@ -46,7 +46,7 @@ class Projectile{
       // Set the cooldown to max so it can start counting down
       this.coolDown = this.coolDownMax;
     }
-    }
+  }
     // update()
   //
   // Move all the projectiles fired by this ship

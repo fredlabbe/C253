@@ -1,23 +1,17 @@
-// Prey
+// Player
 //
-// A class that represents a simple prey that moves
+// A class that represents a simple Player that moves
 // on screen based on a noise() function. It can move around
 // the screen and be consumed by Predator objects.
 
-class Prey {
+class Player extends Character{
 
   // constructor
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, size, walkAnimation, currentFrame, animationRate) {
-    // Position
-    this.x = x;
-    this.y = y;
-    // Velocity and speed
-    this.vx = 0;
-    this.vy = 0;
-    this.speed = speed;
+  constructor(x, y, speed, size, walkAnimation, currentFrame, animationRate) {
+    super(x,y,speed,size);
     this.barX = 10;
     this.barY = height - 50;
 
@@ -25,13 +19,12 @@ class Prey {
     this.maxHealth = size;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     // Display properties
-    this.fillColor = fillColor;
     this.size = this.health;
     // Input properties
     this.upKey = 87; //W
     this.downKey = 83; //S
     this.leftKey = 65; //A
-    this.rightKey = 68; //D
+    this.rightKey = 68; //D  
 
     //the animation
     this.walkAnimation = walkAnimation;
@@ -73,36 +66,9 @@ class Prey {
     }
   }
 
-  // move
-  //
-  // Updates the position according to velocity
-  // Lowers health (as a cost of living)
-  // Handles wrapping
-  move() {
-    // Update position
-    this.x += this.vx;
-    this.y += this.vy;
-    console.log(this.vx);
-    // Update health
-    //this.health = this.health - this.healthLossPerMove;
-    //this.health = constrain(this.health, 0, this.maxHealth);
-    // Handle wrapping
-    //this.handleWrapping();
-    this.handleBoundaries();
-  }
-
-  // handleBoundaries()
-  //
-  // Checks if the prey has gone off the canvas and
-  // prevents it from it, as a wall would do
-  handleBoundaries() {
-    this.x = constrain(this.x, 0 + this.size / 2, width - this.size);
-    this.y = constrain(this.y, 0 + this.size / 2, height - this.size);
-  }
-
   // display
   //
-  // Draw the prey as an image on the canvas
+  // Draw the Player as an image on the canvas
   // with a constant size that does not change with its health.
   display() {
     push();
