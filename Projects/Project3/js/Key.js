@@ -40,7 +40,7 @@ class Key {
   //because of the code in display()
   handleFound(player) {
     let d = dist(this.x, this.y, player.x, player.y);
-    // Check if the distance is less than their two radii (an overlap)
+    // Check if the distance is less than their two sizes (an overlap)
     if (d < this.size + player.size) {
       keySFX.play()
       this.isFound = true;

@@ -155,14 +155,17 @@ function setup() {
   potion = new Potion(500, 500, 50, potionImg);
   door = new Door(doorX, doorY, 100, 200, doorImg, "Dungeon");
   key = new Key(100, 700, keyImg);
+
+  // forestImg = createSprite(0,0,640,480);
+  // forestImg.addAnimation('default', "assets/images/Forest.png");
+  // forestImg.scale = 4;
 }
 
 // draw()
 //
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
-  //putting the dungeon backgound under everything on the canvas
-  image(backgroundImg, 0, 0, width, height);
+
   if (state === "Menu") {
     //the menu image only for the menu
     image(menuImg, 0, 0, width, height);
@@ -172,11 +175,10 @@ function draw() {
   }
   if(state === "Forest"){
     image(forestImg, 0, 0, width, height);
-
-    //the camera follwing the player in p5.Play 
+    //the camera follwing the player in p5.Play
     //camera.zoom = 1.5;
-    camera.position.x = player.x;
-    camera.position.y = player.y;
+    // camera.position.x = player.x;
+    // camera.position.y = player.y;
 
     //the dungeon entry
     dungeonEntry.handleExit(player);
@@ -190,12 +192,18 @@ function draw() {
     // Move the player
     player.move();
 
+    //drawSprites(forestImg);
+
     dungeonEntry.display();
     dungeonKey.display();
     player.display();
     player.healthBar();
   }
   if (state === "Dungeon") {
+    //putting the dungeon backgound under everything on the canvas
+    image(backgroundImg, 0, 0, width, height);
+    //putting the camera off
+    //camera.off();
     // Handle input for the orc
     player.handleInput();
 
