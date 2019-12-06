@@ -14,6 +14,7 @@ class Player extends Character{
     super(x,y,speed,size);
     this.barX = 10;
     this.barY = height - 50;
+    this.barOff = 480;
 
     // Health properties
     this.maxHealth = size;
@@ -68,6 +69,7 @@ class Player extends Character{
     if(keyIsDown(this.shootKey)){
       let projectile = new Projectile(this.x,this.y,30,10,0);
       projectile.shoot();
+      console.log("WORKS");
     }
   }
 
@@ -114,17 +116,28 @@ class Player extends Character{
   //creates the player's healthBar by mapping it to the health and max health
   //and using a rectangle
   healthBar() {
+
+    //making the healthbar follow the player but not at the edges
+    //of the background image
+    if(player.x > camXMin){
+      // a satisfying distance so the healthbar is not off
+      //when it follows the player
+      this.barX = player.x - this.barOff;
+      if(player.x > camXMax){
+        this.barX = camXMax - this.barOff;
+      }
+  }
     let healthSize;
     healthSize = map(this.health, 0, this.maxHealth, 0, 300);
     push();
     //dark red color
     fill(125, 37, 32);
     //creating the red rectangle
-    rect(10, this.barY, 300, 20);
+    rect(this.barX, this.barY, 300, 20);
     //the green color
     fill(60, 94, 55);
     //creating the rectangle that is mapped, the green one, the life
-    rect(10, this.barY, healthSize, 20);
+    rect(this.barX, this.barY, healthSize, 20);
     pop();
 
   }

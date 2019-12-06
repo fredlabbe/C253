@@ -3,6 +3,11 @@
 //
 // A dungeon game where the player has to flee from the orcs, get a key
 //and open the door. Player can take a potion to gain back his/her health.
+//camera & screen properties
+let sceneWidth = 2768;
+let sceneHeight = 1792;
+let camXMin = 500;
+let camXMax = 2200;
 // Our ennemies
 let orcArray = [];
 let orc1;
@@ -12,6 +17,7 @@ let player;
 
 //the potion
 let potion;
+let potion2;
 
 //the Walls
 let wall1;
@@ -115,7 +121,7 @@ function preload() {
   menuImg = loadImage("assets/images/Menu.jpg");
   narrativeImg = loadImage("assets/images/Narrative.jpg");
   overImg = loadImage("assets/images/gameOver.jpg");
-  forestImg = loadImage("assets/images/Forest.png");
+  forestImg = loadImage("assets/images/Tileset.jpg");
 
   //the sounds
 
@@ -135,7 +141,7 @@ function setup() {
   doorX = width - 150;
   doorY = height - 150;
 
-  player = new Player(30, 30, 6, 50, playerWalkAnimation, currentFrame, animationRate);
+  player = new Player(30, 30, 15, 50, playerWalkAnimation, currentFrame, animationRate);
 
   //the wall array
   for (let i = 0; i < wallProperties.length; i++) {
@@ -152,12 +158,13 @@ function setup() {
   dungeonKey = new Key(100, 500, keyImg);
 
   //The objects of Dungeon
-  potion = new Potion(500, 500, 50, potionImg);
+  potion = new Potion(500, 500, potionImg, 50);
+  potion2 = new Potion(500, 300, potionImg, 50);
   door = new Door(doorX, doorY, 100, 200, doorImg, "Dungeon");
   key = new Key(100, 700, keyImg);
 
-  // forestImg = createSprite(0,0,640,480);
-  // forestImg.addAnimation('default', "assets/images/Forest.png");
+   //forestImg = createSprite(0,0,640,480);
+   //forestImg.addAnimation('default', "assets/images/Tileset.jpg");
   // forestImg.scale = 4;
 }
 
@@ -174,11 +181,14 @@ function draw() {
     image(narrativeImg, 0, 0, width, height);
   }
   if(state === "Forest"){
-    image(forestImg, 0, 0, width, height);
+    image(forestImg, 0, 0, sceneWidth, sceneHeight);
     //the camera follwing the player in p5.Play
     //camera.zoom = 1.5;
-    // camera.position.x = player.x;
-    // camera.position.y = player.y;
+    console.log(player.x);
+    if(player.x > camXMin && player.x < camXMax){
+     camera.position.x = player.x;
+     //camera.position.y = player.y;
+   }
 
     //the dungeon entry
     dungeonEntry.handleExit(player);
@@ -211,7 +221,8 @@ function draw() {
     player.move();
 
     //handles if the player drinks the potion
-    potion.handleHealing(player);
+    potion.handleFound(player);
+    potion2.handleFound(player);
 
     //handling if the key is found
     key.handleFound(player);
@@ -221,6 +232,7 @@ function draw() {
 
     // Display all the objects
     potion.display();
+    potion2.display();
     door.display();
     key.display();
 
@@ -267,4 +279,5 @@ function mousePressed() {
     //Should reset all the values to beginning values
     state = "Menu";
   }
+  console.log(state);
 }

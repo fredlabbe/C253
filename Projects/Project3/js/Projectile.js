@@ -77,5 +77,17 @@ class Projectile{
     }
   }
 
+  //display()
+  //
+  //
+  display(){
+    // Go through all the projectiles and display the image for each one
+    for (var i = 0; i < this.projectiles.length; i++) {
+      push();
+      image(bulletImage, this.projectiles[i].x, this.projectiles[i].y, 10, 10);
+      pop();
+    }
+  }
+
 
 }

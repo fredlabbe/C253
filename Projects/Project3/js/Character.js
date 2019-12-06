@@ -38,7 +38,13 @@ class Character{
   // Checks if the Character has gone off the canvas and
   // prevents it from it, as a wall would do
   handleBoundaries() {
-    this.x = constrain(this.x, 0 + this.size / 2, width - this.size);
-    this.y = constrain(this.y, 0 + this.size / 2, height - this.size);
+
+
+    // this.x = constrain(this.x, 0 + this.size / 2, width - this.size);
+    // this.y = constrain(this.y, 0 + this.size / 2, height - this.size);
+
+    // this.x = constrain(0, 2768);
+    // this.y = constrain(0, 1792);
+
   }
 }
