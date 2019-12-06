@@ -55,6 +55,7 @@ let overImg;
 let potionImg;
 let backgroundImg;
 let doorImg;
+let entryImg;
 let keyImg;
 let forestImg;
 
@@ -116,6 +117,7 @@ function preload() {
   }
   potionImg = loadImage("assets/images/potion.png");
   doorImg = loadImage("assets/images/door.png");
+  entryImg = loadImage("assets/images/Entry.png");
   keyImg = loadImage("assets/images/key.png");
   backgroundImg = loadImage("assets/images/background.png");
   menuImg = loadImage("assets/images/Menu.jpg");
@@ -154,7 +156,7 @@ function setup() {
     orcArray.push(orc);
   }
   //the objects of the forest
-  dungeonEntry = new Door(800, 500, 100, 200, doorImg, "Forest");
+  dungeonEntry = new Door(800, 500, 100, 200, entryImg, "Forest");
   dungeonKey = new Key(100, 500, keyImg);
 
   //The objects of Dungeon

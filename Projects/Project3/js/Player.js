@@ -119,13 +119,16 @@ class Player extends Character{
 
     //making the healthbar follow the player but not at the edges
     //of the background image
-    if(player.x > camXMin){
+    if(player.x > camXMin && state === "Forest"){
       // a satisfying distance so the healthbar is not off
       //when it follows the player
       this.barX = player.x - this.barOff;
       if(player.x > camXMax){
         this.barX = camXMax - this.barOff;
       }
+    else{
+      this.barX = 10;
+    }
   }
     let healthSize;
     healthSize = map(this.health, 0, this.maxHealth, 0, 300);

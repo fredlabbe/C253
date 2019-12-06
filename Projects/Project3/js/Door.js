@@ -42,9 +42,13 @@ class Door {
       //and changes the level depending on what level it currently is
       if (d < this.width / 2 + player.size / 2) {
         if(state === "Forest"){
+          //setting the camera back to normal
+          camera.position.x = 500;
+          camera.off();
+          key.isFound = false;
+          //changing the scene
           state = "Dungeon";
           dungeonKey.isFound = false;
-          key.isFound = false;
           player.x = 30;
           player.y = 30;
         }
