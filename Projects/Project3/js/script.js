@@ -3,14 +3,19 @@
 //
 // A dungeon game where the player has to flee from the orcs, get a key
 //and open the door. Player can take a potion to gain back his/her health.
+
 //camera & screen properties
 let sceneWidth = 2768;
 let sceneHeight = 1792;
 let camXMin = 500;
 let camXMax = 2200;
+
 // Our ennemies
 let orcArray = [];
 let orc1;
+
+//array containing the projectiles
+let projectiles = [];
 
 //the player
 let player;
@@ -58,6 +63,7 @@ let doorImg;
 let entryImg;
 let keyImg;
 let forestImg;
+let fireballImg;
 
 //sounds
 let keySFX;
@@ -124,6 +130,7 @@ function preload() {
   narrativeImg = loadImage("assets/images/Narrative.jpg");
   overImg = loadImage("assets/images/gameOver.jpg");
   forestImg = loadImage("assets/images/Tileset.jpg");
+  fireballImg = loadImage("assets/images/fireball.png");
 
   //the sounds
 
@@ -156,14 +163,14 @@ function setup() {
     orcArray.push(orc);
   }
   //the objects of the forest
-  dungeonEntry = new Door(800, 500, 100, 200, entryImg, "Forest");
+  dungeonEntry = new Door(2550, 500, 200, 200, entryImg, "Forest");
   dungeonKey = new Key(100, 500, keyImg);
 
   //The objects of Dungeon
   potion = new Potion(500, 500, potionImg, 50);
   potion2 = new Potion(500, 300, potionImg, 50);
   door = new Door(doorX, doorY, 100, 200, doorImg, "Dungeon");
-  key = new Key(100, 700, keyImg);
+  key = new Key(100, 600, keyImg);
 
    //forestImg = createSprite(0,0,640,480);
    //forestImg.addAnimation('default', "assets/images/Tileset.jpg");
@@ -185,7 +192,6 @@ function draw() {
   if(state === "Forest"){
     image(forestImg, 0, 0, sceneWidth, sceneHeight);
     //the camera follwing the player in p5.Play
-    //camera.zoom = 1.5;
     console.log(player.x);
     if(player.x > camXMin && player.x < camXMax){
      camera.position.x = player.x;
@@ -204,18 +210,20 @@ function draw() {
     // Move the player
     player.move();
 
+    //checking the projectiles
+    checkProjectiles();
+
     //drawSprites(forestImg);
 
     dungeonEntry.display();
     dungeonKey.display();
     player.display();
     player.healthBar();
+
   }
   if (state === "Dungeon") {
     //putting the dungeon backgound under everything on the canvas
     image(backgroundImg, 0, 0, width, height);
-    //putting the camera off
-    //camera.off();
     // Handle input for the orc
     player.handleInput();
 
@@ -281,5 +289,16 @@ function mousePressed() {
     //Should reset all the values to beginning values
     state = "Menu";
   }
-  console.log(state);
+}
+//checkProjectiles()
+//
+//
+function checkProjectiles(){
+
+  for (var i = 0; i < projectiles.length; i++){
+    // Get the projectile based on its index
+    var projectile = projectiles[i];
+    //projectile.update(player);
+    projectile.display();
+  }
 }

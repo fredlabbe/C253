@@ -9,7 +9,7 @@ class Projectile{
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x,y,speed,size,angle){
+  constructor(x,y,speed,size,angle, image){
 
     this.x = x;
     this.y = y;
@@ -18,10 +18,10 @@ class Projectile{
     this.angle = angle;
     //setting up the damage the projectile will inflict
     this.damage = 20;
-    //array containing the projectiles
-    this.projectiles = [];
     this.coolDown = 0;
     this.coolDownMax = 10;
+    //the image
+    this.image = image;
 }
     shoot(){
       // The projectile cooldown determines when you can fire again (when it's at 0)
@@ -42,7 +42,7 @@ class Projectile{
         vy: this.speed * sin(this.angle)
       }
       // Add the projectile to the projectiles array of the ship
-      this.projectiles.push(newProjectile);
+      projectiles.push(newProjectile);
       // Set the cooldown to max so it can start counting down
       this.coolDown = this.coolDownMax;
     }
@@ -54,12 +54,12 @@ class Projectile{
   // Note that in this simple version we never actually delete projectiles from the
   // array. For that we'd need to use either pop() or splice().
   update(character) {
-    // Go through all the projectiles of this ship
+    // Go through all the projectiles
     // (Note this is hugely inefficient since it still looks at projectiles that were fired long ago,
     // we should really remove those from the array!)
-    for (var i = 0; i < this.projectiles.length; i++) {
+    for (var i = 0; i < projectiles.length; i++) {
       // Get the projectile based on its index
-      var projectile = this.projectiles[i];
+      var projectile = projectiles[i];
 
       // Update its position based on velocity
       projectile.x += projectile.vx;
@@ -71,7 +71,7 @@ class Projectile{
           // If so, reduces the health of the character (constrained)
           character.health -= this.damage;
           character.health = constrain(character.health, 0, character.maxHealth);
-          this.projectiles[i].pop();
+          projectiles[i].pop();
         }
       }
     }
@@ -82,9 +82,9 @@ class Projectile{
   //
   display(){
     // Go through all the projectiles and display the image for each one
-    for (var i = 0; i < this.projectiles.length; i++) {
+    for (var i = 0; i < projectiles.length; i++) {
       push();
-      image(bulletImage, this.projectiles[i].x, this.projectiles[i].y, 10, 10);
+      image(bulletImage, projectiles[i].x, projectiles[i].y, 10, 10);
       pop();
     }
   }

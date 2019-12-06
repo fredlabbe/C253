@@ -67,7 +67,7 @@ class Player extends Character{
       this.isMoving = false;
     }
     if(keyIsDown(this.shootKey)){
-      let projectile = new Projectile(this.x,this.y,30,10,0);
+      let projectile = new Projectile(this.x,this.y,30,10,0,fireballImg);
       projectile.shoot();
       console.log("WORKS");
     }
@@ -126,7 +126,7 @@ class Player extends Character{
       if(player.x > camXMax){
         this.barX = camXMax - this.barOff;
       }
-    else{
+    if(state === "Dungeon"){
       this.barX = 10;
     }
   }
