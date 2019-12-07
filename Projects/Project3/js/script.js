@@ -64,6 +64,8 @@ let entryImg;
 let keyImg;
 let forestImg;
 let fireballImg;
+let treeImg;
+let wallImg;
 
 //sounds
 let keySFX;
@@ -101,7 +103,7 @@ let wallProperties = [{
   },
   {
     x: 900,
-    y: 500,
+    y: 300,
     width: 250,
     height: 30
   },
@@ -174,6 +176,8 @@ function preload() {
   overImg = loadImage("assets/images/gameOver.jpg");
   forestImg = loadImage("assets/images/Tileset.jpg");
   fireballImg = loadImage("assets/images/fireball.png");
+  treeImg = loadImage("assets/images/tree.png");
+  wallImg = loadImage("assets/images/wall.png");
 
   //the sounds
 
@@ -190,19 +194,19 @@ function preload() {
 function setup() {
   createCanvas(1000, 700);
   //setting up the door properties
-  doorX = width - 150;
-  doorY = height - 150;
+  doorX = width - 50;
+  doorY = height - 100;
 
   player = new Player(30, 30, 15, 50, playerWalkAnimation, currentFrame, animationRate);
 
   //the wall array
   for (let i = 0; i < wallProperties.length; i++) {
-    wall = new Wall(wallProperties[i].x, wallProperties[i].y, wallProperties[i].width, wallProperties[i].height);
+    wall = new Wall(wallProperties[i].x, wallProperties[i].y, wallProperties[i].width, wallProperties[i].height, wallImg);
     wallArray.push(wall);
   }
   //the wall array
   for (let i = 0; i < treeProperties.length; i++) {
-    tree = new Wall(treeProperties[i].x, treeProperties[i].y, treeProperties[i].width, treeProperties[i].height);
+    tree = new Wall(treeProperties[i].x, treeProperties[i].y, treeProperties[i].width, treeProperties[i].height, treeImg);
     treeArray.push(tree);
   }
   //the array containing the orcs

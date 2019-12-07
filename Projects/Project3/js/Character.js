@@ -20,6 +20,11 @@ class Character{
     // Health properties
     this.maxHealth = size;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
+    //the offset of characters
+    this.charOff = size/2;
+    //solid interactions properties so it looks right
+    this.endForestX = 2660;
+    this.endForestY = 1792 - this.charOff;
   }
 
   // move
@@ -38,13 +43,16 @@ class Character{
   // Checks if the Character has gone off the canvas and
   // prevents it from it, as a wall would do
   handleBoundaries() {
-
-
-    // this.x = constrain(this.x, 0 + this.size / 2, width - this.size);
-    // this.y = constrain(this.y, 0 + this.size / 2, height - this.size);
-
-    // this.x = constrain(0, 2768);
-    // this.y = constrain(0, 1792);
-
+    //at the edges at 0, constrain from the size of the character/2
+    //and at edges right and down, only with size because it looks
+    //better
+    if(state === "Forest"){
+      this.x = constrain(this.x,0 + this.charOff, this.endForestX);
+      this.y = constrain(this.y,0 + this.charOff, this.endForestY);
+    }
+    else{
+      this.x = constrain(this.x, 0 + this.charOff, width - this.size);
+      this.y = constrain(this.y, 0 + this.charOff, height - this.size);
+    }
   }
 }
