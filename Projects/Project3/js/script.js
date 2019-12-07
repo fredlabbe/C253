@@ -74,7 +74,7 @@ let dieSFX;
 coolDown = 0;
 coolDownMax = 10;
 
-//array containing the informations of the walls
+//array containing the informations of the walls of the dungeon
 let wallProperties = [{
     x: 0,
     y: 100,
@@ -110,6 +110,45 @@ let wallProperties = [{
 ];
 //array containing the walls
 let wallArray = [];
+
+//array containing the trees' properties
+let treeProperties = [{
+    x: 540,
+    y: 210,
+    width: 100,
+    height: 200
+  },
+  {
+    x: 930,
+    y: 195,
+    width: 100,
+    height: 200
+  },
+  {
+    x: 1290,
+    y: 150,
+    width: 100,
+    height: 200
+  },
+  {
+    x: 1900,
+    y: 330,
+    width: 100,
+    height: 200
+  },
+  {
+    x: 1575,
+    y: 210,
+    width: 100,
+    height: 200
+  },
+
+
+];
+let treeArray = [];
+
+//a basic tree
+let tree;
 
 //preload()
 //
@@ -161,6 +200,11 @@ function setup() {
     wall = new Wall(wallProperties[i].x, wallProperties[i].y, wallProperties[i].width, wallProperties[i].height);
     wallArray.push(wall);
   }
+  //the wall array
+  for (let i = 0; i < treeProperties.length; i++) {
+    tree = new Wall(treeProperties[i].x, treeProperties[i].y, treeProperties[i].width, treeProperties[i].height);
+    treeArray.push(tree);
+  }
   //the array containing the orcs
   for (let i = 0; i < 3; i++) {
     let orc = new Predator(100, 400, 15, 60, orcLeftAnimation, orcRightAnimation);
@@ -197,6 +241,7 @@ function draw() {
     image(forestImg, 0, 0, sceneWidth, sceneHeight);
     //the camera follwing the player in p5.Play
     console.log(player.x);
+    console.log(player.y);
     if(player.x > camXMin && player.x < camXMax){
      camera.position.x = player.x;
      //camera.position.y = player.y;
@@ -216,8 +261,14 @@ function draw() {
 
     //checking the projectiles
     checkProjectiles();
-    //cooling down the projectiles so there is not a lot of them
-    //coolDown();
+
+    //the trees as walls
+    //handling the solid characteristics of a wall object
+    //in relationship to the characters
+    for (let i = 0; i < treeArray.length; i++) {
+      treeArray[i].handleSolid(player);
+      treeArray[i].display();
+    }
 
     //drawSprites(forestImg);
 
