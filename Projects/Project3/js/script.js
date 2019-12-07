@@ -70,6 +70,10 @@ let keySFX;
 let potionSFX;
 let dieSFX;
 
+//the cooldown to be able to shoot
+coolDown = 0;
+coolDownMax = 10;
+
 //array containing the informations of the walls
 let wallProperties = [{
     x: 0,
@@ -212,6 +216,8 @@ function draw() {
 
     //checking the projectiles
     checkProjectiles();
+    //cooling down the projectiles so there is not a lot of them
+    //coolDown();
 
     //drawSprites(forestImg);
 
@@ -219,6 +225,7 @@ function draw() {
     dungeonKey.display();
     player.display();
     player.healthBar();
+    player.magicBar();
 
   }
   if (state === "Dungeon") {
@@ -265,6 +272,7 @@ function draw() {
     }
     player.display();
     player.healthBar();
+    player.magicBar();
   } else if (state === "GameOver") {
     //Shows the game over screen and resets all values to starting values
     image(overImg, 0, 0, width, height);
@@ -294,11 +302,26 @@ function mousePressed() {
 //
 //
 function checkProjectiles(){
-
+  // The projectile cooldown determines when you can fire again (when it's at 0)
+// So count down
+coolDown -= 1;
+// Constrain the projectile cooldown to avoid weird numbers
+coolDown = constrain(coolDown - 1, 0, coolDownMax)
   for (var i = 0; i < projectiles.length; i++){
-    // Get the projectile based on its index
-    var projectile = projectiles[i];
-    //projectile.update(player);
-    projectile.display();
+    //projectiles[i].update(player);
+    // Go through all the projectiles and display the image for each one
+    projectiles[i].display();
+    projectiles[i].move();
   }
+}
+
+//
+//
+//
+function coolDown(){
+  // The projectile cooldown determines when you can fire again (when it's at 0)
+// So count down
+coolDown -= 1;
+// Constrain the projectile cooldown to avoid weird numbers
+coolDown = constrain(coolDown - 1, 0, coolDownMax)
 }

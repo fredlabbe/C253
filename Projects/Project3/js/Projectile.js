@@ -9,7 +9,7 @@ class Projectile{
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x,y,speed,size,angle, image){
+  constructor(x, y, speed, size, angle, image){
 
     this.x = x;
     this.y = y;
@@ -81,12 +81,15 @@ class Projectile{
   //
   //
   display(){
-    // Go through all the projectiles and display the image for each one
-    for (var i = 0; i < projectiles.length; i++) {
       push();
-      image(bulletImage, projectiles[i].x, projectiles[i].y, 10, 10);
+      image(this.image, this.x, this.y, 10, 10);
       pop();
-    }
+  }
+
+  move(){
+
+    this.x+=20;
+
   }
 
 

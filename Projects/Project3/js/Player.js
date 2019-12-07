@@ -12,10 +12,17 @@ class Player extends Character{
   // Either sets default values or uses the arguments provided
   constructor(x, y, speed, size, walkAnimation, currentFrame, animationRate) {
     super(x,y,speed,size);
-    this.barX = 10;
-    this.barY = height - 50;
-    this.barOff = 480;
 
+    //healthbar properties
+    this.healthBarX = 10;
+    this.barY = height - 50;//same value in Y for both bars
+    this.healthBarOff = 480;
+    //magicBar properties
+    this.magicBarX = width-310;//10 pixels between the end of the 200px bar and the end of screen
+    this.magicBarOff = this.magicBarX - 520;
+    //magic properties
+    this.magic = 100;
+    this.maxMagic = 100;
     // Health properties
     this.maxHealth = size;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
@@ -27,7 +34,6 @@ class Player extends Character{
     this.leftKey = 65; //A
     this.rightKey = 68; //D
     this.shootKey = 32; //Spacebar to shoot
-
     //the animation
     this.walkAnimation = walkAnimation;
     //booleans to know if the object is moving
@@ -66,10 +72,19 @@ class Player extends Character{
       this.vy = 0;
       this.isMoving = false;
     }
+    //shooting the fireball when the space bar is pressed
     if(keyIsDown(this.shootKey)){
+    // Check if the shoot key is pressed and the cooldown is at 0 so you can fire
+    //and when you have magic
+    if (coolDown === 0 && this.magic > 0) {
       let projectile = new Projectile(this.x,this.y,30,10,0,fireballImg);
-      projectile.shoot();
+      // Add the projectile to the projectiles array of the ship
+      projectiles.push(projectile);
+      this.magic -=20;
       console.log("WORKS");
+      }
+      // Set the cooldown to max so it can start counting down
+      coolDown = coolDownMax;
     }
   }
 
@@ -122,12 +137,12 @@ class Player extends Character{
     if(player.x > camXMin && state === "Forest"){
       // a satisfying distance so the healthbar is not off
       //when it follows the player
-      this.barX = player.x - this.barOff;
+      this.healthBarX = player.x - this.healthBarOff;
       if(player.x > camXMax){
-        this.barX = camXMax - this.barOff;
+        this.healthBarX = camXMax - this.healthBarOff;
       }
     if(state === "Dungeon"){
-      this.barX = 10;
+      this.healthBarX = 10;
     }
   }
     let healthSize;
@@ -136,12 +151,56 @@ class Player extends Character{
     //dark red color
     fill(125, 37, 32);
     //creating the red rectangle
-    rect(this.barX, this.barY, 300, 20);
+    rect(this.healthBarX, this.barY, 300, 20);
     //the green color
     fill(60, 94, 55);
     //creating the rectangle that is mapped, the green one, the life
-    rect(this.barX, this.barY, healthSize, 20);
+    rect(this.healthBarX, this.barY, healthSize, 20);
     pop();
 
   }
+
+  // magicBar()
+  //
+  //creates the player's magicBar by mapping it to the magic and max magic
+  //and using a rectangle
+  magicBar() {
+
+    if(this.magic<100){
+      //always increasing the magic as it restores with time but slower than how
+      //much it takes to fire the spell
+      this.magic+=1;
+    }
+    //making the healthbar follow the player but not at the edges
+    //of the background image
+    if(player.x > camXMin && state === "Forest"){
+      // a satisfying distance so the healthbar is not off
+      //when it follows the player
+      this.magicBarX = player.x + this.magicBarOff;
+      if(player.x > camXMax){
+        this.magicBarX = camXMax + this.magicBarOff;
+      }
+    if(state === "Dungeon"){
+      //putting it back to the starting value
+      this.magicBarX = width-310;
+    }
+  }
+    let magicSize;
+    magicSize = map(this.magic, 0, this.maxMagic, 0, 300);
+
+    push();
+    //light blue color
+    fill(178, 189, 244);
+    //creating the light blue rectangle on bottom
+    rect(this.magicBarX, this.barY, 300, 20);
+    if(this.magic > 0){
+    //the dark blue color on top
+    fill(66, 87, 191);
+    //creating the rectangle that is mapped, the dark blue one, the magic
+    rect(this.magicBarX, this.barY, magicSize, 20);
+  }
+    pop();
+
+  }
+
 }
