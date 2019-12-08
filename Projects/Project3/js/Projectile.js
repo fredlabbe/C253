@@ -40,8 +40,6 @@ class Projectile{
           projectiles.pop(i);
           //checking if it is the player who is at 0
           if(player.health === 0){
-            camera.position.x = 500;
-            camera.position.y = 370;
             player.reset();
           }
         }

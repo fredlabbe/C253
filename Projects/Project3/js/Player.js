@@ -77,7 +77,7 @@ class Player extends Character{
     // Check if the shoot key is pressed and the cooldown is at 0 so you can fire
     //and when you have magic
     if (coolDown === 0 && this.magic > 0) {
-      let projectile = new Projectile(this.x,this.y,30,30,0,fireballImg);
+      let projectile = new Projectile(this.x+this.size,this.y,30,30,0,fireballImg);
       // Add the projectile to the projectiles array of the ship
       projectiles.push(projectile);
       this.magic -=20;
@@ -118,8 +118,18 @@ class Player extends Character{
   // and size back to default
   reset() {
     if(state === "Forest"){
+      camera.position.x = 500;
+      camera.position.y = 370;
     this.x = 315;
-    this.y = 70; 
+    this.y = 70;
+
+    //healthbar properties
+    this.healthBarX = 10;
+    this.barY = height - 50;//same value in Y for both bars
+    this.healthBarOff = 480;
+    //magicBar properties
+    this.magicBarX = width-310;//10 pixels between the end of the 200px bar and the end of screen
+    this.magicBarOff = this.magicBarX - 520;
   }
     if(state === "Dungeon"){
     this.x = 50;
@@ -127,6 +137,8 @@ class Player extends Character{
   }
     // Default health
     this.health = this.maxHealth;
+    // default magic
+    this.magic = this.maxMagic;
   }
 
   // healthBar()
