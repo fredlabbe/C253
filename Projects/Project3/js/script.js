@@ -9,6 +9,8 @@ let sceneWidth = 2768;
 let sceneHeight = 1792;
 let camXMin = 500;
 let camXMax = 2200;
+let camYMin = 350;
+let camYMax = 1437;
 
 // Our ennemies
 let orcArray = [];
@@ -66,15 +68,22 @@ let forestImg;
 let fireballImg;
 let treeImg;
 let wallImg;
+let necroImg;
 
 //sounds
 let keySFX;
 let potionSFX;
 let dieSFX;
 
-//the cooldown to be able to shoot
-coolDown = 0;
-coolDownMax = 10;
+//the cooldown to be able to shoot of player
+let coolDown = 0;
+let coolDownMax = 10;
+//the cooldown of Necromancer
+let necroCoolDown = 0;
+let necroCoolDownMax = 20;
+
+//the necromancers
+let necro;
 
 //array containing the informations of the walls of the dungeon
 let wallProperties = [{
@@ -178,6 +187,7 @@ function preload() {
   fireballImg = loadImage("assets/images/fireball.png");
   treeImg = loadImage("assets/images/tree.png");
   wallImg = loadImage("assets/images/wall.png");
+  necroImg = loadImage("assets/images/Necromancer.png");
 
   //the sounds
 
@@ -190,14 +200,14 @@ function preload() {
 // setup()
 //
 // Sets up a canvas
-// Creates objects for the predator, the player, the potions and the walls
+// Creates objects for the Orc, the player, the potions and the walls
 function setup() {
   createCanvas(1000, 700);
   //setting up the door properties
   doorX = width - 50;
   doorY = height - 100;
 
-  player = new Player(30, 30, 15, 50, playerWalkAnimation, currentFrame, animationRate);
+  player = new Player(315, 70, 15, 50, playerWalkAnimation, currentFrame, animationRate);
 
   //the wall array
   for (let i = 0; i < wallProperties.length; i++) {
@@ -211,11 +221,14 @@ function setup() {
   }
   //the array containing the orcs
   for (let i = 0; i < 3; i++) {
-    let orc = new Predator(100, 400, 15, 60, orcLeftAnimation, orcRightAnimation);
+    let orc = new Orc(100, 400, 15, 60, orcLeftAnimation, orcRightAnimation);
     orcArray.push(orc);
   }
+  //the necromancers
+  necro = new Necromancer(500,500,0,100,necroImg);
+
   //the objects of the forest
-  dungeonEntry = new Door(2550, 500, 200, 200, entryImg, "Forest");
+  dungeonEntry = new Door(2550, 1380, 200, 200, entryImg, "Forest");
   dungeonKey = new Key(100, 500, keyImg);
 
   //The objects of Dungeon
@@ -244,11 +257,13 @@ function draw() {
   if(state === "Forest"){
     image(forestImg, 0, 0, sceneWidth, sceneHeight);
     //the camera follwing the player in p5.Play
-    console.log(player.x);
-    console.log(player.y);
+    // console.log(player.x);
+    // console.log(player.y);
     if(player.x > camXMin && player.x < camXMax){
      camera.position.x = player.x;
-     //camera.position.y = player.y;
+   }
+   if(player.y > camYMin && player.y < camYMax){
+     camera.position.y = player.y;
    }
 
     //the dungeon entry
@@ -265,6 +280,9 @@ function draw() {
 
     //checking the projectiles
     checkProjectiles();
+
+    necro.shoot();
+    necro.display();
 
     //the trees as walls
     //handling the solid characteristics of a wall object
@@ -307,6 +325,8 @@ function draw() {
     potion2.display();
     door.display();
     key.display();
+
+    checkProjectiles();
 
     //the walls
     //handling the solid characteristics of a wall object
@@ -360,23 +380,33 @@ function checkProjectiles(){
   // The projectile cooldown determines when you can fire again (when it's at 0)
 // So count down
 coolDown -= 1;
+necroCoolDown -=1 ;
+console.log("works\n"+ necroCoolDown);
 // Constrain the projectile cooldown to avoid weird numbers
 coolDown = constrain(coolDown - 1, 0, coolDownMax)
+necroCoolDown = constrain(necroCoolDown - 1, 0, necroCoolDownMax)
   for (var i = 0; i < projectiles.length; i++){
     //projectiles[i].update(player);
     // Go through all the projectiles and display the image for each one
+    //handling the interactions between the projectiles and the character
     projectiles[i].display();
     projectiles[i].move();
+    projectiles[i].update(necro);
+    if(state === "Dungeon"){
+    for (let j = 0; j < orcArray.length; j++) {
+      projectiles[i].update(orcArray[j]);
+    }
+  }
   }
 }
 
 //
 //
 //
-function coolDown(){
-  // The projectile cooldown determines when you can fire again (when it's at 0)
-// So count down
-coolDown -= 1;
-// Constrain the projectile cooldown to avoid weird numbers
-coolDown = constrain(coolDown - 1, 0, coolDownMax)
-}
+// function coolDown(){
+//   // The projectile cooldown determines when you can fire again (when it's at 0)
+// // So count down
+// coolDown -= 1;
+// // Constrain the projectile cooldown to avoid weird numbers
+// coolDown = constrain(coolDown - 1, 0, coolDownMax)
+// }

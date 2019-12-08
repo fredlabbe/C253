@@ -1,14 +1,14 @@
-// Predator
+// Orc
 //
-// A class that represents a simple predator
+// A class that represents a simple Orc
 // controlled by the arrow keys. It can move around
 // the screen and consume Player object.
 
-class Predator extends Character{
+class Orc extends Character{
 
   // constructor
   //
-  // Sets the initial values for the Predator's properties
+  // Sets the initial values for the Orc's properties
   // Either sets default values or uses the arguments provided
   constructor(x, y, speed, size, orcLeftAnimation, orcRightAnimation) {
     super(x,y,speed,size);
@@ -18,7 +18,6 @@ class Predator extends Character{
     // Health properties
     this.maxHealth = size;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
-    this.healthLossPerMove = 0.1;
     this.healthGainPerEat = 1;
     // Display properties
     this.size = this.health; // size is defined in terms of health
@@ -44,15 +43,15 @@ class Predator extends Character{
 
   // handleEating
   //
-  // Takes a Player object as an argument and checks if the predator
+  // Takes a Player object as an argument and checks if the Orc
   // overlaps it. If so, reduces the Player's health and increases
-  // the predator's. If the Player dies, it gets reset.
+  // the Orc's. If the Player dies, it gets reset.
   handleEating(Player) {
-    // Calculate distance from this predator to the Player
+    // Calculate distance from this Orc to the Player
     let d = dist(this.x, this.y, Player.x, Player.y);
     // Check if the distance is less than their two sizes (an overlap)
     if (d < this.size + Player.size) {
-      // Increase predator health and constrain it to its possible range
+      // Increase Orc health and constrain it to its possible range
       this.health += this.healthGainPerEat;
       this.health = constrain(this.health, 0, this.maxHealth);
       // Decrease Player health by the same amount
@@ -67,7 +66,7 @@ class Predator extends Character{
 
   // display
   //
-  // Draw the predator as an ellipse on the canvas
+  // Draw the Orc as an ellipse on the canvas
   // with a size the same size as its current health.
   display() {
 

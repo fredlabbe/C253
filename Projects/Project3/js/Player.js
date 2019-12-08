@@ -2,13 +2,13 @@
 //
 // A class that represents a simple Player that moves
 // on screen based on a noise() function. It can move around
-// the screen and be consumed by Predator objects.
+// the screen and be consumed by Orc objects.
 
 class Player extends Character{
 
   // constructor
   //
-  // Sets the initial values for the Predator's properties
+  // Sets the initial values for the Orc's properties
   // Either sets default values or uses the arguments provided
   constructor(x, y, speed, size, walkAnimation, currentFrame, animationRate) {
     super(x,y,speed,size);
@@ -47,7 +47,7 @@ class Player extends Character{
 
   // handleInput
   //
-  // Checks if an arrow key is pressed and sets the predator's
+  // Checks if an arrow key is pressed and sets the Orc's
   // velocity appropriately.
   handleInput() {
     // Horizontal movement
@@ -77,7 +77,7 @@ class Player extends Character{
     // Check if the shoot key is pressed and the cooldown is at 0 so you can fire
     //and when you have magic
     if (coolDown === 0 && this.magic > 0) {
-      let projectile = new Projectile(this.x,this.y,30,10,0,fireballImg);
+      let projectile = new Projectile(this.x,this.y,30,30,0,fireballImg);
       // Add the projectile to the projectiles array of the ship
       projectiles.push(projectile);
       this.magic -=20;
@@ -134,6 +134,12 @@ class Player extends Character{
 
     //making the healthbar follow the player but not at the edges
     //of the background image
+    if(player.y > camYMin && player.y < camYMax && state === "Forest"){
+    this.barY = player.y + 280;
+  }
+    if(player.y > camYMax && state === "Forest"){
+      this.barY = sceneHeight - 50;
+    }
     if(player.x > camXMin && state === "Forest"){
       // a satisfying distance so the healthbar is not off
       //when it follows the player
@@ -142,7 +148,9 @@ class Player extends Character{
         this.healthBarX = camXMax - this.healthBarOff;
       }
     if(state === "Dungeon"){
+      //putting back the values when the camera doesn't move
       this.healthBarX = 10;
+      this.barY = height - 50;
     }
   }
     let healthSize;
@@ -169,7 +177,7 @@ class Player extends Character{
     if(this.magic<100){
       //always increasing the magic as it restores with time but slower than how
       //much it takes to fire the spell
-      this.magic+=1;
+      this.magic+=0.5;
     }
     //making the healthbar follow the player but not at the edges
     //of the background image
@@ -200,7 +208,5 @@ class Player extends Character{
     rect(this.magicBarX, this.barY, magicSize, 20);
   }
     pop();
-
   }
-
 }
