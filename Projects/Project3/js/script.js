@@ -375,7 +375,8 @@ function mousePressed() {
 }
 //checkProjectiles()
 //
-//
+//manages the coolDowns of the characters and makes the projectiles
+//move, displays them and checks if it hits something or went off screen
 function checkProjectiles(){
   // The projectile cooldown determines when you can fire again (when it's at 0)
 // So count down
@@ -386,27 +387,16 @@ console.log("works\n"+ necroCoolDown);
 coolDown = constrain(coolDown - 1, 0, coolDownMax)
 necroCoolDown = constrain(necroCoolDown - 1, 0, necroCoolDownMax)
   for (var i = 0; i < projectiles.length; i++){
-    //projectiles[i].update(player);
     // Go through all the projectiles and display the image for each one
     //handling the interactions between the projectiles and the character
     projectiles[i].display();
     projectiles[i].move();
     projectiles[i].update(necro);
-    if(state === "Dungeon"){
-    for (let j = 0; j < orcArray.length; j++) {
-      projectiles[i].update(orcArray[j]);
-    }
-  }
+    projectiles[i].update(player);
+  //   if(state === "Dungeon"){
+  //   for (let j = 0; j < orcArray.length; j++) {
+  //     projectiles[i].update(orcArray[j]);
+  //   }
+  // }
   }
 }
-
-//
-//
-//
-// function coolDown(){
-//   // The projectile cooldown determines when you can fire again (when it's at 0)
-// // So count down
-// coolDown -= 1;
-// // Constrain the projectile cooldown to avoid weird numbers
-// coolDown = constrain(coolDown - 1, 0, coolDownMax)
-// }

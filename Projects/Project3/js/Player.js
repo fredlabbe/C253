@@ -117,13 +117,16 @@ class Player extends Character{
   // Set the position to a random location and reset health
   // and size back to default
   reset() {
-    // Random position
+    if(state === "Forest"){
+    this.x = 315;
+    this.y = 70; 
+  }
+    if(state === "Dungeon"){
     this.x = 50;
     this.y = 50;
+  }
     // Default health
     this.health = this.maxHealth;
-    // Default size
-    this.size = this.health;
   }
 
   // healthBar()
