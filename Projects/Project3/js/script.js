@@ -26,9 +26,9 @@ let player;
 let potion;
 let potion2;
 
-//the Walls
+//the Wall objects
 let wall1;
-let wall2;
+let rock;
 
 //the door and its properties
 let door;
@@ -69,7 +69,7 @@ let fireballImg;
 let treeImg;
 let wallImg;
 let necroImg;
-let rock;
+let rockImg;
 
 //sounds
 let keySFX;
@@ -128,48 +128,87 @@ let treeProperties = [{
     x: 540,
     y: 210,
     width: 120,
-    height: 200,
-    image: treeImg;
+    height: 200
   },
   {
     x: 930,
     y: 195,
     width: 120,
-    height: 200,
-    image: treeImg;
+    height: 200
   },
   {
     x: 1290,
     y: 150,
     width: 120,
-    height: 200,
-    image: treeImg;
+    height: 200
   },
   {
     x: 1900,
     y: 330,
     width: 120,
-    height: 200,
-    image: treeImg;
+    height: 200
   },
   {
     x: 1575,
     y: 210,
     width: 120,
-    height: 200,
-    image: treeImg;
+    height: 200
   },
   {
     x: 105,
     y: 850,
     width: 120,
-    height: 200,
-    image: treeImg;
+    height: 200
   },
 
 
 ];
-let treeArray = [];
+//array containing the rocks' properties
+let rockProperties = [{
+    x: 65,
+    y: 240,
+    width: 120,
+    height: 120
+  },
+  {
+    x: 710,
+    y: 170,
+    width: 120,
+    height: 120
+  },
+  {
+    x: 915,
+    y: 670,
+    width: 200,
+    height: 200
+  },
+  {
+    x: 765,
+    y: 710,
+    width: 120,
+    height: 120
+  },
+  {
+    x: 555,
+    y: 820,
+    width: 100,
+    height: 100
+  },
+  {
+    x: 535,
+    y: 980,
+    width: 200,
+    height: 200
+  },
+  {
+    x: 635,
+    y: 690,
+    width: 100,
+    height: 100
+  },
+
+];
+let objectsArray = [];
 
 //a basic tree
 let tree;
@@ -221,7 +260,7 @@ function setup() {
   doorX = width - 50;
   doorY = height - 100;
 
-  player = new Player(315, 70, 10, 100, playerWalkAnimation, currentFrame, animationRate);
+  player = new Player(315, 70, 20, 100, playerWalkAnimation, currentFrame, animationRate);
 
   //the wall array
   for (let i = 0; i < wallProperties.length; i++) {
@@ -230,8 +269,10 @@ function setup() {
   }
   //the wall array
   for (let i = 0; i < treeProperties.length; i++) {
-    tree = new Wall(treeProperties[i].x, treeProperties[i].y, treeProperties[i].width, treeProperties[i].height, treeProperties[i].image);
-    treeArray.push(tree);
+    tree = new Wall(treeProperties[i].x, treeProperties[i].y, treeProperties[i].width, treeProperties[i].height, treeImg);
+    objectsArray.push(tree);
+    rock = new Wall(rockProperties[i].x, rockProperties[i].y, rockProperties[i].width, rockProperties[i].height, rockImg);
+    objectsArray.push(rock);
   }
   //the array containing the orcs
   for (let i = 0; i < 3; i++) {
@@ -314,9 +355,9 @@ function draw() {
     //the trees as walls
     //handling the solid characteristics of a wall object
     //in relationship to the characters
-    for (let i = 0; i < treeArray.length; i++) {
-      treeArray[i].handleSolid(player);
-      treeArray[i].display();
+    for (let i = 0; i < objectsArray.length; i++) {
+      objectsArray[i].handleSolid(player);
+      objectsArray[i].display();
     }
 
     //drawSprites(forestImg);
