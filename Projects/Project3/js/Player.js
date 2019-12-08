@@ -39,10 +39,14 @@ class Player extends Character{
     //booleans to know if the object is moving
     this.isMoving = false;
     this.isMovingSideways = false;
+    //boolean to know if player is facing left or right
+    this.isRight = true;
     //properties for the frames and animation
     this.currentFrame = currentFrame;
     this.animationRate = animationRate;
     this.frame = 0;
+    //a value for the offset of the spell so it does not take life from player
+    this.spellOff = 50;
   }
 
   // handleInput
@@ -53,12 +57,20 @@ class Player extends Character{
     // Horizontal movement
     if (keyIsDown(this.leftKey)) {
       this.vx = -this.speed;
+      this.isRight = false; //player facing left
       this.isMovingSideways = true;
+      // putting the offset of the spell to a negative value so it does not
+      //appear behind the player
+      this.spellOff = -50;
     } else if (keyIsDown(this.rightKey)) {
       this.vx = this.speed;
+      this.isRight = true;
       this.isMovingSideways = true;
+      //putting the offset back to positive
+      this.spellOff = 50;
     } else {
       this.vx = 0;
+      this.isRight = true;
       this.isMovingSideways = false;
     }
     // Vertical movement
@@ -77,7 +89,7 @@ class Player extends Character{
     // Check if the shoot key is pressed and the cooldown is at 0 so you can fire
     //and when you have magic
     if (coolDown === 0 && this.magic > 0) {
-      let projectile = new Projectile(this.x+this.size,this.y,30,30,0,fireballImg);
+      let projectile = new Projectile(this.x+this.spellOff,this.y,30,30,0,fireballImg, this.isRight);
       // Add the projectile to the projectiles array of the ship
       projectiles.push(projectile);
       this.magic -=20;
@@ -96,18 +108,34 @@ class Player extends Character{
     push();
     imageMode(CENTER);
     if (this.isMoving === true || this.isMovingSideways === true) {
-      image(playerWalkAnimation[currentFrame], this.x, this.y, this.size, this.size);
+      //checking if it is facing left. If yes, play the left animation.
+      //Default is facing right
+      if(this.isRight === false){
+        image(playerLeftAnimation[currentFrame], this.x, this.y, this.size, this.size);
+        //Checking to see if the currentFrame of the overall program is a
+        //multiple of the frameRate of the animation by using modulo (%).
+        //Only changes the frames if it is.
+        if ((frameCount % floor(frameRate()) / animationRate)) {
+          currentFrame++;
+          if (currentFrame >= playerLeftAnimation.length) {
+            currentFrame = 0;
+          }
+        }
+      }
+      else{
+      image(playerRightAnimation[currentFrame], this.x, this.y, this.size, this.size);
       //Checking to see if the currentFrame of the overall program is a
       //multiple of the frameRate of the animation by using modulo (%).
       //Only changes the frames if it is.
       if ((frameCount % floor(frameRate()) / animationRate)) {
         currentFrame++;
-        if (currentFrame >= playerWalkAnimation.length) {
+        if (currentFrame >= playerRightAnimation.length) {
           currentFrame = 0;
         }
       }
+    }
     } else {
-      image(playerWalkAnimation[0], this.x, this.y, this.size, this.size);
+      image(playerRightAnimation[0], this.x, this.y, this.size, this.size);
     }
     pop();
   }

@@ -26,7 +26,7 @@ class Necromancer extends Character {
   //fire too much. Only when it is alive
   shoot() {
     if (this.health != 0 && necroCoolDown === 0 && player.x > this.x && player.x < this.x + this.sightX && player.y > this.y - this.sightY && player.y < this.y + this.sightY) {
-      let projectile = new Projectile(this.x +this.size, this.y, 30, 50, 0, fireballImg);
+      let projectile = new Projectile(this.x +this.size, this.y, 30, 50, 0, fireballImg, true);
       // Add the projectile to the projectiles array of the ship
       projectiles.push(projectile);
       // Set the cooldown to max so it can start counting down

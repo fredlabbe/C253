@@ -43,7 +43,8 @@ let key;
 let dungeonKey;
 
 //animation array
-let playerWalkAnimation = [];
+let playerRightAnimation = [];
+let playerLeftAnimation = [];
 let orcLeftAnimation = [];
 let orcRightAnimation = [];
 
@@ -160,6 +161,36 @@ let treeProperties = [{
     width: 120,
     height: 200
   },
+  {
+    x: 215,
+    y: 1682,
+    width: 150,
+    height: 230
+  },
+  {
+    x: 770,
+    y: 1642,
+    width: 120,
+    height: 200
+  },
+  {
+    x: 1715,
+    y: 1672,
+    width: 120,
+    height: 200
+  },
+  {
+    x: 2395,
+    y: 772,
+    width: 120,
+    height: 200
+  },
+  {
+    x: 2035,
+    y: 950,
+    width: 160,
+    height: 240
+  },
 
 
 ];
@@ -206,6 +237,103 @@ let rockProperties = [{
     width: 100,
     height: 100
   },
+  {
+    x: 655,
+    y: 1200,
+    width: 150,
+    height: 150
+  },
+  {
+    x: 1075,
+    y: 630,
+    width: 100,
+    height: 100
+  },
+  {
+    x: 1205,
+    y: 670,
+    width: 160,
+    height: 160
+  },
+  {
+    x: 915,
+    y: 1270,
+    width: 190,
+    height: 190
+  },
+  {
+    x: 495,
+    y: 1130,
+    width: 100,
+    height: 100
+  },
+  {
+    x: 755,
+    y: 1300,
+    width: 100,
+    height: 100
+  },
+  {
+    x: 1075,
+    y: 1230,
+    width: 100,
+    height: 100
+  },
+  {
+    x: 1195,
+    y: 1230,
+    width: 200,
+    height: 200
+  },
+  {
+    x: 1335,
+    y: 770,
+    width: 170,
+    height: 170
+  },
+  {
+    x: 1355,
+    y: 1210,
+    width: 200,
+    height: 200
+  },
+  {
+    x: 1495,
+    y: 890,
+    width: 120,
+    height: 120
+  },
+  {
+    x: 2495,
+    y: 950,
+    width: 300,
+    height: 300
+  },
+  {
+    x: 2475,
+    y: 230,
+    width: 200,
+    height: 200
+  },
+  {
+    x: 2280,
+    y: 850,
+    width: 120,
+    height: 120
+  },
+  {
+    x: 2235,
+    y: 1662,
+    width: 170,
+    height: 170
+  },
+  {
+    x: 390,
+    y: 1630,
+    width: 150,
+    height: 150
+  },
+
 
 ];
 let objectsArray = [];
@@ -220,7 +348,9 @@ function preload() {
   //the images and animations
   for (let i = 0; i < 3; i++) {
     let playerImage = loadImage("assets/animations/playerWalking/walkingAnimation" + i + ".png");
-    playerWalkAnimation.push(playerImage);
+    playerRightAnimation.push(playerImage);
+    let playerLeftImage = loadImage("assets/animations/playerWalking/leftAnimation" + i + ".png");
+    playerLeftAnimation.push(playerLeftImage);
     console.log("assets/animations/playerWalking/walkingAnimation" + i + ".png");
     let orcLeftImage = loadImage("assets/animations/orcWalking/leftWalking/OrcAnimation" + i + ".png");
     orcLeftAnimation.push(orcLeftImage);
@@ -260,7 +390,7 @@ function setup() {
   doorX = width - 50;
   doorY = height - 100;
 
-  player = new Player(315, 70, 20, 100, playerWalkAnimation, currentFrame, animationRate);
+  player = new Player(315, 70, 20, 100, playerRightAnimation, currentFrame, animationRate);
 
   //the wall array
   for (let i = 0; i < wallProperties.length; i++) {
@@ -271,6 +401,9 @@ function setup() {
   for (let i = 0; i < treeProperties.length; i++) {
     tree = new Wall(treeProperties[i].x, treeProperties[i].y, treeProperties[i].width, treeProperties[i].height, treeImg);
     objectsArray.push(tree);
+  }
+  // continue loading the array containing the objects with the rocks and their properties
+  for (let i = 0; i < rockProperties.length; i++){
     rock = new Wall(rockProperties[i].x, rockProperties[i].y, rockProperties[i].width, rockProperties[i].height, rockImg);
     objectsArray.push(rock);
   }
@@ -293,11 +426,11 @@ function setup() {
 //
 //
 //
-  necro = new Necromancer(500, 500, 0, 100, necroImg);
+  necro = new Necromancer(1135, 1050, 0, 100, necroImg);
 
   //the objects of the forest
   dungeonEntry = new Door(2550, 1380, 200, 200, entryImg, "Forest");
-  dungeonKey = new Key(100, 500, keyImg);
+  dungeonKey = new Key(795, 1100, keyImg);
 
   //The objects of Dungeon
   potion = new Potion(500, 500, potionImg, 50);

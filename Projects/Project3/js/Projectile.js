@@ -9,7 +9,7 @@ class Projectile{
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, size, angle, image){
+  constructor(x, y, speed, size, angle, image, isRight){
 
     this.x = x;
     this.y = y;
@@ -24,6 +24,9 @@ class Projectile{
     this.image = image;
     //determining if we need to delete this projectile
     this.toDelete = false;
+    //to know if it is moving
+    this.isLaunched = false;
+    this.isRight = isRight;
 }
     // update()
   //
@@ -40,7 +43,7 @@ class Projectile{
           character.health -= this.damage;
           character.health = constrain(character.health, 0, character.maxHealth);
           console.log(player.health);
-          this.toDelete = true;  
+          this.toDelete = true;
           //checking if it's the player who is at 0 and if yes, respawns it
           if(player.health === 0){
             player.reset();
@@ -58,14 +61,23 @@ class Projectile{
       image(this.image, this.x, this.y, this.size, this.size);
       pop();
   }
+  // move()
+  //
+  //moves the projectile depending on the side the character faces
 
   move(){
-
-    this.x+=20;
-
+    if(this.isRight){
+    this.x += 20;
+    //this.isLaunched = true;
   }
-
-  deleteProjectile(){
+  else if(this.isRight === false){
+    this.x -= 20;
+    //this.isLaunched = true;
+  }
+  // else {
+  //   this.x += 20;
+  //   this.isLaunched = true;
+  // }
 
   }
 
