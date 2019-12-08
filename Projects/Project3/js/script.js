@@ -69,6 +69,7 @@ let fireballImg;
 let treeImg;
 let wallImg;
 let necroImg;
+let rock;
 
 //sounds
 let keySFX;
@@ -88,31 +89,31 @@ let necro;
 //array containing the informations of the walls of the dungeon
 let wallProperties = [{
     x: 0,
-    y: 100,
+    y: 150,
     width: 500,
     height: 30
   },
   {
     x: 650,
-    y: 100,
+    y: 150,
     width: 400,
     height: 30
   },
   {
     x: 600,
-    y: 535,
+    y: 750,
     width: 30,
-    height: 900
+    height: 400
   },
   {
     x: 600,
-    y: 285,
+    y: 365,
     width: 30,
     height: 400
   },
   {
     x: 900,
-    y: 300,
+    y: 350,
     width: 250,
     height: 30
   },
@@ -126,32 +127,44 @@ let wallArray = [];
 let treeProperties = [{
     x: 540,
     y: 210,
-    width: 100,
-    height: 200
+    width: 120,
+    height: 200,
+    image: treeImg;
   },
   {
     x: 930,
     y: 195,
-    width: 100,
-    height: 200
+    width: 120,
+    height: 200,
+    image: treeImg;
   },
   {
     x: 1290,
     y: 150,
-    width: 100,
-    height: 200
+    width: 120,
+    height: 200,
+    image: treeImg;
   },
   {
     x: 1900,
     y: 330,
-    width: 100,
-    height: 200
+    width: 120,
+    height: 200,
+    image: treeImg;
   },
   {
     x: 1575,
     y: 210,
-    width: 100,
-    height: 200
+    width: 120,
+    height: 200,
+    image: treeImg;
+  },
+  {
+    x: 105,
+    y: 850,
+    width: 120,
+    height: 200,
+    image: treeImg;
   },
 
 
@@ -188,6 +201,7 @@ function preload() {
   treeImg = loadImage("assets/images/tree.png");
   wallImg = loadImage("assets/images/wall.png");
   necroImg = loadImage("assets/images/Necromancer.png");
+  rockImg = loadImage("assets/images/rock.png");
 
   //the sounds
 
@@ -207,7 +221,7 @@ function setup() {
   doorX = width - 50;
   doorY = height - 100;
 
-  player = new Player(315, 70, 15, 50, playerWalkAnimation, currentFrame, animationRate);
+  player = new Player(315, 70, 10, 100, playerWalkAnimation, currentFrame, animationRate);
 
   //the wall array
   for (let i = 0; i < wallProperties.length; i++) {
@@ -216,7 +230,7 @@ function setup() {
   }
   //the wall array
   for (let i = 0; i < treeProperties.length; i++) {
-    tree = new Wall(treeProperties[i].x, treeProperties[i].y, treeProperties[i].width, treeProperties[i].height, treeImg);
+    tree = new Wall(treeProperties[i].x, treeProperties[i].y, treeProperties[i].width, treeProperties[i].height, treeProperties[i].image);
     treeArray.push(tree);
   }
   //the array containing the orcs
@@ -225,7 +239,20 @@ function setup() {
     orcArray.push(orc);
   }
   //the necromancers
-  necro = new Necromancer(500,500,0,100,necroImg);
+  //DOESNT DELETE MUST DELETE WHEN WILL BE ARRAY OF NECROMANCERS AND MUST DO AN
+  //ARRAY OF PROPERTIES LIKE THE WALLS FOR THAT AND THE ORCS
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+  necro = new Necromancer(500, 500, 0, 100, necroImg);
 
   //the objects of the forest
   dungeonEntry = new Door(2550, 1380, 200, 200, entryImg, "Forest");
@@ -237,8 +264,8 @@ function setup() {
   door = new Door(doorX, doorY, 100, 200, doorImg, "Dungeon");
   key = new Key(100, 600, keyImg);
 
-   //forestImg = createSprite(0,0,640,480);
-   //forestImg.addAnimation('default', "assets/images/Tileset.jpg");
+  //forestImg = createSprite(0,0,640,480);
+  //forestImg.addAnimation('default', "assets/images/Tileset.jpg");
   // forestImg.scale = 4;
 }
 
@@ -254,17 +281,17 @@ function draw() {
   if (state === "Narrative") {
     image(narrativeImg, 0, 0, width, height);
   }
-  if(state === "Forest"){
+  if (state === "Forest") {
     image(forestImg, 0, 0, sceneWidth, sceneHeight);
     //the camera follwing the player in p5.Play
-    // console.log(player.x);
-    // console.log(player.y);
-    if(player.x > camXMin && player.x < camXMax){
-     camera.position.x = player.x;
-   }
-   if(player.y > camYMin && player.y < camYMax){
-     camera.position.y = player.y;
-   }
+    console.log(player.x);
+    console.log(player.y);
+    if (player.x > camXMin && player.x < camXMax) {
+      camera.position.x = player.x;
+    }
+    if (player.y > camYMin && player.y < camYMax) {
+      camera.position.y = player.y;
+    }
 
     //the dungeon entry
     dungeonEntry.handleExit(player);
@@ -366,9 +393,9 @@ function mousePressed() {
     state = "Narrative";
   } else if (state === "Narrative") {
     state = "Forest";
-  } else if(state === "Forest"){
+  } else if (state === "Forest") {
     state = "Dungeon";
-  }else if (state === "GameOver") {
+  } else if (state === "GameOver") {
     //Should reset all the values to beginning values
     state = "Menu";
   }
@@ -377,26 +404,36 @@ function mousePressed() {
 //
 //manages the coolDowns of the characters and makes the projectiles
 //move, displays them and checks if it hits something or went off screen
-function checkProjectiles(){
+function checkProjectiles() {
   // The projectile cooldown determines when you can fire again (when it's at 0)
-// So count down
-coolDown -= 1;
-necroCoolDown -=1 ;
-console.log("works\n"+ necroCoolDown);
-// Constrain the projectile cooldown to avoid weird numbers
-coolDown = constrain(coolDown - 1, 0, coolDownMax)
-necroCoolDown = constrain(necroCoolDown - 1, 0, necroCoolDownMax)
-  for (var i = 0; i < projectiles.length; i++){
+  // So count down
+  coolDown -= 1;
+  necroCoolDown -= 1;
+  // Constrain the projectile cooldown to avoid weird numbers
+  coolDown = constrain(coolDown - 1, 0, coolDownMax)
+  necroCoolDown = constrain(necroCoolDown - 1, 0, necroCoolDownMax)
+  for (var i = 0; i < projectiles.length; i++) {
     // Go through all the projectiles and display the image for each one
     //handling the interactions between the projectiles and the character
     projectiles[i].display();
     projectiles[i].move();
     projectiles[i].update(necro);
     projectiles[i].update(player);
-  //   if(state === "Dungeon"){
-  //   for (let j = 0; j < orcArray.length; j++) {
-  //     projectiles[i].update(orcArray[j]);
-  //   }
-  // }
+    for (let j = 0; j < orcArray.length; j++) {
+      projectiles[i].update(orcArray[j]);
+    }
+  }
+  //taking out the objects that must be deleted by taking into account the fact
+  //that when you take out from an array, you make it shrink and it can lead to
+  //issues and errors (that was the way I found to solve my errors)
+  for (let i = projectiles.length - 1; i >= 0; i--) {
+    if (projectiles[i].toDelete === true) {
+      projectiles.splice(i, 1);
+    }
+  }
+  for (let i = orcArray.length - 1; i >= 0; i--) {
+    if (orcArray[i].toDelete === true) {
+      orcArray.splice(i, 1);
+    }
   }
 }

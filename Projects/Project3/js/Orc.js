@@ -23,6 +23,7 @@ class Orc extends Character{
     this.size = this.health; // size is defined in terms of health
     this.orcLeftAnimation = orcLeftAnimation;
     this.orcRightAnimation = orcRightAnimation;
+    this.toDelete = false;
   }
 
   // move
@@ -50,9 +51,9 @@ class Orc extends Character{
     // Calculate distance from this Orc to the Player
     let d = dist(this.x, this.y, Player.x, Player.y);
     // Check if the distance is less than their two sizes (an overlap)
-    if (d < this.size + Player.size) {
+    if (d < this.size/2 + Player.size/2) {
       // Increase Orc health and constrain it to its possible range
-      this.health += this.healthGainPerEat;
+      //this.health += this.healthGainPerEat;
       this.health = constrain(this.health, 0, this.maxHealth);
       // Decrease Player health by the same amount
       Player.health -= this.healthGainPerEat;
@@ -69,7 +70,7 @@ class Orc extends Character{
   // Draw the Orc as an ellipse on the canvas
   // with a size the same size as its current health.
   display() {
-
+    if(this.health > 0){
     //orc animation when it moves left
     push();
     imageMode(CENTER);
@@ -100,4 +101,8 @@ class Orc extends Character{
     }
     pop();
   }
+  else{ this.toDelete = true;
+
+  }
+}
 }

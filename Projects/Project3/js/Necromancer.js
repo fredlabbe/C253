@@ -22,15 +22,15 @@ class Necromancer extends Character {
 
   // shoot()
   //
-  //When the player is in range, shoots in the direction
+  //When the player is in range, shoots in the direction with a certain cooldown so it does not
+  //fire too much. Only when it is alive
   shoot() {
-    if (necroCoolDown === 0 && player.x > this.x && player.x < this.x + this.sightX && player.y > this.y - this.sightY && player.y < this.y + this.sightY) {
+    if (this.health != 0 && necroCoolDown === 0 && player.x > this.x && player.x < this.x + this.sightX && player.y > this.y - this.sightY && player.y < this.y + this.sightY) {
       let projectile = new Projectile(this.x +this.size, this.y, 30, 50, 0, fireballImg);
       // Add the projectile to the projectiles array of the ship
       projectiles.push(projectile);
       // Set the cooldown to max so it can start counting down
       necroCoolDown = necroCoolDownMax;
-      console.log(necroCoolDown);
     }
   }
 

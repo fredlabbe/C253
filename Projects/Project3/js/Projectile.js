@@ -22,11 +22,13 @@ class Projectile{
     this.coolDownMax = 10;
     //the image
     this.image = image;
+    //determining if we need to delete this projectile
+    this.toDelete = false;
 }
     // update()
   //
-  // Move all the projectiles fired by this ship
-  // Check if they hit the other ship and reduces health
+  // Move all the projectiles fired by this character
+  // Check if they hit another character and reduces health
   // Note that in this simple version we never actually delete projectiles from the
   // array. For that we'd need to use either pop() or splice().
   update(character) {
@@ -37,8 +39,9 @@ class Projectile{
           // If so, reduces the health of the character (constrained)
           character.health -= this.damage;
           character.health = constrain(character.health, 0, character.maxHealth);
-          projectiles.pop(i);
-          //checking if it is the player who is at 0
+          console.log(player.health);
+          this.toDelete = true;  
+          //checking if it's the player who is at 0 and if yes, respawns it
           if(player.health === 0){
             player.reset();
           }
@@ -59,6 +62,10 @@ class Projectile{
   move(){
 
     this.x+=20;
+
+  }
+
+  deleteProjectile(){
 
   }
 

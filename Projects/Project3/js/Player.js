@@ -23,11 +23,11 @@ class Player extends Character{
     //magic properties
     this.magic = 100;
     this.maxMagic = 100;
+    //the size
+    this.size = size;
     // Health properties
-    this.maxHealth = size;
+    this.maxHealth = 100;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
-    // Display properties
-    this.size = this.health;
     // Input properties
     this.upKey = 87; //W
     this.downKey = 83; //S
@@ -96,7 +96,7 @@ class Player extends Character{
     push();
     imageMode(CENTER);
     if (this.isMoving === true || this.isMovingSideways === true) {
-      image(playerWalkAnimation[currentFrame], this.x, this.y, this.size * 2, this.size * 2);
+      image(playerWalkAnimation[currentFrame], this.x, this.y, this.size, this.size);
       //Checking to see if the currentFrame of the overall program is a
       //multiple of the frameRate of the animation by using modulo (%).
       //Only changes the frames if it is.
@@ -107,7 +107,7 @@ class Player extends Character{
         }
       }
     } else {
-      image(playerWalkAnimation[0], this.x, this.y, this.size * 2, this.size * 2);
+      image(playerWalkAnimation[0], this.x, this.y, this.size, this.size);
     }
     pop();
   }
@@ -120,20 +120,25 @@ class Player extends Character{
     if(state === "Forest"){
       camera.position.x = 500;
       camera.position.y = 370;
-    this.x = 315;
-    this.y = 70;
+      this.x = 315;
+      this.y = 70;
 
-    //healthbar properties
-    this.healthBarX = 10;
-    this.barY = height - 50;//same value in Y for both bars
-    this.healthBarOff = 480;
-    //magicBar properties
-    this.magicBarX = width-310;//10 pixels between the end of the 200px bar and the end of screen
-    this.magicBarOff = this.magicBarX - 520;
+      //healthbar properties
+      this.healthBarX = 10;
+      this.barY = height - 50;//same value in Y for both bars
+      this.healthBarOff = 480;
+      //magicBar properties
+      this.magicBarX = width-310;//10 pixels between the end of the 200px bar and the end of screen
+      this.magicBarOff = this.magicBarX - 520;
+
+      this.health = this.maxHealth;
   }
     if(state === "Dungeon"){
     this.x = 50;
     this.y = 50;
+    camera.position.x = 500;
+    camera.position.y = 370;
+    camera.off;
   }
     // Default health
     this.health = this.maxHealth;
