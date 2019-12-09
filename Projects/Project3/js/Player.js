@@ -92,6 +92,8 @@ class Player extends Character {
         // Add the projectile to the projectiles array of the ship
         projectiles.push(projectile);
         this.magic -= 20;
+        //play the sound
+        fireballSFX.play();
       }
       // Set the cooldown to max so it can start counting down
       coolDown = coolDownMax;

@@ -71,11 +71,16 @@ let treeImg;
 let wallImg;
 let necroImg;
 let rockImg;
+let skullImg;
 
 //sounds
 let keySFX;
 let potionSFX;
 let dieSFX;
+let orcDieSFX;
+let necroDieSFX;
+let fireballSFX;
+let skullSFX;
 
 //the cooldown to be able to shoot of player
 let coolDown = 0;
@@ -387,12 +392,16 @@ function preload() {
   wallImg = loadImage("assets/images/wall.png");
   necroImg = loadImage("assets/images/Necromancer.png");
   rockImg = loadImage("assets/images/rock.png");
+  skullImg = loadImage("assets/images/skull.png");
 
   //the sounds
 
   keySFX = loadSound('assets/sounds/key.wav');
   potionSFX = loadSound('assets/sounds/potion.wav');
-  dieSFX = loadSound('assets/sounds/die.wav');
+  dieSFX = loadSound('assets/sounds/playerDie.mp3');
+  orcDieSFX = loadSound('assets/sounds/die.wav');
+  fireballSFX = loadSound('assets/sounds/fire.wav');
+  skullSFX = loadSound('assets/sounds/skull.wav');
   //the framerate of the program
   frameRate(20);
 }
@@ -567,8 +576,6 @@ function mousePressed() {
     state = "Narrative";
   } else if (state === "Narrative") {
     state = "Forest";
-  } else if (state === "Forest") {
-    state = "Dungeon";
   } else if (state === "GameOver") {
     //Should reset all the values to beginning values
     state = "Menu";

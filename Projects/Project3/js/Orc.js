@@ -102,7 +102,6 @@ class Orc extends Character {
       pop();
     } else {
       this.toDelete = true;
-
     }
   }
 }
