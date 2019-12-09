@@ -4,7 +4,7 @@
 // by the player. When the item is found, the player can
 // do different things depending on what subclass it is
 
-class Item{
+class Item {
 
   // constructor
   //

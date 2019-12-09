@@ -298,7 +298,7 @@ let rockProperties = [{
     height: 200
   },
   {
-    x: 1495,
+    x: 1895,
     y: 890,
     width: 120,
     height: 120
@@ -337,6 +337,22 @@ let rockProperties = [{
 
 ];
 let objectsArray = [];
+
+let necroProperties = [{
+    x: 1135,
+    y: 1050,
+    speed: 0,
+    size: 100
+  },
+  {
+    x: 1135,
+    y: 900,
+    speed: 0,
+    size: 100
+  },
+
+];
+let necroArray = [];
 
 //a basic tree
 let tree;
@@ -403,30 +419,19 @@ function setup() {
     objectsArray.push(tree);
   }
   // continue loading the array containing the objects with the rocks and their properties
-  for (let i = 0; i < rockProperties.length; i++){
+  for (let i = 0; i < rockProperties.length; i++) {
     rock = new Wall(rockProperties[i].x, rockProperties[i].y, rockProperties[i].width, rockProperties[i].height, rockImg);
     objectsArray.push(rock);
   }
-  //the array containing the orcs
+  //the array containing the orcs with random values in a certain range for x & y
   for (let i = 0; i < 3; i++) {
-    let orc = new Orc(100, 400, 15, 60, orcLeftAnimation, orcRightAnimation);
+    let orc = new Orc(random(100, 500), random(200, 700), 15, 60, orcLeftAnimation, orcRightAnimation);
     orcArray.push(orc);
   }
-  //the necromancers
-  //DOESNT DELETE MUST DELETE WHEN WILL BE ARRAY OF NECROMANCERS AND MUST DO AN
-  //ARRAY OF PROPERTIES LIKE THE WALLS FOR THAT AND THE ORCS
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-  necro = new Necromancer(1135, 1050, 0, 100, necroImg);
+  for (let i = 0; i < necroProperties.length; i++) {
+    necro = new Necromancer(necroProperties[i].x, necroProperties[i].y, necroProperties[i].speed, necroProperties[i].size, necroImg);
+    necroArray.push(necro);
+  }
 
   //the objects of the forest
   dungeonEntry = new Door(2550, 1380, 200, 200, entryImg, "Forest");
@@ -437,10 +442,6 @@ function setup() {
   potion2 = new Potion(500, 300, potionImg, 50);
   door = new Door(doorX, doorY, 100, 200, doorImg, "Dungeon");
   key = new Key(100, 600, keyImg);
-
-  //forestImg = createSprite(0,0,640,480);
-  //forestImg.addAnimation('default', "assets/images/Tileset.jpg");
-  // forestImg.scale = 4;
 }
 
 // draw()
@@ -458,8 +459,6 @@ function draw() {
   if (state === "Forest") {
     image(forestImg, 0, 0, sceneWidth, sceneHeight);
     //the camera follwing the player in p5.Play
-    console.log(player.x);
-    console.log(player.y);
     if (player.x > camXMin && player.x < camXMax) {
       camera.position.x = player.x;
     }
@@ -482,9 +481,11 @@ function draw() {
     //checking the projectiles
     checkProjectiles();
 
-    necro.shoot();
-    necro.display();
-
+    //the necromancers
+    for (let i = 0; i < necroArray.length; i++) {
+      necroArray[i].shoot();
+      necroArray[i].display();
+    }
     //the trees as walls
     //handling the solid characteristics of a wall object
     //in relationship to the characters
@@ -526,7 +527,7 @@ function draw() {
     potion2.display();
     door.display();
     key.display();
-
+    //checking the projectiles and part of their collisions
     checkProjectiles();
 
     //the walls
@@ -554,7 +555,6 @@ function draw() {
     image(overImg, 0, 0, width, height);
     player.reset();
     key.isFound = false;
-    potion.isDrank = false;
 
   }
 }
@@ -591,10 +591,15 @@ function checkProjectiles() {
     //handling the interactions between the projectiles and the character
     projectiles[i].display();
     projectiles[i].move();
-    projectiles[i].update(necro);
     projectiles[i].update(player);
+    projectiles[i].checkDelete(objectsArray);
+    projectiles[i].checkDelete(wallArray);
     for (let j = 0; j < orcArray.length; j++) {
       projectiles[i].update(orcArray[j]);
+    }
+    //checking for the necromancers
+    for (let j = 0; j < necroArray.length; j++) {
+      projectiles[i].update(necroArray[j]);
     }
   }
   //taking out the objects that must be deleted by taking into account the fact

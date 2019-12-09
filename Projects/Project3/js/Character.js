@@ -3,7 +3,7 @@
 // A parent class that represents a simple character
 //
 //
-class Character{
+class Character {
 
   // constructor
   //
@@ -21,7 +21,7 @@ class Character{
     this.maxHealth = size;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     //the offset of characters
-    this.charOff = size/2;
+    this.charOff = size / 2;
     //solid interactions properties so it looks right
     this.endForestX = 2660;
     this.endForestY = 1792 - this.charOff;
@@ -31,7 +31,7 @@ class Character{
   //
   // Updates the position according to velocity
   //handles the boundaries
-  move(){
+  move() {
     // Update position
     this.x += this.vx;
     this.y += this.vy;
@@ -46,11 +46,10 @@ class Character{
     //at the edges at 0, constrain from the size of the character/2
     //and at edges right and down, only with size because it looks
     //better
-    if(state === "Forest"){
-      this.x = constrain(this.x,0 + this.charOff, this.endForestX);
-      this.y = constrain(this.y,0 + this.charOff, this.endForestY);
-    }
-    else{
+    if (state === "Forest") {
+      this.x = constrain(this.x, 0 + this.charOff, this.endForestX);
+      this.y = constrain(this.y, 0 + this.charOff, this.endForestY);
+    } else {
       this.x = constrain(this.x, 0 + this.charOff, width - this.size);
       this.y = constrain(this.y, 0 + this.charOff, height - this.size);
     }

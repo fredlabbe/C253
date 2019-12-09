@@ -4,13 +4,13 @@
 // by the player. When the key is found, the player can
 // unlock the door to the next level.
 
-class Key extends Item{
+class Key extends Item {
   // constructor
   //
   // Sets the initial values for the Potion's properties
   // Either sets default values or uses the arguments provided
   constructor(x, y, image) {
-    super(x,y,image);
+    super(x, y, image);
   }
 
   ///display()

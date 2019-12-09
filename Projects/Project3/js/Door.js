@@ -41,7 +41,7 @@ class Door {
       // Check if the distance is less than their two radii (an overlap)
       //and changes the level depending on what level it currently is
       if (d < this.width / 2 + player.size / 2) {
-        if(state === "Forest"){
+        if (state === "Forest") {
           //setting the camera back to normal
           camera.position.x = 500;
           camera.off();
@@ -51,10 +51,9 @@ class Door {
           dungeonKey.isFound = false;
           player.x = 30;
           player.y = 30;
+        } else if (state === "Dungeon") {
+          state = "GameOver";
         }
-        else if(state === "Dungeon"){
-        state = "GameOver";
-      }
       }
     }
   }

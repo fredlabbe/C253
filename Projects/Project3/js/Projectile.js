@@ -4,12 +4,12 @@
 // It appears at the given coordinates and moves according to some angle
 // and speed.
 
-class Projectile{
+class Projectile {
   // constructor
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, size, angle, image, isRight){
+  constructor(x, y, speed, size, angle, image, isRight) {
 
     this.x = x;
     this.y = y;
@@ -26,26 +26,25 @@ class Projectile{
     this.toDelete = false;
     //to know if it is moving
     this.isLaunched = false;
-    this.isRight = isRight;
-}
-    // update()
+    this.isRight = isRight; //receiving the information to know which side to launch the projectile
+  }
+  // update()
   //
   // Move all the projectiles fired by this character
   // Check if they hit another character and reduces health
   // Note that in this simple version we never actually delete projectiles from the
   // array. For that we'd need to use either pop() or splice().
   update(character) {
-    for (var i = 0; i < projectiles.length; i++){
+    for (var i = 0; i < projectiles.length; i++) {
       // Check if this projectile overlaps the other ship
       if (this.x > character.x - character.size / 2 && this.x < character.x + character.size / 2) {
         if (this.y > character.y - character.size / 2 && this.y < character.y + character.size / 2) {
           // If so, reduces the health of the character (constrained)
           character.health -= this.damage;
           character.health = constrain(character.health, 0, character.maxHealth);
-          console.log(player.health);
           this.toDelete = true;
           //checking if it's the player who is at 0 and if yes, respawns it
-          if(player.health === 0){
+          if (player.health === 0) {
             player.reset();
           }
         }
@@ -56,30 +55,32 @@ class Projectile{
   //display()
   //
   //
-  display(){
-      push();
-      image(this.image, this.x, this.y, this.size, this.size);
-      pop();
+  display() {
+    push();
+    image(this.image, this.x, this.y, this.size, this.size);
+    pop();
   }
   // move()
   //
   //moves the projectile depending on the side the character faces
-
-  move(){
-    if(this.isRight){
-    this.x += 20;
-    //this.isLaunched = true;
+  move() {
+    if (this.isRight) {
+      this.x += 20;
+    } else if (this.isRight === false) {
+      this.x -= 20;
+    }
   }
-  else if(this.isRight === false){
-    this.x -= 20;
-    //this.isLaunched = true;
+  // checkDelete()
+  //
+  //checks if there is an overlap between the projectile and the array that
+  //it receives
+  checkDelete(array) {
+    for (var j = 0; j < array.length; j++) {
+      if (this.x > array[j].x - array[j].width / 2 && this.x < array[j].x + array[j].width / 2) {
+        if (this.y > array[j].y - array[j].height / 2 && this.y < array[j].y + array[j].height / 2) {
+          this.toDelete = true;
+        }
+      }
+    }
   }
-  // else {
-  //   this.x += 20;
-  //   this.isLaunched = true;
-  // }
-
-  }
-
-
 }

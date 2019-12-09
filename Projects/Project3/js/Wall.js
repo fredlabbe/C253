@@ -28,8 +28,7 @@ class Wall {
   display() {
     push();
     imageMode(CENTER);
-    //fill(0);
-    image(this.image,this.x, this.y, this.width, this.height);
+    image(this.image, this.x, this.y, this.width, this.height);
     pop();
   }
   //handleSolid()
