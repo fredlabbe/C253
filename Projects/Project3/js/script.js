@@ -1,8 +1,10 @@
-// A Waltz of Orcs
+// The Staff of Arianor
 // by Frederick Labbe
 //
-// A dungeon game where the player has to flee from the orcs, get a key
+// A rpg-like game where the player has to find a key to enter a dungeon
+//to flee from the orcs, get another key
 //and open the door. Player can take a potion to gain back his/her health.
+//and shoot fire spells
 
 //camera & screen properties
 let sceneWidth = 2768;
