@@ -415,7 +415,7 @@ function setup() {
   doorX = width - 50;
   doorY = height - 100;
 
-  player = new Player(315, 70, 20, 100, playerRightAnimation, currentFrame, animationRate);
+  player = new Player(315, 70, 6, 100, playerRightAnimation, currentFrame, animationRate);
 
   //the wall array
   for (let i = 0; i < wallProperties.length; i++) {
